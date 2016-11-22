@@ -7,9 +7,9 @@ ________________________________________________________________________________
 
 QTAP Team:
 
-Alex Ruffo
-Lachlan Devir
-Michael Wang
+Alex Ruffo, 
+Lachlan Devir, 
+Michael Wang, 
 Carson Cook
 
-©2016
+Â©2016
