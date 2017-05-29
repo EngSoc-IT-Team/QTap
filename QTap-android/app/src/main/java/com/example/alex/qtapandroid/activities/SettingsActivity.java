@@ -32,8 +32,10 @@ import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.SqlStringStatements;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.database.users.UserManager;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -86,7 +88,6 @@ public class SettingsActivity extends AppCompatActivity {
 
                 ClearData();
                 new WebView(getApplicationContext()).clearCache(true);
-
                 Intent intent = new Intent(SettingsActivity.this , LoginActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.putExtra("EXIT", true);
@@ -97,10 +98,14 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         //String userEmail = preferences.getString("UserEmail", "defaultStringIfNothingFound");
         String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
-        String userName = preferences.getString("UserName", "USERNAME");
+//        String userName = preferences.getString("UserName", "USERNAME");
+        UserManager mUserManager = new UserManager(this.getApplicationContext());
+        ArrayList<User> user = mUserManager.getTable();
+        String uNetID = user.get(0).getNetid();
+
         TextView netID = (TextView) findViewById(R.id.netID);
         TextView date = (TextView) findViewById(R.id.login_date);
         date.setText(currentDateTimeString);
-        netID.setText(userName);
+        netID.setText(uNetID);
     }
 }

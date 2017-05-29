@@ -102,10 +102,10 @@ public class EventInfoFragment extends Fragment {
                 double [] address = icsToBuilding.getAddress(loc);
 
                 LatLng building = new LatLng(address[0], address[1]);
-                googleMap.addMarker(new MarkerOptions().position(building).title(loc).snippet(data));
+                googleMap.addMarker(new MarkerOptions().position(building).title(loc).snippet(data)).showInfoWindow();
                 // For zooming automatically to the location of the marker
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(building).zoom(16).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
 
