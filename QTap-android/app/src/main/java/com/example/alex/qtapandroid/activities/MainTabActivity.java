@@ -23,6 +23,7 @@ import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
 import com.example.alex.qtapandroid.common.database.courses.CourseManager;
 import com.example.alex.qtapandroid.common.database.services.ServiceManager;
+import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
 import com.example.alex.qtapandroid.ui.fragments.AgendaFragment;
