@@ -89,8 +89,6 @@ public class CalendarFragment extends Fragment {
         bundle.putInt("year", dateSel.getYear());
         nextFrag.setArguments(bundle);
 
-        MainTabActivity.flag = true;
-
         this.getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, nextFrag)
                 .addToBackStack("AgendaFragmentDateClick")

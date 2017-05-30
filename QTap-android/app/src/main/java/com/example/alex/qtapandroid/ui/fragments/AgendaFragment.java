@@ -126,7 +126,6 @@ public class AgendaFragment extends Fragment {
             }
         });
 
-        MainTabActivity.flag = true;
         return view;
     }
 

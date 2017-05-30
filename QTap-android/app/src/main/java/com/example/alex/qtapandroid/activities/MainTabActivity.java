@@ -41,8 +41,6 @@ import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 public class MainTabActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private boolean mIsViewAtHome;
-
     private DrawerLayout mDrawer;
     public static boolean flag = false;
 
@@ -88,25 +86,8 @@ public class MainTabActivity extends AppCompatActivity
      * back closes drawer and sends user to calendar fragment (schedule).
      * If already on calendar, exits app.
      */
-
-    private String getCurrentFragmentName() {   // if the backstack was actually created, this would get the name of the last fragment in the stack
-
-        int backStackEntryCount = getSupportFragmentManager().getBackStackEntryCount();
-
-        String fragmentName;
-
-        if (backStackEntryCount > 0) {
-            fragmentName = getSupportFragmentManager().getBackStackEntryAt(backStackEntryCount - 1).getName();
-        } else {
-            fragmentName = "";
-        }
-
-        return fragmentName;
-    }
-
-
     @Override
-    public void onBackPressed() {       // Todo: implement a proper fragment stack
+    public void onBackPressed() {
 //        int count = getFragmentManager().getBackStackEntryCount();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -117,29 +98,12 @@ public class MainTabActivity extends AppCompatActivity
             moveTaskToBack(true);
         } else {
             //set title to be for proper fragment
-            String fragTag=fm.getBackStackEntryAt(fm.getBackStackEntryCount()-2).getName(); //at count-1 is the current fragment, -2 is the fragment after going back
-            Log.d("FRAGMENTISHOME",fragTag);
+            String fragTag=fm.getBackStackEntryAt(fm.getBackStackEntryCount()-2).getName(); //at count -2 is the fragment after going back
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setTitle(fragTag);
             }
             super.onBackPressed();
         }
-       /* if (getCurrentFragmentName().equals("AgendaFragmentDateClick"))
-        {
-            displayView(R.id.nav_schedule); //display the calendar fragment
-        }
-        if (!mIsViewAtHome) { //if the current view is not the calendar fragment
-            displayView(R.id.nav_day); //display the calendar fragment
-        }
-        else if (flag == true) {
-            flag = false;
-            displayView(R.id.nav_schedule); //display the calendar fragment
-        }
-//        else if (count > 0)       // does not work as the backstack is not populated with the current MainTabActivity implementation
-//            getFragmentManager().popBackStack();
-        else {
-            moveTaskToBack(true);  //If view is in calendar fragment, exit application
-        }*/
     }
 
     @Override
@@ -190,12 +154,10 @@ public class MainTabActivity extends AppCompatActivity
                 fragment = new CalendarFragment();
                 title = getString(R.string.calendar_fragment);
                 flag = false;       // set agendaFragment flag to false as you have returned to the homepage
-                mIsViewAtHome = false;
                 break;
             case R.id.nav_agenda:
                 fragment = new AgendaFragment();
                 title = getString(R.string.agenda_fragment);
-                mIsViewAtHome = false;
                 break;
             case R.id.nav_map:
                 startActivity(new Intent(MainTabActivity.this, MapsActivity.class));
@@ -203,32 +165,26 @@ public class MainTabActivity extends AppCompatActivity
             case R.id.nav_information:
                 fragment = new InformationFragment();
                 title = getString(R.string.information_fragment);
-                mIsViewAtHome = false;
                 break;
             case R.id.nav_day:
                 fragment = new DayFragment();
                 title = getString(R.string.day_fragment);
-                mIsViewAtHome = true;
                 break;
             case R.id.nav_tools:
                 fragment = new StudentToolsFragment();
                 title = getString(R.string.student_tools_fragment);
-                mIsViewAtHome = false;
                 break;
             case R.id.nav_its:
                 fragment = new ItsFragment();
                 title = getString(R.string.its_fragment);
-                mIsViewAtHome = false;
                 break;
             case R.id.nav_engsoc:
                 fragment = new EngSocFragment();
                 title = getString(R.string.engsoc_fragment);
-                mIsViewAtHome = false;
                 break;
             case R.id.nav_about:
                 fragment = new AboutFragment();
                 title = getString(R.string.about_fragment);
-                mIsViewAtHome = false;
                 break;
         }
 
