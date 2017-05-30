@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.View;
@@ -75,8 +76,8 @@ public class MainTabActivity extends AppCompatActivity
         TextView email = (TextView) header.findViewById(R.id.navHeaderAccountEmail);
         name.setText(userName);
         email.setText(userEmail);
-        UserManager um =new UserManager(this);
-        User u=new User("SF","SDF","SDF","SD","SDF");
+        UserManager um = new UserManager(this);
+        User u = new User("SF", "SDF", "SDF", "SD", "SDF");
         um.insertRow(u);
         User.printUsers(um.getTable());
         um.deleteRow(u);
@@ -111,7 +112,19 @@ public class MainTabActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
-        if (getCurrentFragmentName().equals("AgendaFragmentDateClick"))
+        FragmentManager fm = getSupportFragmentManager();
+        if (fm.getBackStackEntryCount() <= 1) { //last item in backstack, so close app
+            moveTaskToBack(true);
+        } else {
+            //set title to be for proper fragment
+            String fragTag=fm.getBackStackEntryAt(fm.getBackStackEntryCount()-2).getName(); //at count-1 is the current fragment, -2 is the fragment after going back
+            Log.d("FRAGMENTISHOME",fragTag);
+            if (getSupportActionBar() != null) {
+                getSupportActionBar().setTitle(fragTag);
+            }
+            super.onBackPressed();
+        }
+       /* if (getCurrentFragmentName().equals("AgendaFragmentDateClick"))
         {
             displayView(R.id.nav_schedule); //display the calendar fragment
         }
@@ -126,7 +139,7 @@ public class MainTabActivity extends AppCompatActivity
 //            getFragmentManager().popBackStack();
         else {
             moveTaskToBack(true);  //If view is in calendar fragment, exit application
-        }
+        }*/
     }
 
     @Override
@@ -222,6 +235,7 @@ public class MainTabActivity extends AppCompatActivity
         if (fragment != null) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_frame, fragment);
+            ft.addToBackStack(title); //title is the tag
             ft.commit();
         }
 
