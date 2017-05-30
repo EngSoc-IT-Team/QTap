@@ -14,7 +14,7 @@ import com.crashlytics.android.Crashlytics;
 public class DbHelper extends SQLiteOpenHelper {
 
     //**NOTE** this must be incremented if you are trying to run changes to the database schema
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
     //**NOTE** add your name, the database version and the reason it was changed to DBVersionLog.txt
     //when you make a change to the database version
 

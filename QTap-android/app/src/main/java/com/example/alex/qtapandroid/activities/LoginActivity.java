@@ -25,6 +25,8 @@ import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.ICS.ParseICS;
@@ -60,6 +62,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public static String mUserEmail = "";
 
     private boolean isLoggedIn = false;
+    private boolean isInit = true;
 
 
     //TODO document and remove literals
@@ -101,7 +104,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-
         UserManager mUserManager = new UserManager(this.getApplicationContext());
         ArrayList<User> user = mUserManager.getTable();
         if (!user.isEmpty())    // if the user has logged in already
@@ -114,10 +116,21 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
         if (!isLoggedIn) {
             final WebView browser = (WebView) findViewById(R.id.webView);
-            browser.getSettings().setJavaScriptEnabled(true); //TODO check if needed
+
+            browser.getSettings().setJavaScriptEnabled(true); // needed to properly display page / scroll to chosen location
+
             browser.setWebViewClient(new WebViewClient() {
+
                 @Override
                 public void onPageFinished(WebView view, String url) {
+
+//                    String hash = "username";
+
+//                    browser.loadUrl("javascript:(function() { " +
+//                            "window.location.hash='#" + hash + "';" +
+//                            "})()");
+                    if (browser.getUrl().contains("login.queensu.ca"))
+                        browser.loadUrl("javascript:document.getElementById('queensbody').scrollIntoView();");
 
                     browser.evaluateJavascript("(function() { return ('<html>'+document." +
                                     "getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
@@ -127,10 +140,18 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                     tryProcessHtml(html);
                                 }
                             });
+
+
                 }
+
             });
+
             browser.loadUrl("http://my.queensu.ca/software-centre");
+
         }
+    }
+
+    private void waitProcess(String html) {
     }
 
     /**
