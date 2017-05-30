@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,9 +21,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
-import com.example.alex.qtapandroid.common.database.courses.CourseManager;
-import com.example.alex.qtapandroid.common.database.services.ServiceManager;
+import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
@@ -76,6 +75,11 @@ public class MainTabActivity extends AppCompatActivity
         TextView email = (TextView) header.findViewById(R.id.navHeaderAccountEmail);
         name.setText(userName);
         email.setText(userEmail);
+        UserManager um =new UserManager(this);
+        User u=new User("SF","SDF","SDF","SD","SDF");
+        um.insertRow(u);
+        User.printUsers(um.getTable());
+        um.deleteRow(u);
     }
 
     /**
@@ -227,5 +231,11 @@ public class MainTabActivity extends AppCompatActivity
         }
 
         mDrawer.closeDrawer(GravityCompat.START);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DatabaseAccessor.getDatabase().close(); //ensures only one database connection is openat atime
     }
 }

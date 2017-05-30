@@ -36,7 +36,7 @@ public class UserManager extends DatabaseAccessor {
         values.put(User.COLUMN_DATE_INIT, user.getDateInit());
         values.put(User.COLUMN_ICS_URL, user.getIcsURL());
 
-        return mDatabase.insert(User.TABLE_NAME, null, values);
+        return getDatabase().insert(User.TABLE_NAME, null, values);
     }
 
     /**
@@ -48,7 +48,7 @@ public class UserManager extends DatabaseAccessor {
     public void deleteRow(User user) {
         String selection = User._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(user.getID())};
-        mDatabase.delete(User.TABLE_NAME, selection, selectionArgs);
+        getDatabase().delete(User.TABLE_NAME, selection, selectionArgs);
     }
 
     /**
@@ -67,7 +67,7 @@ public class UserManager extends DatabaseAccessor {
         };
         ArrayList<User> users = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
-        try (Cursor cursor = mDatabase.query(User.TABLE_NAME, projection, null, null, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(User.TABLE_NAME, projection, null, null, null, null, null)) {
             while (cursor.moveToNext()) {
                 User user = getRow(cursor.getInt(User.ID_POS));
                 users.add(user);
@@ -96,7 +96,7 @@ public class UserManager extends DatabaseAccessor {
         User user;
         String selection = User.COLUMN_NETID + " LIKE ?";
         String[] selectionArgs = {netid};
-        try (Cursor cursor = mDatabase.query(User.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(User.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             if (cursor != null && cursor.moveToNext()) {
                 user = new User(cursor.getString(User.NETID_POS), cursor.getString(User.FIRST_NAME_POS),
                         cursor.getString(User.LAST_NAME_POS), cursor.getString(User.DATE_INIT_POS), cursor.getString(User.ICS_URL_POS));
@@ -129,7 +129,7 @@ public class UserManager extends DatabaseAccessor {
         User user;
         String selection = User._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (Cursor cursor = mDatabase.query(User.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(User.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             cursor.moveToNext();
             user = new User(cursor.getString(User.NETID_POS), cursor.getString(User.FIRST_NAME_POS),
                     cursor.getString(User.LAST_NAME_POS), cursor.getString(User.DATE_INIT_POS), cursor.getString(User.ICS_URL_POS));
@@ -145,7 +145,7 @@ public class UserManager extends DatabaseAccessor {
      * Deletes the entire Users table.
      */
     public void deleteTable() {
-        mDatabase.delete(User.TABLE_NAME, null, null);
+        getDatabase().delete(User.TABLE_NAME, null, null);
     }
 
     /**
@@ -165,7 +165,7 @@ public class UserManager extends DatabaseAccessor {
 
         String selection = User._ID + " LIKE ?";
         String selectionArgs[] = {String.valueOf(oldUser.getID())};
-        mDatabase.update(User.TABLE_NAME, values, selection, selectionArgs);
+        getDatabase().update(User.TABLE_NAME, values, selection, selectionArgs);
         newUser.setID(oldUser.getID());
         return newUser;
     }

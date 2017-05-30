@@ -21,12 +21,12 @@ public class ServiceManager extends DatabaseAccessor{
         values.put(Service.COLUMN_BUILDING_ID, service.getBuildingID());
         values.put(Service.COLUMN_WEBSITE, service.getWebsite());
         values.put(Service.COLUMN_PURPOSE, service.getPurpose());
-        return mDatabase.insert(Service.TABLE_NAME, null, values);
+        return getDatabase().insert(Service.TABLE_NAME, null, values);
     }
     public void deleteRow(Service service){
         String selection = Service._ID + "LIKE ?";
         String[] selectionArgs = {String .valueOf(service.getID())};
-        mDatabase.delete(Service.TABLE_NAME,selection,selectionArgs);
+        getDatabase().delete(Service.TABLE_NAME,selection,selectionArgs);
     }
 
     public ArrayList<Service> getTable(){
@@ -38,7 +38,7 @@ public class ServiceManager extends DatabaseAccessor{
                 Service.COLUMN_WEBSITE,
         };
                 ArrayList<Service> services = new ArrayList<>();
-        try (Cursor cursor = mDatabase.query(Service.TABLE_NAME,projection,null,null,null,null,null)) {
+        try (Cursor cursor = getDatabase().query(Service.TABLE_NAME,projection,null,null,null,null,null)) {
             while (cursor.moveToNext()) {
                     Service service = getRow(cursor.getInt(Service.ID_POS));
                     services.add(service);
@@ -59,7 +59,7 @@ public class ServiceManager extends DatabaseAccessor{
         Service service;
         String selection = Service._ID + "LIKE ?";
         String[] selectionArgs = {String .valueOf(id)};
-        try (Cursor cursor = mDatabase.query(Service.TABLE_NAME, projection, selection,selectionArgs,null,null,null)){
+        try (Cursor cursor = getDatabase().query(Service.TABLE_NAME, projection, selection,selectionArgs,null,null,null)){
             if (cursor != null && cursor.moveToNext()){
                 service = new Service(cursor.getString(Service.HOUSE_POS),cursor.getInt(Service.BUILDING_ID_POS),
                         cursor.getString(Service.WEBSITE_POS),cursor.getString(Service.PURPOSE_POS));
@@ -72,7 +72,7 @@ public class ServiceManager extends DatabaseAccessor{
             }
         }
     }
-    public void deleteTable() {mDatabase.delete(Service.TABLE_NAME,null,null);}
+    public void deleteTable() {getDatabase().delete(Service.TABLE_NAME,null,null);}
 
     public Service updateRow(Service oldService, Service newService){
         ContentValues values = new ContentValues();
@@ -82,7 +82,7 @@ public class ServiceManager extends DatabaseAccessor{
         values.put(Service.COLUMN_PURPOSE, newService.getPurpose());
         String selection = Service._ID + "LIKE ?";
         String selectionArgs[] = {String.valueOf(oldService.getID())};
-        mDatabase.update(Service.TABLE_NAME,values,selection,selectionArgs);
+        getDatabase().update(Service.TABLE_NAME,values,selection,selectionArgs);
         newService.setID(oldService.getID());
         return newService;
 

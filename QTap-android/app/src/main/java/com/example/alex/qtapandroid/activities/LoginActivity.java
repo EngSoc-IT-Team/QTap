@@ -28,6 +28,7 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 
@@ -105,8 +106,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         ArrayList<User> user = mUserManager.getTable();
         if (!user.isEmpty())    // if the user has logged in already
         {
-            if (user.get(0).getIcsURL() != "" && user.get(0).getIcsURL().contains(".ics"))
-            {
+            if (user.get(0).getIcsURL() != "" && user.get(0).getIcsURL().contains(".ics")) {
                 Log.d(TAG, "user is logged in");
                 isLoggedIn = true;
                 attemptLogin();
@@ -295,6 +295,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         int ADDRESS = 0;
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DatabaseAccessor.getDatabase().close(); //ensure only one database connection is ever open
+    }
+
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -383,14 +389,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                         }
 
                     }
-                        final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
-                        String url = preferences.getString("mIcsUrl", "noURL");
-                        if (!url.equals("noURL")) {
-                            Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
-                            downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
-                            Log.d(TAG, "done!");
+                    final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
+                    String url = preferences.getString("mIcsUrl", "noURL");
+                    if (!url.equals("noURL")) {
+                        Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
+                        downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
+                        Log.d(TAG, "done!");
 
-                        }
+                    }
                     startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
                 }
             }
