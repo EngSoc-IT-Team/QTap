@@ -42,15 +42,11 @@ public class MainTabActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawer;
-    public static boolean flag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_tab);
-        if (getIntent().getBooleanExtra("EXIT", false)) {
-            finish();
-        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -81,7 +77,6 @@ public class MainTabActivity extends AppCompatActivity
      */
     @Override
     public void onBackPressed() {
-//        int count = getFragmentManager().getBackStackEntryCount();
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -146,7 +141,6 @@ public class MainTabActivity extends AppCompatActivity
             case R.id.nav_schedule:
                 fragment = new CalendarFragment();
                 title = getString(R.string.calendar_fragment);
-                flag = false;       // set agendaFragment flag to false as you have returned to the homepage
                 break;
             case R.id.nav_agenda:
                 fragment = new AgendaFragment();
