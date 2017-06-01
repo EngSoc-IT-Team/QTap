@@ -1,15 +1,10 @@
 package com.example.alex.qtapandroid.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -27,7 +22,7 @@ import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
 import com.example.alex.qtapandroid.ui.fragments.AgendaFragment;
-import com.example.alex.qtapandroid.ui.fragments.CalendarFragment;
+import com.example.alex.qtapandroid.ui.fragments.MonthFragment;
 import com.example.alex.qtapandroid.ui.fragments.DayFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
 import com.example.alex.qtapandroid.ui.fragments.InformationFragment;
@@ -116,7 +111,6 @@ public class MainTabActivity extends AppCompatActivity
         }
 
         return false;
-        //return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -140,8 +134,8 @@ public class MainTabActivity extends AppCompatActivity
 
         switch (viewId) {
             case R.id.nav_schedule:
-                fragment = new CalendarFragment();
-                title = getString(R.string.calendar_fragment);
+                fragment = new MonthFragment();
+                title = getString(R.string.month_fragment);
                 break;
             case R.id.nav_agenda:
                 fragment = new AgendaFragment();

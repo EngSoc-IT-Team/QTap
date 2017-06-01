@@ -3,11 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_schedule"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Schedule" />
-
         <item android:title="Calendar">
             <menu>
                 <item
@@ -18,6 +13,10 @@
                     android:id="@+id/nav_day"
                     android:icon="@drawable/ic_menu_send"
                     android:title="Day View" />
+                <item
+                    android:id="@+id/nav_schedule"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="Month View" />
                 <item
                     android:id="@+id/nav_week"
                     android:icon="@drawable/ic_menu_send"

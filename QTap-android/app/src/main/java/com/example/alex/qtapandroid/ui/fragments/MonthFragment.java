@@ -38,7 +38,7 @@ import java.util.TimeZone;
  * This is the first screen user sees upon logging in (unless first time login).
  * Attached to MainTabActivity only.
  */
-public class CalendarFragment extends Fragment {
+public class MonthFragment extends Fragment {
     //TODO replace literal strings with values from a Literals class
     private static final String TAG = StudentToolsFragment.class.getSimpleName();
     private static final String TAG_FRAGMENT = "AgendaFrag";
@@ -52,7 +52,7 @@ public class CalendarFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_calendar, container, false);
+        View v = inflater.inflate(R.layout.fragment_month, container, false);
 //        mDataInfo = (TextView) v.findViewById(R.id.calendarEvents);
         mDateSelection = (DatePicker) v.findViewById(R.id.datePicker);
         mOneClassManager = new OneClassManager(this.getContext());
