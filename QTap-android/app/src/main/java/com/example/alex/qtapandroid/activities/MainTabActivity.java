@@ -63,22 +63,15 @@ public class MainTabActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         displayView(R.id.nav_day); //start at calendar view
-
-        // Set Name and Email in nav header
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String userEmail = preferences.getString("UserEmail", "defaultStringIfNothingFound");
-        String userName = preferences.getString("UserName", "defaultStringIfNothingFound");
+        User u=(new UserManager(this)).getRow(1); //only ever one person in database
+        String userEmail=u.getNetid().split("ps://mytimetable.queensu.ca/timetable/MC/")[1]; //split into ICS URL stuff and email
+        String username=userEmail.split("@")[0]; //username for now is netid, which is found from email
 
         View header = navigationView.getHeaderView(0);// get the existing headerView
         TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);
         TextView email = (TextView) header.findViewById(R.id.navHeaderAccountEmail);
-        name.setText(userName);
+        name.setText(username);
         email.setText(userEmail);
-        UserManager um = new UserManager(this);
-        User u = new User("SF", "SDF", "SDF", "SD", "SDF");
-        um.insertRow(u);
-        User.printUsers(um.getTable());
-        um.deleteRow(u);
     }
 
     /**
