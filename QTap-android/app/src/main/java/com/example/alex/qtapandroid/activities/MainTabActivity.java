@@ -60,14 +60,15 @@ public class MainTabActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         displayView(R.id.nav_day); //start at calendar view
         User u=(new UserManager(this)).getRow(1); //only ever one person in database
-        String userEmail=u.getNetid().split("ps://mytimetable.queensu.ca/timetable/MC/")[1]; //split into ICS URL stuff and email
-        String username=userEmail.split("@")[0]; //username for now is netid, which is found from email
+        String userEmail=u.getNetid()+"@queensu.ca";
+        String username=u.getNetid();
 
         View header = navigationView.getHeaderView(0);// get the existing headerView
         TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);
         TextView email = (TextView) header.findViewById(R.id.navHeaderAccountEmail);
         name.setText(username);
         email.setText(userEmail);
+        User.printUsers((new UserManager(this)).getTable());
     }
 
     /**

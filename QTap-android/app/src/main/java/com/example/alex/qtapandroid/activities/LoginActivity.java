@@ -143,8 +143,7 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // Show a progress spinner, and kick off a background task to
-        // perform the user login attempt.
+        // Show a progress spinner, and kick off a background task to perform the user login attempt.
         showProgress(true);
         mAuthTask = new UserLoginTask(mUserEmail, this);
         mAuthTask.execute((Void) null);
@@ -203,7 +202,11 @@ public class LoginActivity extends AppCompatActivity {
 
         UserLoginTask(String netid, Context context) {
             this.mUserManager = new UserManager(context);
-            this.netid = netid;
+            //TODO get netid to actually be the netid
+            //netid right now is a url with netid inside, parsing for the netid
+            String[] strings=netid.split("/");
+            this.netid = strings[strings.length-1].split("@")[0];
+            Log.d("NETID",""+this.netid);
         }
 
         @Override
