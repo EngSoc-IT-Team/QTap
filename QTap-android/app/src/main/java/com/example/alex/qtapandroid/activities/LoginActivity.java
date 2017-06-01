@@ -317,10 +317,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            //TODO as of now just adding new users into database
-            User userInDB = mUserManager.getRow(netid);
-            if (userInDB == null && isLoggedIn == false) {
+            //User userInDB = mUserManager.getRow(1); //only ever one user in the database
+            if (!isLoggedIn) {
                 User newUser = new User(netid, "", "", "", mIcsUrl); //TODO ask for their name
                 mUserManager.insertRow(newUser);
             }
