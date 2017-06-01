@@ -47,7 +47,6 @@ import java.util.Locale;
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     public static final String TAG = DownloadICSFile.class.getSimpleName();
-    private static final int REQUEST_READ_CONTACTS = 0;
 
     //Keep track of the login task to ensure we can cancel it if requested
     private UserLoginTask mAuthTask = null;
@@ -75,7 +74,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             String indexing = "Your URL for the Class Schedule Subscription pilot service is ";
             index = html.indexOf(indexing) + indexing.length();
             String URL = html.substring(index, index + 200);
-            URL.trim();
             URL = URL.substring(0, URL.indexOf(".ics") + 4);
             mIcsUrl = URL;
             Log.d("WEB", "URL: " + URL);
@@ -132,59 +130,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             browser.loadUrl("http://my.queensu.ca/software-centre");
         }
     }
-
-    /**
-     * auto complete email used for login if permission for contacts is gained.
-     */
-//    private void populateAutoComplete() {
-//        if (!mayRequestContacts()) {
-//            return;
-//        }
-//
-//        getLoaderManager().initLoader(0, null, this);
-//    }
-
-
-    /**
-     * Check for contacts permission. Used to autocomplete email.
-     * Ask for permission if do not have it.
-     * Returns true if have permission, false if permission is requested.
-     */
-//    private boolean mayRequestContacts() {
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-//            return true;
-//        }
-//        if (checkSelfPermission(REQUEST_READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-//            return true;
-//        }
-//        if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-//            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-//                    .setAction(android.R.string.ok, new View.OnClickListener() {
-//                        @Override
-//                        @TargetApi(Build.VERSION_CODES.M)
-//                        public void onClick(View v) {
-//                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-//                        }
-//                    });
-//        } else {
-//            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-//        }
-//        return false;
-//    }
-
-    /**
-     * Callback received when a permissions request has been completed.
-     * If received permission, continue with auto complete of email.
-     */
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-//                                           @NonNull int[] grantResults) {
-//        if (requestCode == REQUEST_READ_CONTACTS) {
-//            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                populateAutoComplete();
-//            }
-//        }
-//    }
 
 
     /**
@@ -266,25 +211,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             emails.add(cursor.getString(ProfileQuery.ADDRESS));
             cursor.moveToNext();
         }
-
-//        addEmailsToAutoComplete(emails);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
 
     }
-
-
-//    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-//        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-////        ArrayAdapter<String> adapter =
-////                new ArrayAdapter<>(LoginActivity.this,
-////                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-////
-////        mEmailView.setAdapter(adapter);
-//    }
-
 
     private interface ProfileQuery {
         String[] PROJECTION = {
