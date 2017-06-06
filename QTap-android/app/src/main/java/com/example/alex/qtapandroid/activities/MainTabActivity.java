@@ -21,7 +21,6 @@ import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
-import com.example.alex.qtapandroid.ui.fragments.OldDayFragment;
 import com.example.alex.qtapandroid.ui.fragments.MonthFragment;
 import com.example.alex.qtapandroid.ui.fragments.DayFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;

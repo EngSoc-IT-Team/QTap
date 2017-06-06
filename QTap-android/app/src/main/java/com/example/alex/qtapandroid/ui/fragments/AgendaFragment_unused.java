@@ -27,9 +27,9 @@ import java.util.Locale;
  * Created by Carson on 02/12/2016.
  * Fragment that shows the classes for one day, and allows the user to cycle through to the next days.
  */
-public class OldDayFragment extends Fragment {
+public class AgendaFragment_unused extends Fragment {
 
-    private static final String TAG = OldDayFragment.class.getSimpleName();
+    private static final String TAG = AgendaFragment_unused.class.getSimpleName();
     private Calendar cal;
     private TextView mDataInfo;
     private View view; //not mView because that hides an attribute in a parent class (fragment)
@@ -40,7 +40,7 @@ public class OldDayFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_agenda, container, false);
+        view = inflater.inflate(R.layout.fragment_agenda_unused, container, false);
         final ListView listview = (ListView) view.findViewById(R.id.agendaList);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
