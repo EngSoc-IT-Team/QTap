@@ -29,7 +29,7 @@ public class BuildingManager extends DatabaseAccessor {
     public long insertRow(Building building) {
         ContentValues values = new ContentValues();
         values.put(Building.COLUMN_TITLE, building.getTitle());
-        return mDatabase.insert(Building.TABLE_NAME, null, values);
+        return getDatabase().insert(Building.TABLE_NAME, null, values);
     }
 
     /**
@@ -41,7 +41,7 @@ public class BuildingManager extends DatabaseAccessor {
     public void deleteRow(Building building) {
         String selection = Building._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(building.getID())};
-        mDatabase.delete(Building.TABLE_NAME, selection, selectionArgs);
+        getDatabase().delete(Building.TABLE_NAME, selection, selectionArgs);
     }
 
     /**
@@ -57,7 +57,7 @@ public class BuildingManager extends DatabaseAccessor {
         };
         ArrayList<Building> buildings = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
-        try (Cursor cursor = mDatabase.query(Building.TABLE_NAME, projection, null, null, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(Building.TABLE_NAME, projection, null, null, null, null, null)) {
             while (cursor.moveToNext()) {
                 Building building = getRow(cursor.getInt(Building.ID_POS));
                 buildings.add(building);
@@ -83,7 +83,7 @@ public class BuildingManager extends DatabaseAccessor {
         Building building;
         String selection = Building._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (Cursor cursor = mDatabase.query(Building.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(Building.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             if (cursor != null && cursor.moveToNext()) {
                 building = new Building(cursor.getString(Building.TITLE_POS),cursor.getString(Building.ROOM_NUM_POS));
                 building.setID(cursor.getInt(Building.ID_POS));
@@ -100,7 +100,7 @@ public class BuildingManager extends DatabaseAccessor {
      * Deletes the entire buildings table.
      */
     public void deleteTable() {
-        mDatabase.delete(Building.TABLE_NAME, null, null);
+        getDatabase().delete(Building.TABLE_NAME, null, null);
     }
 
     /**
@@ -115,7 +115,7 @@ public class BuildingManager extends DatabaseAccessor {
         values.put(Building.COLUMN_TITLE, newBuilding.getTitle());
         String selection = Building._ID + " LIKE ?";
         String selectionArgs[] = {String.valueOf(oldBuilding.getID())};
-        mDatabase.update(Building.TABLE_NAME, values, selection, selectionArgs);
+        getDatabase().update(Building.TABLE_NAME, values, selection, selectionArgs);
         newBuilding.setID(oldBuilding.getID());
         return newBuilding;
     }

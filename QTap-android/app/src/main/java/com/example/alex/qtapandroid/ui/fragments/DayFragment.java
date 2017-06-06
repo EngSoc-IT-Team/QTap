@@ -32,7 +32,7 @@ import java.util.Locale;
 
 public class DayFragment extends Fragment {
 
-    private static final String TAG = AgendaFragment.class.getSimpleName();
+    private static final String TAG ="DayFragment";
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -100,7 +100,7 @@ public class DayFragment extends Fragment {
                     changeDate();
                 }
                 return worked;
-                        
+
             }
         });
 

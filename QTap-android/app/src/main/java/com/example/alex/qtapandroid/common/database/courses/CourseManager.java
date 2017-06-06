@@ -30,7 +30,7 @@ public class CourseManager extends DatabaseAccessor {
     public long insertRow(Course course) {
         ContentValues values = new ContentValues();
         values.put(Course.COLUMN_TITLE, course.getTitle());
-        return mDatabase.insert(Course.TABLE_NAME, null, values);
+        return getDatabase().insert(Course.TABLE_NAME, null, values);
     }
 
     /**
@@ -42,7 +42,7 @@ public class CourseManager extends DatabaseAccessor {
     public void deleteRow(Course course) {
         String selection = Course._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(course.getID())};
-        mDatabase.delete(Course.TABLE_NAME, selection, selectionArgs);
+        getDatabase().delete(Course.TABLE_NAME, selection, selectionArgs);
     }
 
     /**
@@ -57,7 +57,7 @@ public class CourseManager extends DatabaseAccessor {
         };
         ArrayList<Course> courses = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
-        try (Cursor cursor = mDatabase.query(Course.TABLE_NAME, projection, null, null, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(Course.TABLE_NAME, projection, null, null, null, null, null)) {
             while (cursor.moveToNext()) {
                 Course course = new Course(cursor.getString(Course.TITLE_POS));
                 course.setID(cursor.getInt(Course.ID_POS));
@@ -83,7 +83,7 @@ public class CourseManager extends DatabaseAccessor {
         Course course = null;
         String selection = Course._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (Cursor cursor = mDatabase.query(Course.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(Course.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             if (cursor != null && cursor.moveToNext()) {
                 course = new Course(cursor.getString(Course.TITLE_POS));
                 course.setID(cursor.getInt(Course.ID_POS));
@@ -101,7 +101,7 @@ public class CourseManager extends DatabaseAccessor {
      * Deletes the entire Courses table.
      */
     public void deleteTable() {
-        mDatabase.delete(Course.TABLE_NAME, null, null);
+        getDatabase().delete(Course.TABLE_NAME, null, null);
     }
 
     /**
@@ -116,7 +116,7 @@ public class CourseManager extends DatabaseAccessor {
         values.put(Course.COLUMN_TITLE, newCourse.getTitle());
         String selection = Course._ID + " LIKE ?";
         String selectionArgs[] = {String.valueOf(oldCourse.getID())};
-        mDatabase.update(Course.TABLE_NAME, values, selection, selectionArgs);
+        getDatabase().update(Course.TABLE_NAME, values, selection, selectionArgs);
         newCourse.setID(oldCourse.getID());
         return newCourse;
     }

@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.example.alex.qtapandroid.ICS.ParseICS;
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 
@@ -46,10 +47,9 @@ import java.util.Locale;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG = DownloadICSFile.class.getSimpleName();
-    private static final int REQUEST_READ_CONTACTS = 0;
 
     //Keep track of the login task to ensure we can cancel it if requested
     private UserLoginTask mAuthTask = null;
@@ -78,7 +78,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             String indexing = "Your URL for the Class Schedule Subscription pilot service is ";
             index = html.indexOf(indexing) + indexing.length();
             String URL = html.substring(index, index + 200);
-            URL.trim();
             URL = URL.substring(0, URL.indexOf(".ics") + 4);
             mIcsUrl = URL;
             Log.d("WEB", "URL: " + URL);
@@ -151,63 +150,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    private void waitProcess(String html) {
-    }
-
-    /**
-     * auto complete email used for login if permission for contacts is gained.
-     */
-//    private void populateAutoComplete() {
-//        if (!mayRequestContacts()) {
-//            return;
-//        }
-//
-//        getLoaderManager().initLoader(0, null, this);
-//    }
-
-
-    /**
-     * Check for contacts permission. Used to autocomplete email.
-     * Ask for permission if do not have it.
-     * Returns true if have permission, false if permission is requested.
-     */
-//    private boolean mayRequestContacts() {
-//        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-//            return true;
-//        }
-//        if (checkSelfPermission(REQUEST_READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
-//            return true;
-//        }
-//        if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-//            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
-//                    .setAction(android.R.string.ok, new View.OnClickListener() {
-//                        @Override
-//                        @TargetApi(Build.VERSION_CODES.M)
-//                        public void onClick(View v) {
-//                            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-//                        }
-//                    });
-//        } else {
-//            requestPermissions(new String[]{READ_CONTACTS}, REQUEST_READ_CONTACTS);
-//        }
-//        return false;
-//    }
-
-    /**
-     * Callback received when a permissions request has been completed.
-     * If received permission, continue with auto complete of email.
-     */
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-//                                           @NonNull int[] grantResults) {
-//        if (requestCode == REQUEST_READ_CONTACTS) {
-//            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                populateAutoComplete();
-//            }
-//        }
-//    }
-
-
     /**
      * Attempts to sign in or register the account specified by the login form.
      * If there are form errors (invalid email, missing fields, etc.), the
@@ -219,8 +161,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return;
         }
 
-        // Show a progress spinner, and kick off a background task to
-        // perform the user login attempt.
+        // Show a progress spinner, and kick off a background task to perform the user login attempt.
         showProgress(true);
         mAuthTask = new UserLoginTask(mUserEmail, this);
         mAuthTask.execute((Void) null);
@@ -263,57 +204,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        return new CursorLoader(this,
-                // Retrieve data rows for the device user's 'profile' contact.
-                Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-                        ContactsContract.Contacts.Data.CONTENT_DIRECTORY), ProfileQuery.PROJECTION,
-
-                // Select only email addresses.
-                ContactsContract.Contacts.Data.MIMETYPE +
-                        " = ?", new String[]{ContactsContract.CommonDataKinds.Email
-                .CONTENT_ITEM_TYPE},
-
-                // Show primary email addresses first. Note that there won't be
-                // a primary email address if the user hasn't specified one.
-                ContactsContract.Contacts.Data.IS_PRIMARY + " DESC");
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        List<String> emails = new ArrayList<>();
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            emails.add(cursor.getString(ProfileQuery.ADDRESS));
-            cursor.moveToNext();
-        }
-
-//        addEmailsToAutoComplete(emails);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> cursorLoader) {
-
-    }
-
-
-//    private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-//        //Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-////        ArrayAdapter<String> adapter =
-////                new ArrayAdapter<>(LoginActivity.this,
-////                        android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
-////
-////        mEmailView.setAdapter(adapter);
-//    }
-
-
-    private interface ProfileQuery {
-        String[] PROJECTION = {
-                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                ContactsContract.CommonDataKinds.Email.IS_PRIMARY,
-        };
-
-        int ADDRESS = 0;
+    protected void onPause() {
+        super.onPause();
+        DatabaseAccessor.getDatabase().close(); //ensure only one database connection is ever open
     }
 
     /**
@@ -327,15 +220,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         UserLoginTask(String netid, Context context) {
             this.mUserManager = new UserManager(context);
-            this.netid = netid;
+            //TODO get netid to actually be the netid
+            //netid right now is a url with netid inside, parsing for the netid
+            String[] strings = netid.split("/");
+            this.netid = strings[strings.length - 1].split("@")[0];
+            Log.d("NETID", "" + this.netid);
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-            //TODO as of now just adding new users into database
-            User userInDB = mUserManager.getRow(netid);
-            if (userInDB == null && isLoggedIn == false) {
+            //User userInDB = mUserManager.getRow(1); //only ever one user in the database
+            if (!isLoggedIn) {
                 User newUser = new User(netid, "", "", "", mIcsUrl); //TODO ask for their name
                 mUserManager.insertRow(newUser);
             }
@@ -407,24 +302,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                     }
                     final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
-                    final ParseICS parser = new ParseICS(LoginActivity.this);
-                    String url = preferences.getString("mIcsUrl", "noURL");
-                    if (!url.equals("noURL")) {
-                        Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
-                        downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
-                        Log.d(TAG, "Parsing...!");
-                        parser.parseICSData();
-                        Log.d(TAG, "Done!");
-                    }
-                    startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
+                    Log.d(TAG, "done!");
                 }
+                startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
             }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
         }
     }
 }

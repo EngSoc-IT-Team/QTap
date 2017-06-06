@@ -8,16 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.widget.AbsListView;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.activities.MainTabActivity;
 import com.example.alex.qtapandroid.common.database.courses.OneClass;
 import com.example.alex.qtapandroid.common.database.courses.OneClassManager;
 
@@ -30,9 +27,9 @@ import java.util.Locale;
  * Created by Carson on 02/12/2016.
  * Fragment that shows the classes for one day, and allows the user to cycle through to the next days.
  */
-public class AgendaFragment extends Fragment {
+public class AgendaFragment_unused extends Fragment {
 
-    private static final String TAG = AgendaFragment.class.getSimpleName();
+    private static final String TAG = AgendaFragment_unused.class.getSimpleName();
     private Calendar cal;
     private TextView mDataInfo;
     private View view; //not mView because that hides an attribute in a parent class (fragment)
@@ -43,7 +40,7 @@ public class AgendaFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_agenda, container, false);
+        view = inflater.inflate(R.layout.fragment_agenda_unused, container, false);
         final ListView listview = (ListView) view.findViewById(R.id.agendaList);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -126,7 +123,6 @@ public class AgendaFragment extends Fragment {
             }
         });
 
-        MainTabActivity.flag = true;
         return view;
     }
 

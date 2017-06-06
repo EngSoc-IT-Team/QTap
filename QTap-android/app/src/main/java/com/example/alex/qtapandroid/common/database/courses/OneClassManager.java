@@ -35,7 +35,7 @@ public class OneClassManager extends DatabaseAccessor {
         values.put(OneClass.COLUMN_MONTH, oneClass.getMonth());
         values.put(OneClass.COLUMN_YEAR, oneClass.getYear());
         values.put(OneClass.COLUMN_COURSE_ID, oneClass.getCourseID());
-        return mDatabase.insert(OneClass.TABLE_NAME, null, values);
+        return getDatabase().insert(OneClass.TABLE_NAME, null, values);
     }
 
     /**
@@ -47,7 +47,7 @@ public class OneClassManager extends DatabaseAccessor {
     public void deleteRow(OneClass oneClass) {
         String selection = OneClass._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(oneClass.getID())};
-        mDatabase.delete(OneClass.TABLE_NAME, selection, selectionArgs);
+        getDatabase().delete(OneClass.TABLE_NAME, selection, selectionArgs);
     }
 
     /**
@@ -71,7 +71,7 @@ public class OneClassManager extends DatabaseAccessor {
 
         ArrayList<OneClass> classes = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
-        try (Cursor cursor = mDatabase.query(OneClass.TABLE_NAME, projection, null, null, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(OneClass.TABLE_NAME, projection, null, null, null, null, null)) {
             while (cursor.moveToNext()) {
                 OneClass oneClass = new OneClass(cursor.getString(OneClass.CLASS_TYPE_POS),
                         cursor.getString(OneClass.ROOM_NUM_POS), cursor.getString(OneClass.STIME_POS),
@@ -111,7 +111,7 @@ public class OneClassManager extends DatabaseAccessor {
         OneClass oneClass;
         String selection = OneClass._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (Cursor cursor = mDatabase.query(OneClass.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(OneClass.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             if (cursor != null && cursor.moveToNext()) {
                 oneClass = new OneClass(cursor.getString(OneClass.CLASS_TYPE_POS),
                         cursor.getString(OneClass.ROOM_NUM_POS), cursor.getString(OneClass.STIME_POS),
@@ -134,7 +134,7 @@ public class OneClassManager extends DatabaseAccessor {
      * Deletes the entire OneClass table.
      */
     public void deleteTable() {
-        mDatabase.delete(OneClass.TABLE_NAME, null, null);
+        getDatabase().delete(OneClass.TABLE_NAME, null, null);
     }
 
     /**
@@ -156,7 +156,7 @@ public class OneClassManager extends DatabaseAccessor {
         values.put(OneClass.COLUMN_COURSE_ID, newClass.getCourseID());
         String selection = OneClass._ID + " LIKE ?";
         String selectionArgs[] = {String.valueOf(oldClass.getID())};
-        mDatabase.update(OneClass.TABLE_NAME, values, selection, selectionArgs);
+        getDatabase().update(OneClass.TABLE_NAME, values, selection, selectionArgs);
         newClass.setID(oldClass.getID());
         return newClass;
     }

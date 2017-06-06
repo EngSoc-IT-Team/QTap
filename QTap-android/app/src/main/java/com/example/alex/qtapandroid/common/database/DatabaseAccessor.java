@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteDatabase;
  * class to access the database easily.
  */
 public class DatabaseAccessor {
-    public SQLiteDatabase mDatabase;
+    private static SQLiteDatabase mDatabase;
     private DbHelper mDBHelper;
     private Context mContext;
 
@@ -23,7 +23,7 @@ public class DatabaseAccessor {
 
     /**
      * Creates an instance of the database helper and opens
-     * a readable/writeable instance of the database.
+     * a readable/writable instance of the database.
      *
      * @throws SQLException
      */
@@ -32,6 +32,10 @@ public class DatabaseAccessor {
             mDBHelper = com.example.alex.qtapandroid.common.database.DbHelper.getInstance(mContext);
         }
         mDatabase = mDBHelper.getWritableDatabase();
+    }
+
+    public static SQLiteDatabase getDatabase(){
+        return mDatabase;
     }
 }
 

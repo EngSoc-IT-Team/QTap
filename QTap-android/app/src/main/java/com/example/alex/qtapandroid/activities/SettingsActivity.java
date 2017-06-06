@@ -28,6 +28,8 @@ import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.SqlStringStatements;
 
@@ -89,9 +91,8 @@ public class SettingsActivity extends AppCompatActivity {
                 ClearData();
                 new WebView(getApplicationContext()).clearCache(true);
                 Intent intent = new Intent(SettingsActivity.this , LoginActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.putExtra("EXIT", true);
                 startActivity(intent);
+                finish();
 
             }
         });
@@ -108,4 +109,11 @@ public class SettingsActivity extends AppCompatActivity {
         date.setText(currentDateTimeString);
         netID.setText(uNetID);
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        DatabaseAccessor.getDatabase().close(); //ensure only one database connection is ever open
+    }
+
 }

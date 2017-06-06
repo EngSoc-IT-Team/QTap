@@ -1,7 +1,7 @@
 <resources>
     <!--strings related to names of views -->
     <string name="app_name">QTap</string>
-    <string name="calendar_fragment">Schedule</string>
+    <string name="month_fragment">Month View</string>
     <string name="information_fragment">Information</string>
     <string name="student_tools_fragment">Student Tools</string>
     <string name="its_fragment">ITS</string>

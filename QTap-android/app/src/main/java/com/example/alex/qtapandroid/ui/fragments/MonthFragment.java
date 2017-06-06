@@ -3,33 +3,19 @@ package com.example.alex.qtapandroid.ui.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.format.DateFormat;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import java.util.Date;
-
-import com.example.alex.qtapandroid.ICS.ParseICS;
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.activities.MainTabActivity;
-import com.example.alex.qtapandroid.common.database.courses.Course;
 import com.example.alex.qtapandroid.common.database.courses.CourseManager;
 import com.example.alex.qtapandroid.common.database.courses.OneClass;
 import com.example.alex.qtapandroid.common.database.courses.OneClassManager;
-import com.example.alex.qtapandroid.common.database.users.User;
-import com.example.alex.qtapandroid.common.database.users.UserManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.GregorianCalendar;
-import java.util.SimpleTimeZone;
-import java.util.TimeZone;
 
 /**
  * Created by Carson on 02/12/2016.
@@ -38,7 +24,7 @@ import java.util.TimeZone;
  * This is the first screen user sees upon logging in (unless first time login).
  * Attached to MainTabActivity only.
  */
-public class CalendarFragment extends Fragment {
+public class MonthFragment extends Fragment {
     //TODO replace literal strings with values from a Literals class
     private static final String TAG = StudentToolsFragment.class.getSimpleName();
     private static final String TAG_FRAGMENT = "AgendaFrag";
@@ -52,7 +38,7 @@ public class CalendarFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_calendar, container, false);
+        View v = inflater.inflate(R.layout.fragment_month, container, false);
 //        mDataInfo = (TextView) v.findViewById(R.id.calendarEvents);
         mDateSelection = (DatePicker) v.findViewById(R.id.datePicker);
         mOneClassManager = new OneClassManager(this.getContext());
@@ -82,14 +68,12 @@ public class CalendarFragment extends Fragment {
     public void getCalData(){
         DatePicker dateSel = (DatePicker) getView().findViewById(R.id.datePicker);
 
-        AgendaFragment nextFrag= new AgendaFragment();
+        AgendaFragment_unused nextFrag= new AgendaFragment_unused();
         Bundle bundle = new Bundle();
         bundle.putInt("day", dateSel.getDayOfMonth());
         bundle.putInt("month", dateSel.getMonth());
         bundle.putInt("year", dateSel.getYear());
         nextFrag.setArguments(bundle);
-
-        MainTabActivity.flag = true;
 
         this.getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, nextFrag)
