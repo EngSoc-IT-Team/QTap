@@ -165,7 +165,6 @@ public class DayFragment extends Fragment {
                 Log.i(LOG_TAG, " Clicked on Item " + position);
 
                 DataObject data = ((RecyclerViewAdapter) mAdapter).getItem(position);
-              //  ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Day View");
 
                 CardView card = (CardView) view.findViewById(R.id.card_view);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -199,10 +198,8 @@ public class DayFragment extends Fragment {
                 nextFrag.setArguments(bundle);
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
                 fragmentManager.beginTransaction()
                         .replace(R.id.content_frame, nextFrag)
-                        .addToBackStack("EventInfoFragment")
                         .addSharedElement(card, cardName)
                         .commit();
             }

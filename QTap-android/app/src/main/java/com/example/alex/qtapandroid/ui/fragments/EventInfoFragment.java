@@ -224,7 +224,6 @@ public class EventInfoFragment extends Fragment {
 
                     fragmentManager.beginTransaction()
                             .replace(R.id.content_frame, nextFrag)
-                            .addToBackStack("EventInfoFragment")
                             .addSharedElement(card, cardName)
                             .commit();
                     return true;

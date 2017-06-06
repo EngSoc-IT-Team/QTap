@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -68,6 +69,10 @@ public class MainTabActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         }
         FragmentManager fm = getSupportFragmentManager();
+        Log.d("HELLOTHERE",""+fm.getBackStackEntryCount());
+        for (int i=0; i<fm.getBackStackEntryCount(); i++){
+            Log.d("HELLOTHERE",""+fm.getBackStackEntryAt(i).getName());
+        }
         if (fm.getBackStackEntryCount() <= 1) { //last item in backstack, so close app
             moveTaskToBack(true);
         } else {
