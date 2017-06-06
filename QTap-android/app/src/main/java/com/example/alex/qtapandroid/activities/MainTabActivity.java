@@ -50,15 +50,10 @@ public class MainTabActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         displayView(R.id.nav_day); //start at calendar view
         User u = (new UserManager(this)).getRow(1); //only ever one person in database
-        String userEmail = u.getNetid() + "@queensu.ca";
-        String username = u.getNetid();
 
         View header = navigationView.getHeaderView(0);// get the existing headerView
         TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);
-        TextView email = (TextView) header.findViewById(R.id.navHeaderAccountEmail);
-        name.setText(username);
-        email.setText(userEmail);
-        User.printUsers((new UserManager(this)).getTable());
+        name.setText(u.getNetid());
     }
 
     /**
@@ -151,12 +146,7 @@ public class MainTabActivity extends AppCompatActivity
             ft.addToBackStack(title); //title is the tag
             ft.commit();
         }
-
-        // set the toolbar title
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setTitle(title);
-        }
-
+        getSupportActionBar().setTitle(title);
         mDrawer.closeDrawer(GravityCompat.START);
     }
 

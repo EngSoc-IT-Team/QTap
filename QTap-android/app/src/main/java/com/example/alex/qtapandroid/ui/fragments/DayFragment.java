@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -164,7 +165,7 @@ public class DayFragment extends Fragment {
                 Log.i(LOG_TAG, " Clicked on Item " + position);
 
                 DataObject data = ((RecyclerViewAdapter) mAdapter).getItem(position);
-
+              //  ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Day View");
 
                 CardView card = (CardView) view.findViewById(R.id.card_view);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
