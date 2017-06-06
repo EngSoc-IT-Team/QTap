@@ -1,27 +1,20 @@
 package com.example.alex.qtapandroid.ui.fragments;
 
-import android.gesture.Gesture;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
-import android.transition.TransitionInflater;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.annotation.Nullable;
+import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.common.card.elements.DataObject;
-import com.example.alex.qtapandroid.common.card.elements.RecyclerViewAdapter;
 import com.example.alex.qtapandroid.common.database.courses.OneClass;
 import com.example.alex.qtapandroid.common.database.courses.OneClassManager;
 
@@ -30,302 +23,329 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+/**
+ * Created by Carson on 02/12/2016.
+ * Fragment that shows the classes for one day, and allows the user to cycle through to the next days.
+ */
 public class DayFragment extends Fragment {
 
-    private static final String TAG = AgendaFragment.class.getSimpleName();
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private static String LOG_TAG = "CardViewActivity";
-    private View view; //not mView because that hides an attribute in a parent class (fragment)
-    private TextView dateText;
-    private String dateString;
-    private int changeAmount;
-    private boolean isChanged;
+    private static final String TAG = OldDayFragment.class.getSimpleName();
     private Calendar cal;
-
+    private TextView mDataInfo;
+    private View view; //not mView because that hides an attribute in a parent class (fragment)
+    private boolean flag_loading = false;
+    private  String[] itemArr;
+    private  ArrayAdapter<String> adapter;
+    private int positionToSave;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_agenda, container, false);
+        final ListView listview = (ListView) view.findViewById(R.id.agendaList);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
 
-        view = inflater.inflate(R.layout.fragment_day, container, false);
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            int day = bundle.getInt("day", 0);
+            int month = bundle.getInt("month", 0);
+            int year = bundle.getInt("year", calendar.get(Calendar.YEAR));
 
-        final GestureDetector gesture = new GestureDetector(getActivity(),
-                new GestureDetector.SimpleOnGestureListener() {
+            calendar.set(year, month, day);
 
-                    @Override
-                    public boolean onDown(MotionEvent e) {
-                        Log.i("GESTURE", "OnDown");
-                        return true;
-                    }
+        }
 
-                    @Override
-                    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                                           float velocityY) {
-                        final int SWIPE_MIN_DISTANCE = 100;
-                        final int SWIPE_MAX_OFF_PATH = 250;
-                        final int SWIPE_THRESHOLD_VELOCITY = 200;
+        itemArr = getDayEventData(calendar);
 
-                        try {
-                            Log.i("GESTURE", "onFling has been called! Length: " + (e1.getX() - e2.getX() + " MinDistance: " +  SWIPE_MIN_DISTANCE + " || Velocity: " + Math.abs(velocityX) + " ThresholdVelocity: " + SWIPE_THRESHOLD_VELOCITY));
 
-                            if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                                return false;
-                            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
-                                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                Log.i("GESTURE", "Right to Left");
-                                changeAmount = 1;
-                                isChanged = true;
-                            } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
-                                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                Log.i("GESTURE", "Left to Right");
-                                changeAmount = -1;
-                                isChanged = true;
-                            }
-                        } catch (Exception e) {
-                            // nothing
-                            Log.i("GESTURE", "onFling called, Error: " + e.getMessage());
-                        }
-                        return super.onFling(e1, e2, velocityX, velocityY);
-                    }
-                });
+        listview.setOnScrollListener(new AbsListView.OnScrollListener() {
 
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.i("GESTURE", "Touch detected!");
-                boolean worked = gesture.onTouchEvent(event);
-                if (isChanged)
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+
+            }
+
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                                 int visibleItemCount, int totalItemCount) {
+
+                if(firstVisibleItem+visibleItemCount == totalItemCount && totalItemCount!=0)
                 {
-                    changeDate();
+//                    Log.d(TAG, "At bottom of list!");
+
+                    if(flag_loading == false)
+                    {
+                        flag_loading = true;
+//                        cal.add(Calendar.DAY_OF_YEAR, 1);
+                        positionToSave = listview.getFirstVisiblePosition() + 1;
+                        onClickEmailSignInButton();
+                    }//        listview.post(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                listview.setSelection(positionToSave);
+//            }
+//        });
+
                 }
-                return worked;
-                        
             }
         });
 
+//        listview.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+//
+//            @Override
+//            public boolean onPreDraw() {
+//                if(listview.getFirstVisiblePosition() == positionToSave) {
+//                    listview.getViewTreeObserver().removeOnPreDrawListener(this);
+//                    return true;
+//                }
+//                else {
+//                    return false;
+//                }
+//            }
+//        });
 
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this.getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        View.OnTouchListener gestureListener = new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return gesture.onTouchEvent(event);
+
+        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, itemArr);
+        listview.setAdapter(adapter);
+
+
+
+        mDataInfo = (TextView) view.findViewById(R.id.textDay);
+        CharSequence s = DateFormat.format("yyyy-MM-dd", calendar.getTime());
+        mDataInfo.setText("Showing Information For: " + s + " (" + calendar.getDisplayName(
+                Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US) + ")");
+
+        Button mEmailSignInButton = (Button) view.findViewById(R.id.nextDay);
+        mEmailSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onClickEmailSignInButton();
             }
-        };
-
-        mRecyclerView.setOnTouchListener(gestureListener);
-
-
-        dateText = (TextView) view.findViewById(R.id.DateTextDisplay);
-
-        cal = Calendar.getInstance();
-        cal.setTimeInMillis(System.currentTimeMillis());
-
-//        if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
-//            cal.add(Calendar.DAY_OF_YEAR, 1);
-
-//        String[] s = getDayEventData(cal);
-        mAdapter = new RecyclerViewAdapter(getDayEventData(cal));
-        mRecyclerView.setAdapter(mAdapter);
-
-
-
-        // Code to Add an item with default animation
-//        ((RecyclerViewAdapter) mAdapter).addItem(new DataObject("TEST!", "EXAMPLE TEST TEXT..."), 0);
-
-        // Code to remove an item with default animation
-        //((MyRecyclerViewAdapter) mAdapter).deleteItem(index);
+        });
 
         return view;
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
+    /**
+     * Defines the on click listener code for the email sign in button = mEmailSignInButton.
+     */
+    public void onClickEmailSignInButton() {
+//        String rTime = mDataInfo.getText().toString();
+//        Calendar calendar = cal;
+//        calendar.setTimeInMillis(System.currentTimeMillis());
+//        rTime = rTime.substring(rTime.indexOf(":") + 2);
+//
+//        int yr = Integer.parseInt(rTime.substring(0, 4));
+//        int mon = Integer.parseInt(rTime.substring(5, 7)) - 1;
+//        int day = Integer.parseInt(rTime.substring(8, 10));
+//
+//        calendar.set(yr, mon, day);
 
+        cal.add(Calendar.DAY_OF_YEAR, 1);
+//        if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
+////            calendar.add(Calendar.DAY_OF_YEAR, 2);
+//            cal.add(Calendar.DAY_OF_YEAR, 2);
+//        }
+//        else if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+//            cal.add(Calendar.DAY_OF_YEAR, 1);
+
+
+        ListView listview = (ListView) view.findViewById(R.id.agendaList);
+        String[] items = getDayEventData(cal);
+        String[] oldItems = itemArr;
+
+        itemArr = new String[oldItems.length + items.length + 1];
+
+        for (int i = 0; i<oldItems.length; i++)
+            itemArr[i] = oldItems[i];
+        itemArr[oldItems.length] = "";
+        itemArr[oldItems.length + 1] = "";
+
+        for (int i = 0; i<items.length; i++)
+            itemArr[i + oldItems.length + 1] = items[i];
+
+        adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, itemArr);
+        listview.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+
+        CharSequence s = DateFormat.format("yyyy-MM-dd", cal.getTime());
+        mDataInfo.setText("Showing Information For: " + s + " (" + cal.getDisplayName(
+                Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US) + ")");
+        flag_loading = false;
+        listview.setSelection(positionToSave);
     }
 
-    public void changeDate() {
-        cal.add(Calendar.DAY_OF_YEAR,changeAmount);
-        changeAmount = 0;
-        isChanged = false;
-        mAdapter = new RecyclerViewAdapter(getDayEventData(cal));
-        mRecyclerView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        ((RecyclerViewAdapter) mAdapter).setOnItemClickListener(new RecyclerViewAdapter
-                .MyClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-                Log.i(LOG_TAG, " Clicked on Item " + position);
-
-                DataObject data = ((RecyclerViewAdapter) mAdapter).getItem(position);
-
-
-                CardView card = (CardView) view.findViewById(R.id.card_view);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    card.setTransitionName("transistion_event_info" + position);
-                }
-
-                String cardName = card.getTransitionName();
-
-
-                EventInfoFragment nextFrag=  new EventInfoFragment();
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    setSharedElementReturnTransition(TransitionInflater.from(
-                            getActivity()).inflateTransition(R.transition.card_transistion));
-                    setExitTransition(TransitionInflater.from(
-                            getActivity()).inflateTransition(android.R.transition.explode));
-
-                    nextFrag.setSharedElementEnterTransition(TransitionInflater.from(
-                            getActivity()).inflateTransition(R.transition.card_transistion));
-                    nextFrag.setEnterTransition(TransitionInflater.from(
-                            getActivity()).inflateTransition(android.R.transition.explode));
-                }
-
-
-                Bundle bundle = new Bundle();
-                bundle.putString("data1", data.getmText1());
-                bundle.putString("data2", data.getmText2());
-                bundle.putString("date", dateString);
-                bundle.putString("TRANS_TEXT", cardName);
-
-                nextFrag.setArguments(bundle);
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, nextFrag)
-                        .addToBackStack("EventInfoFragment")
-                        .addSharedElement(card, cardName)
-                        .commit();
-            }
-        });
-    }
-
-    public ArrayList<DataObject> getDayEventData(Calendar calendar) {
+    /**
+     * Method that displays the events for the day selected in the calendar.
+     *
+     * @param calendar The calendar where the user selects a day.
+     * @return Array of Strings that hold each event's information.
+     */
+    public String[] getDayEventData(Calendar calendar) {
         OneClassManager oneClassManager = new OneClassManager(this.getContext());
 
         List<String> list = new ArrayList<String>();
-        List<String> loc = new ArrayList<>();
-        List<String> time = new ArrayList<>();
-        List<String> des = new ArrayList<>();
-        ArrayList<DataObject> result = new ArrayList<DataObject>();
-
         ArrayList<OneClass> data = oneClassManager.getTable();
 
-        int day, month, year;
+        int day, month, year, sDay, sMon;
         boolean isInfo = false;
-        Calendar cal = calendar;
+        boolean endWeek = false;
+        boolean dayInfo = false;
+        //calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SATURDAY && calendar.get(Calendar.DAY_OF_WEEK) != Calendar.SUNDAY
+        sDay = calendar.get(Calendar.DAY_OF_MONTH);
+        sMon = calendar.get(Calendar.MONTH) + 1;
 
-        int calDay = calendar.get(Calendar.DAY_OF_MONTH);
-        int calMon = calendar.get(Calendar.MONTH) + 1;
-        int calYear = calendar.get(Calendar.YEAR);
+        while (!endWeek) {
 
-        CharSequence f = DateFormat.format("yyyy-MM-dd", calendar.getTime());
-        CharSequence date = DateFormat.format("EEE, d MMM, yyyy", cal.getTime());
-        dateString = date.toString();
+            int calDay = calendar.get(Calendar.DAY_OF_MONTH);
+            int calMon = calendar.get(Calendar.MONTH) + 1;
+            int calYear = calendar.get(Calendar.YEAR);
 
-        dateText.setText(date);
-//        list.add("Showing Information For: " + date);
+            if (calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+                endWeek = true;
+            CharSequence s = DateFormat.format("yyyy-MM-dd", calendar.getTime());
+            list.add("Showing Information For: " + s + " (" + calendar.getDisplayName(
+                    Calendar.DAY_OF_WEEK, Calendar.SHORT, Locale.US) + ")");
 
-        for (int i = 0; i < data.size(); i++) {             // look for the selected day in the events from the database
-            day = Integer.parseInt(data.get(i).getDay());
-            month = Integer.parseInt(data.get(i).getMonth());
-            year = Integer.parseInt(data.get(i).getYear());
+            for (int i = 0; i < data.size(); i++) {             // look for the selected day in the events from the database
+                day = Integer.parseInt(data.get(i).getDay());
+                month = Integer.parseInt(data.get(i).getMonth());
+                year = Integer.parseInt(data.get(i).getYear());
 
 
-            if (year == calYear && month == calMon && calDay == day) { // if the day matches add the event
-                list.add(data.get(i).getType());
-                loc.add(data.get(i).getRoomNum());
-                time.add(data.get(i).getStartTime() + "-" + data.get(i).getEndTime());
-                des.add(data.get(i).getType());
-
-                isInfo = true;
+                if (year == calYear && month == calMon && calDay == day) { // if the day matches add the event
+                    list.add(s + "/~/" + "Event Name: " + data.get(i).getType() + " Location: " +
+                            data.get(i).getRoomNum() + " at: " + data.get(i).getStartTime() +
+                            " to " + data.get(i).getEndTime());
+                    isInfo = true;
+                    dayInfo = true;
+                }
             }
+            if (!dayInfo) {
+                list.add("Nothing is happening today");
+                Log.d(TAG, "No events on " + calDay +"/" + calMon + "/" + calYear);
+            }
+            if (!endWeek)
+                calendar.add(Calendar.DAY_OF_YEAR,1);
+            cal = calendar;
+            dayInfo = false;
         }
 
         if (!isInfo) {
-            result.add(new DataObject("No events today", date.toString()));
-            return result;
+            list.clear();
+            list.add("No events this week (" +  sMon + "/" + sDay + " - " + (cal.get(Calendar.MONTH) + 1) + "/" + cal.get(Calendar.DAY_OF_MONTH) + ")" );
+            return list.toArray(new String[list.size()]);
         }
 
+        List<String> result = new ArrayList<String>();
+
+        List<Integer> rhours = new ArrayList();
+        List<Integer> rmins = new ArrayList();
 
         int startHour;
         int startMin;
         int posSmall = 0;
         int minHour;
         int minMin;
-        int endHour =0;
-        int endMin =0;
+        boolean isNotFirstDay = false;
         for (int i = 0; i < list.size(); i++) {
 
-            if (list.get(i) == ("Nothing is happening today")) {
-                result.add(new DataObject(list.get(i), f.toString()));
+            if (list.get(i).contains("Showing Information For:")) {
+                if (isNotFirstDay)
+                    result.add("");
+                isNotFirstDay = true;
+                result.add(list.get(i));
+                list.remove(i);
+                i -= 1;
+            }else if (list.get(i) == ("Nothing is happening today"))
+            {
+                result.add(list.get(i));
                 list.remove(i);
                 i -= 1;
 
-            } else {
+            }else {
                 minHour = 25;
                 minMin = 61;
 
                 for (int j = 0; j < list.size(); j++) {
-                    String s = time.get(j);
-                    String s1 = s.substring(0, s.indexOf("-"));
-                    int div = s1.indexOf(":");
-                    String shour = s1.substring(0,div);
-                    String smin = s1.substring(div + 1, s1.length());
+                    String s = list.get(j);
+                    String s1 = s.substring(0,10);
+                    String s2 = list.get(i).substring(0,10);
+                    Log.d(TAG, "i.substring" + list.get(i).substring(0,10) + " Event j.substring:" + s1 + " s2.substring: " + s2);
 
-                    int index = s.indexOf("-") + 1;
-                    String s2 = s.substring(index,s.length());
-                    Log.d(TAG, "Event: " + list.get(i) + " sTime:" + s1 + " eTime: " + s2);
-                    div = s2.indexOf(":");
+                    if (s1.equals(s2)) {
+//                        if (!s.contains("Showing Information For:")) {
+                        Log.d(TAG, "Event i: " + list.get(i) + " Event j:" + s);
 
-                    startHour = Integer.parseInt(shour);
-                    startMin = Integer.parseInt(smin);
-                    if (startHour < minHour) {
-                        posSmall = j;
-                        minHour = startHour;
-                        minMin = startMin;
-                        endHour = Integer.parseInt(s2.substring(0,div));
-                        endMin = Integer.parseInt(s2.substring(div + 1,s2.length()));
+                        int index = s.indexOf("at: ") + 4;
+                        String tp = s.substring(index);
+                        String temp1 = tp.substring(0, tp.indexOf(":"));
+                        index = temp1.length() + 1;
+                        String temp2 = tp.substring(index, tp.indexOf(" "));
 
-                    } else if (startHour == minHour) {
-                        if (startMin < minMin) {
+                        startHour = Integer.parseInt(temp1);
+                        startMin = Integer.parseInt(temp2);
+                        if (startHour < minHour) {
                             posSmall = j;
                             minHour = startHour;
                             minMin = startMin;
-                            endHour = Integer.parseInt(s2.substring(0,div));
-                            endMin = Integer.parseInt(s2.substring(div + 1,s2.length()));
-
+                        } else if (startHour == minHour) {
+                            if (startMin < minMin) {
+                                posSmall = j;
+                                minHour = startHour;
+                                minMin = startMin;
+                            }
                         }
+//                        }
                     }
                 }
-                String amPMTime;
-                if (minHour > 12)
-                    amPMTime = (minHour - 12) + ":" +  minMin + "-" + (endHour - 12) + ":" + endMin + " PM";
-                else if (endHour > 12)
-                    amPMTime = (minHour) + ":" +  minMin + "-" + (endHour - 12) + ":" + endMin + " PM";
-                else amPMTime = time.get(posSmall) + " AM";
-
-                result.add(new DataObject(list.get(posSmall), amPMTime + " at: " + loc.get(posSmall)));
+                rhours.add(minHour);
+                rmins.add(minHour);
+                result.add(list.get(posSmall).substring(13));
                 list.remove(posSmall);
-                time.remove(posSmall);
-                loc.remove(posSmall);
-                des.remove(posSmall);
                 i = -1;
             }
         }
         if (list.size() > 0) {
-            result.add(new DataObject(list.get(0), time.get(0) + " at: " + loc.get(0) + " description: " + des.get(0)));
+            if (list.get(0).contains("/~/"))
+                result.add(list.get(0).substring(13));
+            else
+                result.add(list.get(0));
+
+            // This stuff is for adding spacing to events
+//            int index = list.get((0)).indexOf("at: ") + 4;
+//            String tp = list.get((0)).substring(index);
+//            String temp1 = tp.substring(0, tp.indexOf(":"));
+//            index = temp1.length() + 1;
+//            String temp2 = tp.substring(index, list.get((0)).indexOf(" ") - 1);
+//
+//            rhours.add(Integer.parseInt(temp1));
+//            rmins.add(Integer.parseInt(temp2));
+
         }
 
+        // This stuff is for adding spacing to events
 
-        return result;
+//        for (int i = 0; i < result.size() - 1; i++) {
+//
+//            int start2 = 0;
+//            int start1 = 0;
+//
+//            if (result.get(i) != "") {
+//                start2 = rhours.get(i + 1);  // start time of event 2
+//                start1 = rhours.get(i);      // start time of event 1
+//
+//                while (start2 > (start1 + 1)) {
+//                    result.add(i + 1, "");
+//                    rhours.add(i+ 1, -1);
+//                    i++;
+//                    start1++;
+//                }
+//            }
+//        }
+
+        return result.toArray(new String[list.size()]);
     }
 }
+
+

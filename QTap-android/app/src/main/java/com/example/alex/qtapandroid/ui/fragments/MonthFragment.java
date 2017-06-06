@@ -3,33 +3,19 @@ package com.example.alex.qtapandroid.ui.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.text.format.DateFormat;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
-import java.util.Date;
-
-import com.example.alex.qtapandroid.ICS.ParseICS;
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.activities.MainTabActivity;
-import com.example.alex.qtapandroid.common.database.courses.Course;
 import com.example.alex.qtapandroid.common.database.courses.CourseManager;
 import com.example.alex.qtapandroid.common.database.courses.OneClass;
 import com.example.alex.qtapandroid.common.database.courses.OneClassManager;
-import com.example.alex.qtapandroid.common.database.users.User;
-import com.example.alex.qtapandroid.common.database.users.UserManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.GregorianCalendar;
-import java.util.SimpleTimeZone;
-import java.util.TimeZone;
 
 /**
  * Created by Carson on 02/12/2016.
@@ -82,7 +68,7 @@ public class MonthFragment extends Fragment {
     public void getCalData(){
         DatePicker dateSel = (DatePicker) getView().findViewById(R.id.datePicker);
 
-        AgendaFragment nextFrag= new AgendaFragment();
+        OldDayFragment nextFrag= new OldDayFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("day", dateSel.getDayOfMonth());
         bundle.putInt("month", dateSel.getMonth());

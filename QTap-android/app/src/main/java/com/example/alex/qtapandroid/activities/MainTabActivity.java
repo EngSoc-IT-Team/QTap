@@ -21,7 +21,7 @@ import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
-import com.example.alex.qtapandroid.ui.fragments.AgendaFragment;
+import com.example.alex.qtapandroid.ui.fragments.OldDayFragment;
 import com.example.alex.qtapandroid.ui.fragments.MonthFragment;
 import com.example.alex.qtapandroid.ui.fragments.DayFragment;
 import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
@@ -136,10 +136,6 @@ public class MainTabActivity extends AppCompatActivity
             case R.id.nav_schedule:
                 fragment = new MonthFragment();
                 title = getString(R.string.month_fragment);
-                break;
-            case R.id.nav_agenda:
-                fragment = new AgendaFragment();
-                title = getString(R.string.agenda_fragment);
                 break;
             case R.id.nav_map:
                 startActivity(new Intent(MainTabActivity.this, MapsActivity.class));
