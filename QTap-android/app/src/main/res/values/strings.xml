@@ -52,7 +52,7 @@
 
     <!--strings for titles on top of pages -->
     <string name="resources">Resources</string>
-    <string name="links">Links (Open in Internet)</string>
+    <string name="links">Links</string>
     <string name="account">Account</string>
     <string name="options">Options</string>
 
