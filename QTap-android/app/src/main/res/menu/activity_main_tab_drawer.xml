@@ -13,10 +13,6 @@
                     android:id="@+id/nav_schedule"
                     android:icon="@drawable/ic_menu_camera"
                     android:title="Month View" />
-                <item
-                    android:id="@+id/nav_week"
-                    android:icon="@drawable/ic_menu_send"
-                    android:title="Week View" />
             </menu>
         </item>
         <item android:title="Campus Information">
@@ -26,10 +22,6 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Map" />
         <item
-            android:id="@+id/nav_information"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Information" />
-        <item
             android:id="@+id/nav_tools"
             android:icon="@drawable/ic_menu_manage"
             android:title="Student Tools" />
@@ -37,22 +29,5 @@
         </item>
 
     </group>
-
-    <item android:title="Help">
-        <menu>
-            <item
-                android:id="@+id/nav_its"
-                android:icon="@drawable/ic_menu_share"
-                android:title="ITS" />
-            <item
-                android:id="@+id/nav_engsoc"
-                android:icon="@drawable/ic_menu_send"
-                android:title="EngSoc" />
-            <item
-                android:id="@+id/nav_about"
-                android:icon="@drawable/ic_menu_send"
-                android:title="About" />
-        </menu>
-    </item>
 
 </menu>

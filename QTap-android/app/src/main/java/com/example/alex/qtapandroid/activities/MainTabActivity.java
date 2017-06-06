@@ -20,12 +20,8 @@ import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
-import com.example.alex.qtapandroid.ui.fragments.AboutFragment;
 import com.example.alex.qtapandroid.ui.fragments.MonthFragment;
 import com.example.alex.qtapandroid.ui.fragments.DayFragment;
-import com.example.alex.qtapandroid.ui.fragments.EngSocFragment;
-import com.example.alex.qtapandroid.ui.fragments.InformationFragment;
-import com.example.alex.qtapandroid.ui.fragments.ItsFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 
 /**
@@ -53,9 +49,9 @@ public class MainTabActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         displayView(R.id.nav_day); //start at calendar view
-        User u=(new UserManager(this)).getRow(1); //only ever one person in database
-        String userEmail=u.getNetid()+"@queensu.ca";
-        String username=u.getNetid();
+        User u = (new UserManager(this)).getRow(1); //only ever one person in database
+        String userEmail = u.getNetid() + "@queensu.ca";
+        String username = u.getNetid();
 
         View header = navigationView.getHeaderView(0);// get the existing headerView
         TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);
@@ -81,7 +77,7 @@ public class MainTabActivity extends AppCompatActivity
             moveTaskToBack(true);
         } else {
             //set title to be for proper fragment
-            String fragTag=fm.getBackStackEntryAt(fm.getBackStackEntryCount()-2).getName(); //at count -2 is the fragment after going back
+            String fragTag = fm.getBackStackEntryAt(fm.getBackStackEntryCount() - 2).getName(); //at count -2 is the fragment after going back
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setTitle(fragTag);
             }
@@ -139,10 +135,6 @@ public class MainTabActivity extends AppCompatActivity
             case R.id.nav_map:
                 startActivity(new Intent(MainTabActivity.this, MapsActivity.class));
                 break;
-            case R.id.nav_information:
-                fragment = new InformationFragment();
-                title = getString(R.string.information_fragment);
-                break;
             case R.id.nav_day:
                 fragment = new DayFragment();
                 title = getString(R.string.day_fragment);
@@ -150,18 +142,6 @@ public class MainTabActivity extends AppCompatActivity
             case R.id.nav_tools:
                 fragment = new StudentToolsFragment();
                 title = getString(R.string.student_tools_fragment);
-                break;
-            case R.id.nav_its:
-                fragment = new ItsFragment();
-                title = getString(R.string.its_fragment);
-                break;
-            case R.id.nav_engsoc:
-                fragment = new EngSocFragment();
-                title = getString(R.string.engsoc_fragment);
-                break;
-            case R.id.nav_about:
-                fragment = new AboutFragment();
-                title = getString(R.string.about_fragment);
                 break;
         }
 
