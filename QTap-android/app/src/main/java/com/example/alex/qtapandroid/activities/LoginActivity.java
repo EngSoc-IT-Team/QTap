@@ -25,8 +25,11 @@ import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.alex.qtapandroid.ICS.ParseICS;
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.users.User;
@@ -59,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
     public static String mUserEmail = "";
 
     private boolean isLoggedIn = false;
+    private boolean isInit = true;
 
 
     //TODO document and remove literals
@@ -99,7 +103,6 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-
         UserManager mUserManager = new UserManager(this.getApplicationContext());
         ArrayList<User> user = mUserManager.getTable();
         if (!user.isEmpty())    // if the user has logged in already
@@ -112,10 +115,21 @@ public class LoginActivity extends AppCompatActivity {
         }
         if (!isLoggedIn) {
             final WebView browser = (WebView) findViewById(R.id.webView);
-            browser.getSettings().setJavaScriptEnabled(true); //TODO check if needed
+
+            browser.getSettings().setJavaScriptEnabled(true); // needed to properly display page / scroll to chosen location
+
             browser.setWebViewClient(new WebViewClient() {
+
                 @Override
                 public void onPageFinished(WebView view, String url) {
+
+//                    String hash = "username";
+
+//                    browser.loadUrl("javascript:(function() { " +
+//                            "window.location.hash='#" + hash + "';" +
+//                            "})()");
+                    if (browser.getUrl().contains("login.queensu.ca"))
+                        browser.loadUrl("javascript:document.getElementById('queensbody').scrollIntoView();");
 
                     browser.evaluateJavascript("(function() { return ('<html>'+document." +
                                     "getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
@@ -125,12 +139,16 @@ public class LoginActivity extends AppCompatActivity {
                                     tryProcessHtml(html);
                                 }
                             });
+
+
                 }
+
             });
+
             browser.loadUrl("http://my.queensu.ca/software-centre");
+
         }
     }
-
 
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -204,9 +222,9 @@ public class LoginActivity extends AppCompatActivity {
             this.mUserManager = new UserManager(context);
             //TODO get netid to actually be the netid
             //netid right now is a url with netid inside, parsing for the netid
-            String[] strings=netid.split("/");
-            this.netid = strings[strings.length-1].split("@")[0];
-            Log.d("NETID",""+this.netid);
+            String[] strings = netid.split("/");
+            this.netid = strings[strings.length - 1].split("@")[0];
+            Log.d("NETID", "" + this.netid);
         }
 
         @Override
@@ -249,12 +267,14 @@ public class LoginActivity extends AppCompatActivity {
 
                     {
                         final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
+                        final ParseICS parser = new ParseICS(LoginActivity.this);
                         String url = preferences.getString("mIcsUrl", "noURL");
                         if (!url.equals("noURL")) {
                             Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
                             downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
-                            Log.d(TAG, "done!");
-
+                            Log.d(TAG, "Parsing...!");
+                            parser.parseICSData();
+                            Log.d(TAG, "Done!");
                         }
                     }
                     startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
@@ -282,22 +302,10 @@ public class LoginActivity extends AppCompatActivity {
 
                     }
                     final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
-                    String url = preferences.getString("mIcsUrl", "noURL");
-                    if (!url.equals("noURL")) {
-                        Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
-                        downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
-                        Log.d(TAG, "done!");
-
-                    }
-                    startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
+                    Log.d(TAG, "done!");
                 }
+                startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
             }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
         }
     }
 }

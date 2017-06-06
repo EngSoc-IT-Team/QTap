@@ -2,13 +2,20 @@ package com.example.alex.qtapandroid.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -17,6 +24,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.location.LocationServices;
 import com.example.alex.qtapandroid.R;
 
 import java.security.Permission;
@@ -25,10 +33,14 @@ import java.util.List;
 
 import static java.security.AccessController.getContext;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     private GoogleMap mMap;
+    private GoogleApiClient googleApiClient;
+    private double longitude;
+    private double latitude;
+    private boolean hasLoc = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +50,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+
     }
 
 
@@ -110,7 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        googleMap.setMyLocationEnabled(true);
+//        googleMap.setMyLocationEnabled(true);
 
 
         // Add a marker in Sydney and move the camera
@@ -119,6 +138,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         CameraPosition cameraPosition = new CameraPosition.Builder().target(
                 new LatLng(44.228185, -76.492447)).zoom(16).build();
+
 
         // create markers
         MarkerOptions marker1 = new MarkerOptions().position(new LatLng(44.2242736, -76.5007331)).title("Leonard Hall");
@@ -132,8 +152,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(marker2);
         mMap.addMarker(marker3);
 
-        boolean hasLoc = true;
-
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             hasLoc = checkAndRequestPermissions();
             Log.i("MAPS", " permission status: hasLoc " + hasLoc);
@@ -144,7 +162,75 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.i("MAPS", " permission was granted");
             mMap.setMyLocationEnabled(true); // false to disable
             mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            getCurrentLocation();
         }
+        else
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
+    private void getCurrentLocation() {
+//        mMap.clear();
+        Log.i("MAPS", " Getting current user location...");
+        if (hasLoc == false && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+
+        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        String bestProvider = locationManager.getBestProvider(criteria, true);
+        Location location = locationManager.getLastKnownLocation(bestProvider);
+        if (location != null) {
+            onLocationChanged(location);
+        }
+        if (location != null) {
+            //Getting longitude and latitude
+            longitude = location.getLongitude();
+            latitude = location.getLatitude();
+
+            //moving the map to location
+            moveMap();
+        }
+    }
+
+    public void onLocationChanged(Location location) {
+        LatLng loc = new LatLng(location.getLatitude(), location.getLongitude());
+
+    }
+
+
+    private void moveMap() {
+        /**
+         * Creating the latlng object to store lat, long coordinates
+         * adding marker to map
+         * move the camera with animation
+         */
+        LatLng latLng = new LatLng(latitude, longitude);
+        Log.i("MAPS", "Lat: " + latitude + " Long: " + longitude);
+
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(17).build();
+        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
     }
 }
