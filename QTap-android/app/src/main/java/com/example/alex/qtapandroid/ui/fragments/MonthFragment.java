@@ -68,7 +68,7 @@ public class MonthFragment extends Fragment {
     public void getCalData(){
         DatePicker dateSel = (DatePicker) getView().findViewById(R.id.datePicker);
 
-        AgendaFragment_unused nextFrag= new AgendaFragment_unused();
+        DayFragment nextFrag= new DayFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("day", dateSel.getDayOfMonth());
         bundle.putInt("month", dateSel.getMonth());
