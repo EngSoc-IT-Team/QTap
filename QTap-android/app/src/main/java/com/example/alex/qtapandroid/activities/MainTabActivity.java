@@ -94,9 +94,11 @@ public class MainTabActivity extends AppCompatActivity
             case R.id.settings:
                 Intent settings = new Intent(MainTabActivity.this, SettingsActivity.class);
                 startActivity(settings);
+                break;
             case R.id.about:
                 Intent about = new Intent(MainTabActivity.this, AboutActivity.class);
                 startActivity(about);
+                break;
         }
         return false;
     }
