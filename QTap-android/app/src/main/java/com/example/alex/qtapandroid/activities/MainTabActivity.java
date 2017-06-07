@@ -69,7 +69,6 @@ public class MainTabActivity extends AppCompatActivity
      */
     @Override
     public void onBackPressed() {
-        //TODO special case for coming back out of map
         mDrawer.closeDrawer(GravityCompat.START);
         FragmentManager fm = getSupportFragmentManager();
         if (fm.getBackStackEntryCount() <= 1) { //last item in backstack, so close app
@@ -81,18 +80,24 @@ public class MainTabActivity extends AppCompatActivity
                 getSupportActionBar().setTitle(fragTag);
             }
             clearSelectedDrawerItem();
-            int itemID=getSelectedDrawerItem(fragTag);
+            int itemID = getSelectedDrawerItem(fragTag);
             mNavView.getMenu().findItem(itemID).setChecked(true);
             super.onBackPressed();
         }
     }
 
-    private int getSelectedDrawerItem(String fragTag){
-        if (fragTag.equals(mNavView.getMenu().findItem(R.id.nav_month).getTitle().toString())){
+    /**
+     * finds the drawer menu ID that corresponds to a fragment
+     *
+     * @param fragTag Tag given to a fragment
+     * @return ID of the item on the drawer corresponding to the fragment, defaults to nav_day
+     */
+    private int getSelectedDrawerItem(String fragTag) {
+        if (fragTag.equals(mNavView.getMenu().findItem(R.id.nav_month).getTitle().toString())) {
             return R.id.nav_month;
         } else if (fragTag.equals(mNavView.getMenu().findItem(R.id.nav_map).getTitle().toString())) {
             return R.id.nav_map;
-        } else if (fragTag.equals(mNavView.getMenu().findItem(R.id.nav_tools).getTitle().toString())){
+        } else if (fragTag.equals(mNavView.getMenu().findItem(R.id.nav_tools).getTitle().toString())) {
             return R.id.nav_tools;
         }
         return R.id.nav_day;
