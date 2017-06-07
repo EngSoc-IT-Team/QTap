@@ -69,10 +69,6 @@ public class MainTabActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         }
         FragmentManager fm = getSupportFragmentManager();
-        Log.d("HELLOTHERE",""+fm.getBackStackEntryCount());
-        for (int i=0; i<fm.getBackStackEntryCount(); i++){
-            Log.d("HELLOTHERE",""+fm.getBackStackEntryAt(i).getName());
-        }
         if (fm.getBackStackEntryCount() <= 1) { //last item in backstack, so close app
             moveTaskToBack(true);
         } else {
@@ -94,12 +90,12 @@ public class MainTabActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.settings:
-            Intent settings = new Intent(MainTabActivity.this, SettingsActivity.class);
-            startActivity(settings);
+                Intent settings = new Intent(MainTabActivity.this, SettingsActivity.class);
+                startActivity(settings);
             case R.id.about:
-                Intent about = new Intent(MainTabActivity.this,AboutActivity.class);
+                Intent about = new Intent(MainTabActivity.this, AboutActivity.class);
                 startActivity(about);
         }
         return false;
@@ -155,6 +151,6 @@ public class MainTabActivity extends AppCompatActivity
     @Override
     protected void onPause() {
         super.onPause();
-        DatabaseAccessor.getDatabase().close(); //ensures only one database connection is openat atime
+        DatabaseAccessor.getDatabase().close(); //ensures only one database connection is open at a time
     }
 }

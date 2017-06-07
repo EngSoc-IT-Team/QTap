@@ -61,6 +61,7 @@
     <string name="init_database">Initializing Database</string>
     <string name="no_events">No events today</string>
     <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_about">About</string>
 
     <!-- Strings related to Settings -->
 
@@ -120,7 +121,7 @@
         <item>3</item>
     </string-array>
 
-    <string-array name="multi_select_list_preference_default_value" />
+    <string-array name="multi_select_list_preference_default_value"/>
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
 
@@ -136,12 +137,12 @@
     <string name="title_activity_tester">tester</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="transistion_event_info" />
+    <string name="transistion_event_info"/>
 
     <string name="about_app">Welcome to QTap, thanks for downloading!\n\n
-When you login to Solus, your class calendar is downloaded and added to the app. The home screen is the day view. Here, you can see your classes for the day.\n\
+When you login to Solus, your class calendar is downloaded and added to the app. The home screen is the day view. Here, you can see your classes for the day.\n\n
 If you swipe from the left side, a menu opens up with information about Queens and the campus. You can also choose the month view, where you can pick a specific day to view your class schedule.\n\n
 Your class calendar isn\'t updated unless you log out and log back in again. To log out, go to the settings page. On this page you can also see the date your calendar was last synced.\n\n
-Don't worry about your data! Only your NetID is stored in the phone, and it is by default in an encrypted location only accessible from this app. Also, when you logout, this information is deleted.\n\n
-Shout out to the 2016-17 Engineering Society IT Team for making this! It's not a finished product, if have any ideas on improvements, email doit@engsoc.queensu.ca!</string>
+Don\'t worry about your data! Only your NetID is stored in the phone, and it is by default in an encrypted location only accessible from this app. Also, when you logout, this information is deleted.\n\n
+Shout out to the 2016-17 Engineering Society IT Team for making this! It\'s not a finished product, if have any ideas on improvements, email doit@engsoc.queensu.ca!</string>
 </resources>
