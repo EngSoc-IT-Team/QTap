@@ -219,7 +219,6 @@ public class DayFragment extends Fragment {
 
         int day, month, year;
         boolean isInfo = false;
-        Calendar cal = calendar;
 
         int calDay = calendar.get(Calendar.DAY_OF_MONTH);
         int calMon = calendar.get(Calendar.MONTH) + 1;
@@ -232,7 +231,8 @@ public class DayFragment extends Fragment {
         dateText.setText(date);
 //        list.add("Showing Information For: " + date);
 
-        for (int i = 0; i < data.size(); i++) {             // look for the selected day in the events from the database
+        for (int i = 0; i < data.size(); i++) {             // look for the selected
+            // day in the events from the database
             day = Integer.parseInt(data.get(i).getDay());
             month = Integer.parseInt(data.get(i).getMonth());
             year = Integer.parseInt(data.get(i).getYear());

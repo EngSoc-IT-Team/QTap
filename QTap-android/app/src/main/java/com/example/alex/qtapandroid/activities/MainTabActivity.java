@@ -2,6 +2,7 @@ package com.example.alex.qtapandroid.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -25,6 +26,8 @@ import com.example.alex.qtapandroid.ui.fragments.MonthFragment;
 import com.example.alex.qtapandroid.ui.fragments.DayFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 
+import java.security.acl.Group;
+
 /**
  * activity holding most of the app.
  * contains the drawer that navigates user to fragments with map, schedule, info etc.
@@ -33,6 +36,7 @@ public class MainTabActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawer;
+    private NavigationView mNavView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,7 @@ public class MainTabActivity extends AppCompatActivity
         setContentView(R.layout.activity_main_tab);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mNavView = (NavigationView) mDrawer.findViewById(R.id.nav_view);
 
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -64,10 +69,8 @@ public class MainTabActivity extends AppCompatActivity
      */
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        }
+        //TODO special case for coming back out of map
+        mDrawer.closeDrawer(GravityCompat.START);
         FragmentManager fm = getSupportFragmentManager();
         if (fm.getBackStackEntryCount() <= 1) { //last item in backstack, so close app
             moveTaskToBack(true);
@@ -77,8 +80,22 @@ public class MainTabActivity extends AppCompatActivity
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setTitle(fragTag);
             }
+            clearSelectedDrawerItem();
+            int itemID=getSelectedDrawerItem(fragTag);
+            mNavView.getMenu().findItem(itemID).setChecked(true);
             super.onBackPressed();
         }
+    }
+
+    private int getSelectedDrawerItem(String fragTag){
+        if (fragTag.equals(mNavView.getMenu().findItem(R.id.nav_month).getTitle().toString())){
+            return R.id.nav_month;
+        } else if (fragTag.equals(mNavView.getMenu().findItem(R.id.nav_map).getTitle().toString())) {
+            return R.id.nav_map;
+        } else if (fragTag.equals(mNavView.getMenu().findItem(R.id.nav_tools).getTitle().toString())){
+            return R.id.nav_tools;
+        }
+        return R.id.nav_day;
     }
 
     @Override
@@ -122,8 +139,12 @@ public class MainTabActivity extends AppCompatActivity
         Fragment fragment = null;
         String title = getString(R.string.app_name);
 
+        //set item chosen in drawer
+        clearSelectedDrawerItem();
+        mNavView.getMenu().findItem(viewId).setChecked(true);
+
         switch (viewId) {
-            case R.id.nav_schedule:
+            case R.id.nav_month:
                 fragment = new MonthFragment();
                 title = getString(R.string.month_fragment);
                 break;
@@ -148,6 +169,16 @@ public class MainTabActivity extends AppCompatActivity
         }
         getSupportActionBar().setTitle(title);
         mDrawer.closeDrawer(GravityCompat.START);
+    }
+
+    /**
+     * Un-selects every item in the drawer because user selected another one
+     */
+    private void clearSelectedDrawerItem() {
+        mNavView.getMenu().findItem(R.id.nav_month).setChecked(false);
+        mNavView.getMenu().findItem(R.id.nav_map).setChecked(false);
+        mNavView.getMenu().findItem(R.id.nav_day).setChecked(false);
+        mNavView.getMenu().findItem(R.id.nav_tools).setChecked(false);
     }
 
     @Override
