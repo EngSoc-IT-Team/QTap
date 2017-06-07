@@ -135,7 +135,13 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="title_activity_tester">tester</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="transistion_event_info" />
+
+    <string name="about_app">Welcome to QTap, thanks for downloading!\n\n
+When you login to Solus, your class calendar is downloaded and added to the app. The home screen is the day view. Here, you can see your classes for the day.\n\
+If you swipe from the left side, a menu opens up with information about Queens and the campus. You can also choose the month view, where you can pick a specific day to view your class schedule.\n\n
+Your class calendar isn\'t updated unless you log out and log back in again. To log out, go to the settings page. On this page you can also see the date your calendar was last synced.\n\n
+Don't worry about your data! Only your NetID is stored in the phone, and it is by default in an encrypted location only accessible from this app. Also, when you logout, this information is deleted.\n\n
+Shout out to the 2016-17 Engineering Society IT Team for making this! It's not a finished product, if have any ideas on improvements, email doit@engsoc.queensu.ca!</string>
 </resources>
