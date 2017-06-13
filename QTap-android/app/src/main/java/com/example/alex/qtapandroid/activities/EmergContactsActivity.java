@@ -111,9 +111,7 @@ public class EmergContactsActivity extends ListActivity {
             return null;
         }
 
-        /**
-         * getting All products from url
-         */
+        @Override
         protected String doInBackground(String... args) {
             JSONObject json = null;
             try {
@@ -141,9 +139,7 @@ public class EmergContactsActivity extends ListActivity {
             return null;
         }
 
-        /**
-         * After completing background task Dismiss the progress dialog
-         **/
+        @Override
         protected void onPostExecute(String file_url) {
             mProgressDialog.dismiss();
 
