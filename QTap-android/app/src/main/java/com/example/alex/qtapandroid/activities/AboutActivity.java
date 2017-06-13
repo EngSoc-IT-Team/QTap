@@ -3,7 +3,9 @@ package com.example.alex.qtapandroid.activities;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
+import com.example.alex.qtapandroid.CloudDB;
 import com.example.alex.qtapandroid.R;
 
 /**

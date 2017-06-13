@@ -9,15 +9,9 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.ICS.ParseICS;
-import com.example.alex.qtapandroid.common.database.courses.CourseManager;
-
-import java.util.List;
+import com.example.alex.qtapandroid.activities.EmergContactsActivity;
 
 
 /**
@@ -30,9 +24,17 @@ public class StudentToolsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_student_tools, container, false);
+        CardView emergContactsCard=(CardView)v.findViewById(R.id.emerg_contacts_card);
         CardView solusCard = (CardView) v.findViewById(R.id.solus_card);
         CardView outlookCard = (CardView) v.findViewById(R.id.outlook_card);
         CardView onqCard = (CardView) v.findViewById(R.id.onq_card);
+
+        emergContactsCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getContext(),EmergContactsActivity.class));
+            }
+        });
 
         solusCard.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
