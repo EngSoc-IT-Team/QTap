@@ -4,6 +4,14 @@
               android:layout_height="fill_parent"
               android:orientation="vertical">
 
+    <android.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:title="@string/title_activity_emerg_contacts"
+        android:titleTextColor="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"/>
+
     <ListView
         android:id="@android:id/list"
         android:layout_width="fill_parent"
