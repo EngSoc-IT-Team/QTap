@@ -32,6 +32,7 @@
         android:paddingStart="3dp"
         android:paddingTop="6dp"
         android:textSize="13sp"
-        android:layout_below="@+id/number"/>
+        android:layout_below="@+id/number"
+        android:layout_marginBottom="5dp"/>
 
 </RelativeLayout>
