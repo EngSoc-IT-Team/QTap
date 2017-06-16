@@ -62,7 +62,7 @@ public class EmergContactsActivity extends ListActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog = new ProgressDialog(EmergContactsActivity.this);
-            mProgressDialog.setMessage("Loading products. Please wait...");
+            mProgressDialog.setMessage("Loading contacts. Please wait...");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.setCancelable(false);
             mProgressDialog.show();
@@ -123,13 +123,13 @@ public class EmergContactsActivity extends ListActivity {
             try {
                 int success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
-                    JSONArray products = json.getJSONArray(TAG_CONTACTS);
-                    for (int i = 0; i < products.length(); i++) {
-                        JSONObject product = products.getJSONObject(i);
+                    JSONArray contacts = json.getJSONArray(TAG_CONTACTS);
+                    for (int i = 0; i < contacts.length(); i++) {
+                        JSONObject contact = contacts.getJSONObject(i);
                         HashMap<String, String> map = new HashMap<>();
-                        map.put(TAG_NAME, product.getString(TAG_NAME));
-                        map.put(TAG_NUMBER, product.getString(TAG_NUMBER));
-                        map.put(TAG_DESCRIPTION, product.getString(TAG_DESCRIPTION));
+                        map.put(TAG_NAME, contact.getString(TAG_NAME));
+                        map.put(TAG_NUMBER, contact.getString(TAG_NUMBER));
+                        map.put(TAG_DESCRIPTION, contact.getString(TAG_DESCRIPTION));
                         emergContactsList.add(map);
                     }
                 }

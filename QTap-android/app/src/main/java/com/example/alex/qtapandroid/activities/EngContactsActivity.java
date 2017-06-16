@@ -33,10 +33,11 @@ import java.util.logging.Logger;
  */
 public class EngContactsActivity extends ListActivity {
 
-    private static final String TAG_CONTACTS = "EmergencyContacts";
+    private static final String TAG_CONTACTS = "EngineeringContacts";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_NAME = "Name";
-    private static final String TAG_NUMBER = "PhoneNumber";
+    private static final String TAG_EMAIL = "Email";
+    private static final String TAG_POSITION = "Position";
     private static final String TAG_DESCRIPTION = "Description";
 
     private ProgressDialog mProgressDialog;
@@ -45,7 +46,7 @@ public class EngContactsActivity extends ListActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_emerg_contacts);
+        setContentView(R.layout.activity_eng_contacts);
         engContactsList = new ArrayList<>();
         new GetEmergContacts().execute();
     }
@@ -62,7 +63,7 @@ public class EngContactsActivity extends ListActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             mProgressDialog = new ProgressDialog(EngContactsActivity.this);
-            mProgressDialog.setMessage("Loading products. Please wait...");
+            mProgressDialog.setMessage("Loading contacts. Please wait...");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.setCancelable(false);
             mProgressDialog.show();
@@ -116,20 +117,21 @@ public class EngContactsActivity extends ListActivity {
             JSONObject json = null;
             try {
                 //call php script on server that gets info from cloud database
-                json = new JSONObject(getJSON(getString(R.string.db_all_emerg_contacts), 10000));
+                json = new JSONObject(getJSON(getString(R.string.db_all_eng_contacts), 10000));
             } catch (JSONException e) {
                 Log.d("HELLOTHERE", "BAD: " + e);
             }
             try {
                 int success = json.getInt(TAG_SUCCESS);
                 if (success == 1) {
-                    JSONArray products = json.getJSONArray(TAG_CONTACTS);
-                    for (int i = 0; i < products.length(); i++) {
-                        JSONObject product = products.getJSONObject(i);
+                    JSONArray contacts = json.getJSONArray(TAG_CONTACTS);
+                    for (int i = 0; i < contacts.length(); i++) {
+                        JSONObject contact = contacts.getJSONObject(i);
                         HashMap<String, String> map = new HashMap<>();
-                        map.put("name", product.getString(TAG_NAME));
-                        map.put(TAG_NUMBER, product.getString(TAG_NUMBER));
-                        map.put(TAG_DESCRIPTION, product.getString(TAG_DESCRIPTION));
+                        map.put(TAG_NAME, contact.getString(TAG_NAME));
+                        map.put(TAG_EMAIL, contact.getString(TAG_EMAIL));
+                        map.put(TAG_POSITION, contact.getString(TAG_POSITION));
+                        map.put(TAG_DESCRIPTION, contact.getString(TAG_DESCRIPTION));
                         engContactsList.add(map);
                     }
                 }
@@ -148,7 +150,8 @@ public class EngContactsActivity extends ListActivity {
                 public void run() {
                     //Updating parsed JSON data into ListView
                     ListAdapter adapter = new SimpleAdapter(EngContactsActivity.this, engContactsList,
-                            R.layout.eng_contacts_list_item, new String[]{"name",TAG_NUMBER,TAG_DESCRIPTION}, new int[]{R.id.name,R.id.number,R.id.description});
+                            R.layout.eng_contacts_list_item, new String[]{TAG_NAME, TAG_EMAIL, TAG_POSITION, TAG_DESCRIPTION},
+                            new int[]{R.id.name, R.id.email, R.id.position, R.id.description});
                     setListAdapter(adapter);
                 }
             });
