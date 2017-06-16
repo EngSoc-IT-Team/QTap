@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
-import android.widget.Toolbar;
 
 import com.example.alex.qtapandroid.R;
 
@@ -41,13 +40,13 @@ public class EngContactsActivity extends ListActivity {
     private static final String TAG_DESCRIPTION = "Description";
 
     private ProgressDialog mProgressDialog;
-    private ArrayList<HashMap<String, String>> productsList;
+    private ArrayList<HashMap<String, String>> engContactsList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_emerg_contacts);
-        productsList = new ArrayList<>();
+        engContactsList = new ArrayList<>();
         new GetEmergContacts().execute();
     }
 
@@ -131,7 +130,7 @@ public class EngContactsActivity extends ListActivity {
                         map.put("name", product.getString(TAG_NAME));
                         map.put(TAG_NUMBER, product.getString(TAG_NUMBER));
                         map.put(TAG_DESCRIPTION, product.getString(TAG_DESCRIPTION));
-                        productsList.add(map);
+                        engContactsList.add(map);
                     }
                 }
             } catch (JSONException e) {
@@ -148,8 +147,8 @@ public class EngContactsActivity extends ListActivity {
             runOnUiThread(new Runnable() {
                 public void run() {
                     //Updating parsed JSON data into ListView
-                    ListAdapter adapter = new SimpleAdapter(EngContactsActivity.this, productsList,
-                            R.layout.emerg_contacts_list_item, new String[]{"name",TAG_NUMBER,TAG_DESCRIPTION}, new int[]{R.id.name,R.id.number,R.id.description});
+                    ListAdapter adapter = new SimpleAdapter(EngContactsActivity.this, engContactsList,
+                            R.layout.eng_contacts_list_item, new String[]{"name",TAG_NUMBER,TAG_DESCRIPTION}, new int[]{R.id.name,R.id.number,R.id.description});
                     setListAdapter(adapter);
                 }
             });
