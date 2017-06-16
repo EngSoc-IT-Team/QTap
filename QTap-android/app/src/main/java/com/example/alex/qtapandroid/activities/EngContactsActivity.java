@@ -30,9 +30,9 @@ import java.util.logging.Logger;
 
 /**
  * Created by Carson on 12/06/2017.
- * Activity that displays emergency contact information held in cloud database
+ * Activity that displays engineering contact information held in cloud database
  */
-public class EmergContactsActivity extends ListActivity {
+public class EngContactsActivity extends ListActivity {
 
     private static final String TAG_CONTACTS = "EmergencyContacts";
     private static final String TAG_SUCCESS = "success";
@@ -62,7 +62,7 @@ public class EmergContactsActivity extends ListActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgressDialog = new ProgressDialog(EmergContactsActivity.this);
+            mProgressDialog = new ProgressDialog(EngContactsActivity.this);
             mProgressDialog.setMessage("Loading products. Please wait...");
             mProgressDialog.setIndeterminate(false);
             mProgressDialog.setCancelable(false);
@@ -148,7 +148,7 @@ public class EmergContactsActivity extends ListActivity {
             runOnUiThread(new Runnable() {
                 public void run() {
                     //Updating parsed JSON data into ListView
-                    ListAdapter adapter = new SimpleAdapter(EmergContactsActivity.this, productsList,
+                    ListAdapter adapter = new SimpleAdapter(EngContactsActivity.this, productsList,
                             R.layout.emerg_contacts_list_item, new String[]{"name",TAG_NUMBER,TAG_DESCRIPTION}, new int[]{R.id.name,R.id.number,R.id.description});
                     setListAdapter(adapter);
                 }
