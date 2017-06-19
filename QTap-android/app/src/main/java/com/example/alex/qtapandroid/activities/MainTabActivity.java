@@ -2,7 +2,6 @@ package com.example.alex.qtapandroid.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -26,7 +25,6 @@ import com.example.alex.qtapandroid.ui.fragments.MonthFragment;
 import com.example.alex.qtapandroid.ui.fragments.DayFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 
-import java.security.acl.Group;
 
 /**
  * activity holding most of the app.
@@ -37,6 +35,7 @@ public class MainTabActivity extends AppCompatActivity
 
     private DrawerLayout mDrawer;
     private NavigationView mNavView;
+    private FragmentManager mFragManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +50,12 @@ public class MainTabActivity extends AppCompatActivity
                 this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.setDrawerListener(toggle);
         toggle.syncState();
+        mFragManager=getSupportFragmentManager();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         displayView(R.id.nav_day); //start at calendar view
         User u = (new UserManager(this)).getRow(1); //only ever one person in database
-
         View header = navigationView.getHeaderView(0);// get the existing headerView
         TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);
         name.setText(u.getNetid());
@@ -70,12 +69,11 @@ public class MainTabActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         mDrawer.closeDrawer(GravityCompat.START);
-        FragmentManager fm = getSupportFragmentManager();
-        if (fm.getBackStackEntryCount() <= 1) { //last item in backstack, so close app
+        if (mFragManager.getBackStackEntryCount() <= 1) { //last item in backstack, so close app
             moveTaskToBack(true);
         } else {
             //set title to be for proper fragment
-            String fragTag = fm.getBackStackEntryAt(fm.getBackStackEntryCount() - 2).getName(); //at count -2 is the fragment after going back
+            String fragTag = mFragManager.getBackStackEntryAt(mFragManager.getBackStackEntryCount() - 2).getName(); //at count -2 is the fragment after going back
             if (getSupportActionBar() != null) {
                 getSupportActionBar().setTitle(fragTag);
             }
@@ -131,6 +129,13 @@ public class MainTabActivity extends AppCompatActivity
         return true;
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String tag = mFragManager.getBackStackEntryAt(mFragManager.getBackStackEntryCount()-1).getName(); //get current fragment
+        getSupportActionBar().setTitle(tag);
+    }
+
     /**
      * logic to decide what fragment to show, based on what drawer item user clicked.
      * will attach new fragment.
@@ -143,10 +148,7 @@ public class MainTabActivity extends AppCompatActivity
 
         Fragment fragment = null;
         String title = getString(R.string.app_name);
-
-        //set item chosen in drawer
-        clearSelectedDrawerItem();
-        mNavView.getMenu().findItem(viewId).setChecked(true);
+        boolean activity = false;
 
         switch (viewId) {
             case R.id.nav_month:
@@ -155,6 +157,7 @@ public class MainTabActivity extends AppCompatActivity
                 break;
             case R.id.nav_map:
                 startActivity(new Intent(MainTabActivity.this, MapsActivity.class));
+                activity = true;
                 break;
             case R.id.nav_day:
                 fragment = new DayFragment();
@@ -166,8 +169,12 @@ public class MainTabActivity extends AppCompatActivity
                 break;
         }
 
-        if (fragment != null) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        if (!activity) {
+            //set item chosen in drawer, unless going to activity
+            clearSelectedDrawerItem();
+            mNavView.getMenu().findItem(viewId).setChecked(true);
+            //if chose a fragment, add to backstack
+            FragmentTransaction ft = mFragManager.beginTransaction();
             ft.replace(R.id.content_frame, fragment);
             ft.addToBackStack(title); //title is the tag
             ft.commit();
