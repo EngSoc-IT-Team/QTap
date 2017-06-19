@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.ActionBar;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -36,6 +37,7 @@ public class MainTabActivity extends AppCompatActivity
     private DrawerLayout mDrawer;
     private NavigationView mNavView;
     private FragmentManager mFragManager;
+    private ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,11 +48,12 @@ public class MainTabActivity extends AppCompatActivity
         mNavView = (NavigationView) mDrawer.findViewById(R.id.nav_view);
 
         setSupportActionBar(toolbar);
+        mActionBar=getSupportActionBar();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.setDrawerListener(toggle);
         toggle.syncState();
-        mFragManager=getSupportFragmentManager();
+        mFragManager = getSupportFragmentManager();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -132,8 +135,8 @@ public class MainTabActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        String tag = mFragManager.getBackStackEntryAt(mFragManager.getBackStackEntryCount()-1).getName(); //get current fragment
-        getSupportActionBar().setTitle(tag);
+        String tag = mFragManager.getBackStackEntryAt(mFragManager.getBackStackEntryCount() - 1).getName(); //get current fragment
+        mActionBar.setTitle(tag);
     }
 
     /**
@@ -179,7 +182,7 @@ public class MainTabActivity extends AppCompatActivity
             ft.addToBackStack(title); //title is the tag
             ft.commit();
         }
-        getSupportActionBar().setTitle(title);
+        mActionBar.setTitle(title);
         mDrawer.closeDrawer(GravityCompat.START);
     }
 
