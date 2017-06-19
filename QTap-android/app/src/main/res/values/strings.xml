@@ -1,15 +1,4 @@
 <resources>
-    <!--strings related to names of views -->
-    <string name="app_name">QTap</string>
-    <string name="month_fragment">Month View</string>
-    <string name="information_fragment">Information</string>
-    <string name="student_tools_fragment">Student Tools</string>
-    <string name="its_fragment">ITS</string>
-    <string name="engsoc_fragment">Eng Soc</string>
-    <string name="about_fragment">About</string>
-    <string name="agenda_fragment">Agenda</string>
-    <string name="day_fragment">Day View</string>
-
     <!--sections for introduction screen -->
     <string name="slide_1_title">Welcome to QTap!</string>
     <string name="slide_1_desc">The one app for all of your Queen\'s needs</string>
@@ -37,6 +26,19 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_maps">Map</string>
+    <string name="resources">Resources</string>
+    <string name="links">Links</string>
+    <string name="account">Account</string>
+    <string name="options">Options</string>
+    <string name="app_name">QTap</string>
+    <string name="month_fragment">Month View</string>
+    <string name="information_fragment">Information</string>
+    <string name="student_tools_fragment">Student Tools</string>
+    <string name="its_fragment">ITS</string>
+    <string name="engsoc_fragment">Eng Soc</string>
+    <string name="about_fragment">About</string>
+    <string name="agenda_fragment">Agenda</string>
+    <string name="day_fragment">Day View</string>
 
     <!--strings for button names -->
     <string name="title_emergency_contacts">Emergency Contacts</string>
@@ -47,16 +49,10 @@
     <string name="outlook365">Outlook 365</string>
     <string name="onq">OnQ</string>
     <string name="netid">Net ID:</string>
-    <string name="login_date">Login Date:</string>
+    <string name="login_date">Last Login:</string>
     <string name="logout">Log Out</string>
     <string name="faculty">Faculty</string>
     <string name="about">About</string>
-
-    <!--strings for titles on top of pages -->
-    <string name="resources">Resources</string>
-    <string name="links">Links</string>
-    <string name="account">Account</string>
-    <string name="options">Options</string>
 
     <!-- other strings -->
     <string name="ellipses">&#8226;</string>
@@ -65,8 +61,27 @@
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_about">About</string>
 
-    <!-- Strings related to Settings -->
 
+
+    <!--URLs-->
+    <string name="queens_url">http://www.queensu.ca/</string>
+    <string name="microsoft_url">https://login.microsoftonline.com/</string>
+    <string name="solus_url">http://www.my.queensu.ca/</string>
+    <string name="counselling_url">http://queensu.ca/studentwellness/counselling-services</string>
+    <string name="career_url">http://careers.queensu.ca/students</string>
+
+    <!-- strings used to get info from cloud DB-->
+    <string name="db_all_emerg_contacts">http://qtap.engsoc.queensu.ca/database/get_all_emerg_contacts.php</string>
+    <string name="db_all_eng_contacts">http://qtap.engsoc.queensu.ca/database/get_all_eng_contacts.php</string>
+
+    <string name="about_app">Welcome to QTap, thanks for downloading!\n\n
+When you login to Solus, your class calendar is downloaded and added to the app. The home screen is the day view. Here, you can see your classes for the day.\n\n
+If you swipe from the left side, a menu opens up with information about Queens and the campus. You can also choose the month view, where you can pick a specific day to view your class schedule.\n\n
+Your class calendar isn\'t updated unless you log out and log back in again. To log out, go to the settings page. On this page you can also see the date your calendar was last synced.\n\n
+Don\'t worry about your data! Only your NetID is stored in the phone, and it is by default in an encrypted location only accessible from this app. Also, when you logout, this information is deleted.\n\n
+Shout out to the 2016-17 Engineering Society IT Team for making this! It\'s not a finished product, if have any ideas on improvements, email doit@engsoc.queensu.ca!</string>
+
+    <!--STRINGS MAYBE CAN BE DELETED -->
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
@@ -140,22 +155,4 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="transistion_event_info"/>
-
-    <!--URLs-->
-    <string name="queens_url">http://www.queensu.ca/</string>
-    <string name="microsoft_url">https://login.microsoftonline.com/</string>
-    <string name="solus_url">http://www.my.queensu.ca/</string>
-    <string name="counselling_url">http://queensu.ca/studentwellness/counselling-services</string>
-    <string name="career_url">http://careers.queensu.ca/students</string>
-
-    <!-- strings used to get info from cloud DB-->
-    <string name="db_all_emerg_contacts">http://qtap.engsoc.queensu.ca/database/get_all_emerg_contacts.php</string>
-    <string name="db_all_eng_contacts">http://qtap.engsoc.queensu.ca/database/get_all_eng_contacts.php</string>
-
-    <string name="about_app">Welcome to QTap, thanks for downloading!\n\n
-When you login to Solus, your class calendar is downloaded and added to the app. The home screen is the day view. Here, you can see your classes for the day.\n\n
-If you swipe from the left side, a menu opens up with information about Queens and the campus. You can also choose the month view, where you can pick a specific day to view your class schedule.\n\n
-Your class calendar isn\'t updated unless you log out and log back in again. To log out, go to the settings page. On this page you can also see the date your calendar was last synced.\n\n
-Don\'t worry about your data! Only your NetID is stored in the phone, and it is by default in an encrypted location only accessible from this app. Also, when you logout, this information is deleted.\n\n
-Shout out to the 2016-17 Engineering Society IT Team for making this! It\'s not a finished product, if have any ideas on improvements, email doit@engsoc.queensu.ca!</string>
 </resources>

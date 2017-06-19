@@ -3,7 +3,6 @@ package com.example.alex.qtapandroid.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.CookieManager;
@@ -41,7 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_page);
+        setContentView(R.layout.activity_settings);
 
         Button logout = (Button) findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener() {
