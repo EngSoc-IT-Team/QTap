@@ -72,6 +72,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
         createMarkers();
+        //move map to ILC area
         CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(44.228185, -76.492447)).zoom(16).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
@@ -79,26 +80,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void createMarkers() {
         MarkerOptions leonard = new MarkerOptions().position(new LatLng(44.2242736, -76.5007331)).title("Leonard Hall");
         MarkerOptions stirling = new MarkerOptions().position(new LatLng(44.224625, -76.497790)).title("Stirling Hall");
-        MarkerOptions arc = new MarkerOptions().position(new LatLng(44.229444, -76.494269)).title("ARC");
         MarkerOptions ilc = new MarkerOptions().position(new LatLng(44.228185, -76.492447)).title("ILC");
-        mMap.addMarker(ilc);
-        mMap.addMarker(leonard);
-        mMap.addMarker(stirling);
-        mMap.addMarker(arc);
+        MarkerOptions jduc = new MarkerOptions().position(new LatLng(44.228137,-76.494670)).title("JDUC");
+        MarkerOptions wlh = new MarkerOptions().position(new LatLng(44.227914,-76.491708)).title("Walter Light Hall");
+        MarkerOptions etherington = new MarkerOptions().position(new LatLng(44.224,-76.493895)).title("Etherington Hall");
+        MarkerOptions waldron = new MarkerOptions().position(new LatLng(44.223145,-76.4914)).title("Waldron Tower");
+        MarkerOptions stauffer=new MarkerOptions().position(new LatLng(44.228165,-76.496363)).title("Stauffer Library");
+        MarkerOptions goodes = new MarkerOptions().position(new LatLng(44.228070,-76.497646)).title("Goodes Hall");
+        MarkerOptions douglas = new MarkerOptions().position(new LatLng(44.227509,-76.495111)).title("Douglas Library");
+        MarkerOptions grant = new MarkerOptions().position(new LatLng(44.225707,-76.495151)).title("Grant Hall");
+        MarkerOptions clark=new MarkerOptions().position(new LatLng(44.226770,-76.493664)).title("Clark Hall Pub");
+
+        mMap.addMarker(ilc); mMap.addMarker(wlh); mMap.addMarker(jduc);
+        mMap.addMarker(leonard); mMap.addMarker(stirling); mMap.addMarker(douglas);
+        mMap.addMarker(etherington); mMap.addMarker(waldron); mMap.addMarker(grant);
+        mMap.addMarker(stauffer); mMap.addMarker(goodes); mMap.addMarker(clark);
     }
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-
-    }
+    public void onConnected(@Nullable Bundle bundle) {}
 
     @Override
-    public void onConnectionSuspended(int i) {
-
-    }
+    public void onConnectionSuspended(int i) {}
 
     @Override
-    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
-    }
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {}
 }
