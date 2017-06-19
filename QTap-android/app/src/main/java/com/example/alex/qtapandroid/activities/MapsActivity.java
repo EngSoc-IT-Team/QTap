@@ -2,16 +2,12 @@ package com.example.alex.qtapandroid.activities;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -49,7 +45,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();
     }
 
-    private void checkAndRequestPermissions() {
+    private void requestPermissions() {
         int accessCoarse = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION);
         int accessFine = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
         List<String> listPermissionsNeeded = new ArrayList<>();
@@ -70,10 +66,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            checkAndRequestPermissions();
+            requestPermissions();
         }
 
         mMap = googleMap;
+        mMap.setMyLocationEnabled(true);
         createMarkers();
         CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(44.228185, -76.492447)).zoom(16).build();
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -84,9 +81,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         MarkerOptions stirling = new MarkerOptions().position(new LatLng(44.224625, -76.497790)).title("Stirling Hall");
         MarkerOptions arc = new MarkerOptions().position(new LatLng(44.229444, -76.494269)).title("ARC");
         MarkerOptions ilc = new MarkerOptions().position(new LatLng(44.228185, -76.492447)).title("ILC");
-        leonard.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-        stirling.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
-        arc.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
         mMap.addMarker(ilc);
         mMap.addMarker(leonard);
         mMap.addMarker(stirling);
