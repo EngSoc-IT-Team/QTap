@@ -108,31 +108,26 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
     private void displayView(int viewId) {
 
         Fragment fragment = null;
-        String title = null;
 
         switch (viewId) {
             case R.id.nav_month:
                 fragment = new MonthFragment();
-                title = getString(R.string.month_fragment);
                 break;
             case R.id.nav_map:
                 startActivity(new Intent(MainTabActivity.this, MapsActivity.class));
                 break;
             case R.id.nav_day:
                 fragment = new DayFragment();
-                title = getString(R.string.day_fragment);
                 break;
             case R.id.nav_tools:
                 fragment = new StudentToolsFragment();
-                title = getString(R.string.student_tools_fragment);
                 break;
         }
 
         if (fragment != null) {
             //if chose a fragment, add to back stack
             FragmentTransaction ft = mFragManager.beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
-            ft.addToBackStack(title); //title is the tag
+            ft.replace(R.id.content_frame, fragment).addToBackStack(null);
             ft.commit();
         }
         mDrawer.closeDrawer(GravityCompat.START);
