@@ -74,9 +74,6 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
         } else {
             //set title to be for proper fragment
             String fragTag = mFragManager.getBackStackEntryAt(mFragManager.getBackStackEntryCount() - 2).getName(); //at count -2 is the fragment after going back
-            if (getSupportActionBar() != null) {
-                //getSupportActionBar().setTitle(fragTag);
-            }
             clearSelectedDrawerItem();
             int itemID = getSelectedDrawerItem(fragTag);
             mNavView.getMenu().findItem(itemID).setChecked(true);
@@ -141,7 +138,6 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
 
         Fragment fragment = null;
         String title = null;
-        boolean activity = false;
 
         switch (viewId) {
             case R.id.nav_month:
@@ -150,7 +146,6 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
                 break;
             case R.id.nav_map:
                 startActivity(new Intent(MainTabActivity.this, MapsActivity.class));
-                activity = true;
                 break;
             case R.id.nav_day:
                 fragment = new DayFragment();
@@ -162,7 +157,7 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
                 break;
         }
 
-        if (!activity) {
+        if (fragment != null) {
             //set item chosen in drawer, unless going to activity
             clearSelectedDrawerItem();
             mNavView.getMenu().findItem(viewId).setChecked(true);
