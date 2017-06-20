@@ -101,7 +101,6 @@ public class DayFragment extends Fragment {
                     changeDate();
                 }
                 return worked;
-
             }
         });
 
@@ -112,7 +111,13 @@ public class DayFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         View.OnTouchListener gestureListener = new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
-                return gesture.onTouchEvent(event);
+                Log.i("GESTURE", "Touch detected!");
+                boolean worked = gesture.onTouchEvent(event);
+                if (isChanged)
+                {
+                    changeDate();
+                }
+                return worked;
             }
         };
 
