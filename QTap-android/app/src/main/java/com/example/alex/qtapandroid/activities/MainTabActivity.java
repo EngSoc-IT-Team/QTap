@@ -150,7 +150,7 @@ public class MainTabActivity extends AppCompatActivity
     private void displayView(int viewId) {
 
         Fragment fragment = null;
-        String title = getString(R.string.app_name);
+        String title = null;
         boolean activity = false;
 
         switch (viewId) {
@@ -182,7 +182,9 @@ public class MainTabActivity extends AppCompatActivity
             ft.addToBackStack(title); //title is the tag
             ft.commit();
         }
-        mActionBar.setTitle(title);
+        if (title != null) {
+            mActionBar.setTitle(title);
+        }
         mDrawer.closeDrawer(GravityCompat.START);
     }
 
