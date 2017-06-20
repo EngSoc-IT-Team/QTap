@@ -72,7 +72,7 @@ public class MainTabActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         mDrawer.closeDrawer(GravityCompat.START);
-        if (mFragManager.getBackStackEntryCount() <= 1) { //last item in backstack, so close app
+        if (mFragManager.getBackStackEntryCount() <= 1) { //last item in back stack, so close app
             moveTaskToBack(true);
         } else {
             //set title to be for proper fragment
@@ -176,7 +176,7 @@ public class MainTabActivity extends AppCompatActivity
             //set item chosen in drawer, unless going to activity
             clearSelectedDrawerItem();
             mNavView.getMenu().findItem(viewId).setChecked(true);
-            //if chose a fragment, add to backstack
+            //if chose a fragment, add to back stack
             FragmentTransaction ft = mFragManager.beginTransaction();
             ft.replace(R.id.content_frame, fragment);
             ft.addToBackStack(title); //title is the tag
