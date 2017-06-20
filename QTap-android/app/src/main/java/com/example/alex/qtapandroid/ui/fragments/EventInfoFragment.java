@@ -136,7 +136,6 @@ public class EventInfoFragment extends Fragment {
                     DayFragment nextFrag = new DayFragment();
                     FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        fragmentManager.popBackStack();
                         setSharedElementReturnTransition(TransitionInflater.from(
                                 getActivity()).inflateTransition(R.transition.card_transistion));
                         setExitTransition(TransitionInflater.from(
@@ -148,7 +147,7 @@ public class EventInfoFragment extends Fragment {
                                 getActivity()).inflateTransition(android.R.transition.explode));
                     }
                     fragmentManager.beginTransaction()
-                           .replace(R.id.content_frame, nextFrag)
+                            .replace(R.id.content_frame, nextFrag)
                             .commit();
                     return true;
                 }
