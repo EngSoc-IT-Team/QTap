@@ -2,7 +2,6 @@ package com.example.alex.qtapandroid.ui.fragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -34,14 +33,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventInfoFragment extends Fragment {
-    @Nullable
-
-    String data, data2, date;
-
-    private MapView mMapView;
-    private GoogleMap mGoogleMap;
     private final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
 
+    String mEventTitle, data2, mDate;
+
+    private View myView;
+    private MapView mMapView;
+    private GoogleMap mGoogleMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,13 +48,13 @@ public class EventInfoFragment extends Fragment {
 
         if (bundle != null) {
             actionTitle = bundle.getString("ACTION");
-            data = bundle.getString("data1", "");
+            mEventTitle = bundle.getString("data1", "");
             data2 = bundle.getString("data2", "");
-            date = bundle.getString("date", "");
+            mDate = bundle.getString("date", "");
         }
         getActivity().setTitle(actionTitle);
-        View view = inflater.inflate(R.layout.fragment_event_info, container, false);
-        mMapView = (MapView) view.findViewById(R.id.event_map);
+        myView = inflater.inflate(R.layout.fragment_event_info, container, false);
+        mMapView = (MapView) myView.findViewById(R.id.event_map);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
 
@@ -78,14 +76,14 @@ public class EventInfoFragment extends Fragment {
                 String loc = data2.substring(data2.indexOf("at:") + 4, data2.length());
                 double[] address = icsToBuilding.getAddress(loc);
                 LatLng building = new LatLng(address[0], address[1]);
-                mGoogleMap.addMarker(new MarkerOptions().position(building).title(loc).snippet(data)).showInfoWindow();
+                mGoogleMap.addMarker(new MarkerOptions().position(building).title(loc).snippet(mEventTitle)).showInfoWindow();
 
                 //For zooming automatically to the location of the marker
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(building).zoom(16).build();
                 mGoogleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
-        return view;
+        return myView;
     }
 
     private void requestPermissions() {
@@ -108,18 +106,18 @@ public class EventInfoFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         TextView eventName = (TextView) view.findViewById(R.id.EventName);
-        if (!data.equals("No events today")) {
+        if (!mEventTitle.equals("No events today")) {
             //have information to show
-            eventName.setText(data);
+            eventName.setText(mEventTitle);
             TextView eventLoc = (TextView) view.findViewById(R.id.EventLoc);
             eventLoc.setText(data2);
             TextView eventDate = (TextView) view.findViewById(R.id.EventDate);
-            eventDate.setText(data);
+            eventDate.setText(mEventTitle);
         } else {
             mMapView.setVisibility(View.GONE);
-            CardView c=(CardView)getView().findViewById(R.id.card_view_event);
+            CardView c = (CardView) myView.findViewById(R.id.card_view_event);
             c.setVisibility(View.GONE);
-            TextView t=(TextView)getView().findViewById(R.id.no_events_message);
+            TextView t = (TextView) myView.findViewById(R.id.no_events_message);
             t.setVisibility(View.VISIBLE);
         }
     }
@@ -129,17 +127,16 @@ public class EventInfoFragment extends Fragment {
         super.onResume();
         mMapView.onResume();
 
-        getView().setFocusableInTouchMode(true);
-        getView().requestFocus();
-        getView().setOnKeyListener(new View.OnKeyListener() {
+        myView.setFocusableInTouchMode(true);
+        myView.requestFocus();
+        myView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
                     DayFragment nextFrag = new DayFragment();
-                    Bundle bundle = new Bundle();
-                    bundle.putString(date, "");
-                    nextFrag.setArguments(bundle);
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        fragmentManager.popBackStack();
                         setSharedElementReturnTransition(TransitionInflater.from(
                                 getActivity()).inflateTransition(R.transition.card_transistion));
                         setExitTransition(TransitionInflater.from(
@@ -150,14 +147,8 @@ public class EventInfoFragment extends Fragment {
                         nextFrag.setEnterTransition(TransitionInflater.from(
                                 getActivity()).inflateTransition(android.R.transition.explode));
                     }
-                    CardView card = (CardView) v.findViewById(R.id.card_view_event);
-                    String cardName = card.getTransitionName();
-
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-
                     fragmentManager.beginTransaction()
-                            .replace(R.id.content_frame, nextFrag)
-                            .addSharedElement(card, cardName)
+                           .replace(R.id.content_frame, nextFrag)
                             .commit();
                     return true;
                 }

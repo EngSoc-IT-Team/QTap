@@ -196,7 +196,7 @@ public class DayFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("data1", data.getmText1());
                 bundle.putString("data2", data.getmText2());
-                bundle.putString("date", dateString);
+                bundle.putString("mDate", dateString);
                 bundle.putString("TRANS_TEXT", cardName);
 
                 nextFrag.setArguments(bundle);
@@ -233,7 +233,7 @@ public class DayFragment extends Fragment {
         dateString = date.toString();
 
         dateText.setText(date);
-//        list.add("Showing Information For: " + date);
+//        list.add("Showing Information For: " + mDate);
 
         for (int i = 0; i < data.size(); i++) {             // look for the selected
             // day in the events from the database

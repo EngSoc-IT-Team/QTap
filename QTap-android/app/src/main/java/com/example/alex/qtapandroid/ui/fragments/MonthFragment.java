@@ -86,7 +86,7 @@ public class MonthFragment extends Fragment {
                 .commit();
     }
 
-    public void getData() {                     // this function displays the data for the selected day in the green text vie
+    public void getData() {                     // this function displays the mEventTitle for the selected day in the green text vie
         ArrayList<OneClass> data = mOneClassManager.getTable();
 
 //        mDataInfo.setText("Event Information for " + (mDateSelection.getMonth() + 1) + "/" + mDateSelection.getDayOfMonth());        // get the selected day
@@ -103,8 +103,8 @@ public class MonthFragment extends Fragment {
                     && mDateSelection.getDayOfMonth() == day) {     // if the day matches add its info to mDataInfo
 
 //                mDataInfo.append(System.getProperty("line.separator") + "Event Name: " + courseTitle +
-//                        " Location: " + data.get(i).getRoomNum() + " at: " + data.get(i).getStartTime() + " to " +
-//                        data.get(i).getEndTime());
+//                        " Location: " + mEventTitle.get(i).getRoomNum() + " at: " + mEventTitle.get(i).getStartTime() + " to " +
+//                        mEventTitle.get(i).getEndTime());
                 isInfo = true;
             }
         }
@@ -119,7 +119,7 @@ public class MonthFragment extends Fragment {
 //
 //        boolean isInit = false;
 //
-//        // see if user has initialized database yet, and if the database is up to date
+//        // see if user has initialized database yet, and if the database is up to mDate
 //        for (int i = 0; i < user.size(); i++) {
 //
 //            if (!user.get(i).getDateInit().isEmpty()) {
@@ -189,7 +189,7 @@ public class MonthFragment extends Fragment {
 //                        pdt.setEndRule(Calendar.OCTOBER, -1, Calendar.SUNDAY, 2 * 60 * 60 * 1000);
 //
 //                        // create a GregorianCalendar with the Pacific Daylight time zone
-//                        // and the current date and time
+//                        // and the current mDate and time
 //                        Calendar cal2 = new GregorianCalendar(pdt);
 //                        Calendar cal = new GregorianCalendar(pdt);
 //
