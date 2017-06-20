@@ -3,6 +3,8 @@ package com.example.alex.qtapandroid.ui.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,19 +67,22 @@ public class MonthFragment extends Fragment {
         getData();
     }
 
-    public void getCalData(){
+    public void getCalData() {
         DatePicker dateSel = (DatePicker) getView().findViewById(R.id.datePicker);
 
-        DayFragment nextFrag= new DayFragment();
+        DayFragment nextFrag = new DayFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("day", dateSel.getDayOfMonth());
         bundle.putInt("month", dateSel.getMonth());
         bundle.putInt("year", dateSel.getYear());
         nextFrag.setArguments(bundle);
-
+        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.setTitle("Day View");
+        }
         this.getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, nextFrag)
-                .addToBackStack("AgendaFragmentDateClick")
+                .addToBackStack("Day View")
                 .commit();
     }
 
