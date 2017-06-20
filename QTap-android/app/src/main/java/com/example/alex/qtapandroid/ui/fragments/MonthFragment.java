@@ -27,6 +27,7 @@ public class MonthFragment extends Fragment {
     public static final String TAG_DAY = "day";
     public static final String TAG_MONTH = "month";
     public static final String TAG_YEAR = "year";
+    public static final String TAG_FROM_MONTH = "from_month";
 
     private DatePicker mDatePicker;
     private NavigationView mNavView;
@@ -73,6 +74,7 @@ public class MonthFragment extends Fragment {
     public void getCalData() {
         DayFragment nextFrag = new DayFragment();
         Bundle bundle = new Bundle();
+        bundle.putString(TAG_FROM_MONTH, TAG_FROM_MONTH); //tell day fragment bundle is from month fragment
         bundle.putInt(TAG_DAY, mDatePicker.getDayOfMonth());
         bundle.putInt(TAG_MONTH, mDatePicker.getMonth());
         bundle.putInt(TAG_YEAR, mDatePicker.getYear());

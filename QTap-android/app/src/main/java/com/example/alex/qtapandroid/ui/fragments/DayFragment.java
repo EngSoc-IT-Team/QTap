@@ -52,8 +52,17 @@ public class DayFragment extends Fragment {
 
         mView = inflater.inflate(R.layout.fragment_day, container, false);
         mDateText = (TextView) mView.findViewById(R.id.DateTextDisplay);
+
+        Bundle bundle = getArguments();
         mCalendar = Calendar.getInstance();
-        mCalendar.setTimeInMillis(System.currentTimeMillis());
+        if (bundle != null && bundle.getString(MonthFragment.TAG_FROM_MONTH, "").equals(MonthFragment.TAG_FROM_MONTH)) {
+            mCalendar.set(Calendar.DAY_OF_MONTH, bundle.getInt(MonthFragment.TAG_DAY));
+            mCalendar.set(Calendar.MONTH, bundle.getInt(MonthFragment.TAG_MONTH));
+            mCalendar.set(Calendar.YEAR, bundle.getInt(MonthFragment.TAG_YEAR));
+        } else {
+            mCalendar.setTimeInMillis(System.currentTimeMillis());
+        }
+
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
