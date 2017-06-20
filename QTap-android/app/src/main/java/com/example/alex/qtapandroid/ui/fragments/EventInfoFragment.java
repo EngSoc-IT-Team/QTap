@@ -48,9 +48,9 @@ public class EventInfoFragment extends Fragment {
 
         if (bundle != null) {
             actionTitle = bundle.getString("ACTION");
-            mEventTitle = bundle.getString("data1", "");
-            data2 = bundle.getString("data2", "");
-            mDate = bundle.getString("date", "");
+            mEventTitle = bundle.getString(DayFragment.TAG_TITLE);
+            data2 = bundle.getString("data2");
+            mDate = bundle.getString(DayFragment.TAG_DATE);
         }
         getActivity().setTitle(actionTitle);
         myView = inflater.inflate(R.layout.fragment_event_info, container, false);

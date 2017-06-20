@@ -1,6 +1,5 @@
 package com.example.alex.qtapandroid.ui.fragments;
 
-import android.gesture.Gesture;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,159 +29,53 @@ import com.example.alex.qtapandroid.common.database.courses.OneClassManager;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
 
 public class DayFragment extends Fragment {
 
-    private static final String TAG ="DayFragment";
+    public static final String TAG_TITLE="event_title";
+    public static final String TAG_DATE="date";
+
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private static String LOG_TAG = "CardViewActivity";
-    private View view; //not mView because that hides an attribute in a parent class (fragment)
-    private TextView dateText;
-    private String dateString;
-    private int changeAmount;
-    private boolean isChanged;
-    private Calendar cal;
+    private View mView;
+    private TextView mDateText;
+    private String mDateString;
+    private int mNumDaysChange;
+    private boolean mIsChanged;
+    private Calendar mCalendar;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.fragment_day, container, false);
-
-        final GestureDetector gesture = new GestureDetector(getActivity(),
-                new GestureDetector.SimpleOnGestureListener() {
-
-                    @Override
-                    public boolean onDown(MotionEvent e) {
-                        Log.i("GESTURE", "OnDown");
-                        return true;
-                    }
-
-                    @Override
-                    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                                           float velocityY) {
-                        final int SWIPE_MIN_DISTANCE = 100;
-                        final int SWIPE_MAX_OFF_PATH = 250;
-                        final int SWIPE_THRESHOLD_VELOCITY = 200;
-
-                        try {
-                            Log.i("GESTURE", "onFling has been called! Length: " + (e1.getX() - e2.getX() + " MinDistance: " +  SWIPE_MIN_DISTANCE + " || Velocity: " + Math.abs(velocityX) + " ThresholdVelocity: " + SWIPE_THRESHOLD_VELOCITY));
-
-                            if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                                return false;
-                            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE
-                                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                Log.i("GESTURE", "Right to Left");
-                                changeAmount = 1;
-                                isChanged = true;
-                            } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE
-                                    && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                Log.i("GESTURE", "Left to Right");
-                                changeAmount = -1;
-                                isChanged = true;
-                            }
-                        } catch (Exception e) {
-                            // nothing
-                            Log.i("GESTURE", "onFling called, Error: " + e.getMessage());
-                        }
-                        return super.onFling(e1, e2, velocityX, velocityY);
-                    }
-                });
-
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.i("GESTURE", "Touch detected!");
-                boolean worked = gesture.onTouchEvent(event);
-                if (isChanged)
-                {
-                    changeDate();
-                }
-                return worked;
-            }
-        });
-
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
+        mView = inflater.inflate(R.layout.fragment_day, container, false);
+        mDateText = (TextView) mView.findViewById(R.id.DateTextDisplay);
+        mCalendar = Calendar.getInstance();
+        mCalendar.setTimeInMillis(System.currentTimeMillis());
+        mRecyclerView = (RecyclerView) mView.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
-        mLayoutManager = new LinearLayoutManager(this.getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        View.OnTouchListener gestureListener = new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.i("GESTURE", "Touch detected!");
-                boolean worked = gesture.onTouchEvent(event);
-                if (isChanged)
-                {
-                    changeDate();
-                }
-                return worked;
-            }
-        };
-
-        mRecyclerView.setOnTouchListener(gestureListener);
-
-
-        dateText = (TextView) view.findViewById(R.id.DateTextDisplay);
-
-        cal = Calendar.getInstance();
-        cal.setTimeInMillis(System.currentTimeMillis());
-
-//        if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
-//            cal.add(Calendar.DAY_OF_YEAR, 1);
-
-//        String[] s = getDayEventData(cal);
-        mAdapter = new RecyclerViewAdapter(getDayEventData(cal));
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+        mRecyclerView.setLayoutManager(layoutManager);
+        mAdapter = new RecyclerViewAdapter(getDayEventData(mCalendar));
         mRecyclerView.setAdapter(mAdapter);
 
+        //need both view listeners as mView is little space above cards
+        mRecyclerView.setOnTouchListener(mGestureListener);
+        mView.setOnTouchListener(mGestureListener);
 
-
-        // Code to Add an item with default animation
-//        ((RecyclerViewAdapter) mAdapter).addItem(new DataObject("TEST!", "EXAMPLE TEST TEXT..."), 0);
-
-        // Code to remove an item with default animation
-        //((MyRecyclerViewAdapter) mAdapter).deleteItem(index);
-
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.day_fragment));
-        }
-    }
-
-    public void changeDate() {
-        cal.add(Calendar.DAY_OF_YEAR,changeAmount);
-        changeAmount = 0;
-        isChanged = false;
-        mAdapter = new RecyclerViewAdapter(getDayEventData(cal));
-        mRecyclerView.setAdapter(mAdapter);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         ((RecyclerViewAdapter) mAdapter).setOnItemClickListener(new RecyclerViewAdapter
                 .MyClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                Log.i(LOG_TAG, " Clicked on Item " + position);
-
                 DataObject data = ((RecyclerViewAdapter) mAdapter).getItem(position);
 
-                CardView card = (CardView) view.findViewById(R.id.card_view);
+                CardView card = (CardView) mView.findViewById(R.id.card_view);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     card.setTransitionName("transistion_event_info" + position);
                 }
 
                 String cardName = card.getTransitionName();
-
-
-                EventInfoFragment nextFrag=  new EventInfoFragment();
+                EventInfoFragment nextFrag = new EventInfoFragment();
 
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     setSharedElementReturnTransition(TransitionInflater.from(
@@ -196,13 +89,11 @@ public class DayFragment extends Fragment {
                             getActivity()).inflateTransition(android.R.transition.explode));
                 }
 
-
                 Bundle bundle = new Bundle();
-                bundle.putString("data1", data.getmText1());
+                bundle.putString(TAG_TITLE, data.getmText1());
                 bundle.putString("data2", data.getmText2());
-                bundle.putString("mDate", dateString);
+                bundle.putString(TAG_DATE, mDateString);
                 bundle.putString("TRANS_TEXT", cardName);
-
                 nextFrag.setArguments(bundle);
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
@@ -212,7 +103,57 @@ public class DayFragment extends Fragment {
                         .commit();
             }
         });
+        return mView;
     }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.setTitle(getString(R.string.day_fragment));
+        }
+    }
+
+    public void changeDate() {
+        mCalendar.add(Calendar.DAY_OF_YEAR, mNumDaysChange);
+        mNumDaysChange = 0;
+        mIsChanged = false;
+        mAdapter = new RecyclerViewAdapter(getDayEventData(mCalendar));
+        mRecyclerView.setAdapter(mAdapter);
+    }
+
+    final GestureDetector mGestureDetector = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener() {
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            final int SWIPE_MIN_DISTANCE = 100;
+            final int SWIPE_MAX_OFF_PATH = 250;
+            try {
+                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                    return false;
+                if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE ){
+                    mNumDaysChange = 1;
+                    mIsChanged = true;
+                } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE ){
+                    mNumDaysChange = -1;
+                    mIsChanged = true;
+                }
+            } catch (Exception e) {
+                //don't change day
+                Log.d("GESTURE", "onFling called, Error: " + e.getMessage());
+            }
+            return super.onFling(e1, e2, velocityX, velocityY);
+        }
+    });
+
+    View.OnTouchListener mGestureListener = new View.OnTouchListener() {
+        public boolean onTouch(View v, MotionEvent event) {
+            boolean worked = mGestureDetector.onTouchEvent(event);
+            if (mIsChanged) {
+                changeDate();
+            }
+            return worked;
+        }
+    };
 
     public ArrayList<DataObject> getDayEventData(Calendar calendar) {
         OneClassManager oneClassManager = new OneClassManager(this.getContext());
@@ -233,10 +174,10 @@ public class DayFragment extends Fragment {
         int calYear = calendar.get(Calendar.YEAR);
 
         CharSequence f = DateFormat.format("yyyy-MM-dd", calendar.getTime());
-        CharSequence date = DateFormat.format("EEE, d MMM, yyyy", cal.getTime());
-        dateString = date.toString();
+        CharSequence date = DateFormat.format("EEE, d MMM, yyyy", mCalendar.getTime());
+        mDateString = date.toString();
 
-        dateText.setText(date);
+        mDateText.setText(date);
 //        list.add("Showing Information For: " + mDate);
 
         for (int i = 0; i < data.size(); i++) {             // look for the selected
@@ -267,8 +208,8 @@ public class DayFragment extends Fragment {
         int posSmall = 0;
         int minHour;
         int minMin;
-        int endHour =0;
-        int endMin =0;
+        int endHour = 0;
+        int endMin = 0;
         for (int i = 0; i < list.size(); i++) {
 
             if (list.get(i) == ("Nothing is happening today")) {
@@ -284,12 +225,11 @@ public class DayFragment extends Fragment {
                     String s = time.get(j);
                     String s1 = s.substring(0, s.indexOf("-"));
                     int div = s1.indexOf(":");
-                    String shour = s1.substring(0,div);
+                    String shour = s1.substring(0, div);
                     String smin = s1.substring(div + 1, s1.length());
 
                     int index = s.indexOf("-") + 1;
-                    String s2 = s.substring(index,s.length());
-                    Log.d(TAG, "Event: " + list.get(i) + " sTime:" + s1 + " eTime: " + s2);
+                    String s2 = s.substring(index, s.length());
                     div = s2.indexOf(":");
 
                     startHour = Integer.parseInt(shour);
@@ -298,25 +238,25 @@ public class DayFragment extends Fragment {
                         posSmall = j;
                         minHour = startHour;
                         minMin = startMin;
-                        endHour = Integer.parseInt(s2.substring(0,div));
-                        endMin = Integer.parseInt(s2.substring(div + 1,s2.length()));
+                        endHour = Integer.parseInt(s2.substring(0, div));
+                        endMin = Integer.parseInt(s2.substring(div + 1, s2.length()));
 
                     } else if (startHour == minHour) {
                         if (startMin < minMin) {
                             posSmall = j;
                             minHour = startHour;
                             minMin = startMin;
-                            endHour = Integer.parseInt(s2.substring(0,div));
-                            endMin = Integer.parseInt(s2.substring(div + 1,s2.length()));
+                            endHour = Integer.parseInt(s2.substring(0, div));
+                            endMin = Integer.parseInt(s2.substring(div + 1, s2.length()));
 
                         }
                     }
                 }
                 String amPMTime;
                 if (minHour > 12)
-                    amPMTime = (minHour - 12) + ":" +  minMin + "-" + (endHour - 12) + ":" + endMin + " PM";
+                    amPMTime = (minHour - 12) + ":" + minMin + "-" + (endHour - 12) + ":" + endMin + " PM";
                 else if (endHour > 12)
-                    amPMTime = (minHour) + ":" +  minMin + "-" + (endHour - 12) + ":" + endMin + " PM";
+                    amPMTime = (minHour) + ":" + minMin + "-" + (endHour - 12) + ":" + endMin + " PM";
                 else amPMTime = time.get(posSmall) + " AM";
 
                 result.add(new DataObject(list.get(posSmall), amPMTime + " at: " + loc.get(posSmall)));
