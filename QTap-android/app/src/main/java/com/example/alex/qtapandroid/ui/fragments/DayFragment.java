@@ -104,7 +104,6 @@ public class DayFragment extends Fragment {
             }
         });
 
-
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         mRecyclerView.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this.getContext());

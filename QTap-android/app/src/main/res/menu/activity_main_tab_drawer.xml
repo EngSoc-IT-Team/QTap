@@ -25,14 +25,12 @@
             </menu>
         </item>
         <item android:title="@string/information_section">
-        <menu>
-            <item
-                android:id="@+id/nav_tools"
-                android:icon="@drawable/ic_menu_manage"
-                android:title="@string/student_tools_fragment"/>
-        </menu>
-    </item>
-
-</group>
-
-    </menu>
+            <menu>
+                <item
+                    android:id="@+id/nav_tools"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="@string/student_tools_fragment"/>
+            </menu>
+        </item>
+    </group>
+</menu>
