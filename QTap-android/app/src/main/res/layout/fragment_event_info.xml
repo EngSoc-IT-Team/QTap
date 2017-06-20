@@ -1,71 +1,71 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.alex.qtapandroid.ui.fragments.EventInfoFragment">
+             xmlns:card_view="http://schemas.android.com/apk/res-auto"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context="com.example.alex.qtapandroid.ui.fragments.EventInfoFragment">
+
+    <TextView
+        android:id="@+id/no_events_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="40dp"
+        android:text="@string/message_no_events"
+        android:textColor="@color/colorPrimary"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:visibility="gone"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:orientation="vertical"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
 
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/card_view_event"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:layout_margin="5dp"
-        card_view:cardCornerRadius="2dp"
-        android:elevation="15dp"
-        android:transitionName="@string/transistion_event_info"
-        card_view:contentPadding="10dp">
-
-        <LinearLayout
+        <android.support.v7.widget.CardView
+            android:id="@+id/card_view_event"
             android:layout_width="fill_parent"
-            android:orientation="vertical"
-            android:layout_height="fill_parent">
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_margin="5dp"
+            android:elevation="15dp"
+            android:transitionName="@string/transistion_event_info"
+            card_view:cardCornerRadius="2dp"
+            card_view:contentPadding="10dp">
 
-            <TextView
-                android:id="@+id/EventName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:textColor="@color/colorPrimary"
-                android:textSize="40dp"
-                android:layout_marginBottom="40dp"
-                android:textStyle="bold"/>
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/EventDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView"
-                />
-            <!--<TextView-->
-                <!--android:id="@+id/EventTime"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_below="@+id/textView"-->
-                <!--android:layout_marginTop="20dp"/>-->
-            <TextView
-                android:id="@+id/EventLoc"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/textView"
-                android:layout_marginTop="20dp"/>
+                <TextView
+                    android:id="@+id/EventName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="40dp"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="40sp"
+                    android:textStyle="bold"/>
 
-            <com.google.android.gms.maps.MapView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:id="@+id/event_map">
-            </com.google.android.gms.maps.MapView>
+                <TextView
+                    android:id="@+id/EventDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    />
 
-        </LinearLayout>
-    </android.support.v7.widget.CardView>
+                <TextView
+                    android:id="@+id/EventLoc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"/>
 
-
+                <com.google.android.gms.maps.MapView
+                    android:id="@+id/event_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
+                </com.google.android.gms.maps.MapView>
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
     </LinearLayout>
 </FrameLayout>

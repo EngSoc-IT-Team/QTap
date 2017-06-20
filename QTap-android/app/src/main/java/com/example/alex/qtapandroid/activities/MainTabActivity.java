@@ -31,8 +31,7 @@ import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
  * activity holding most of the app.
  * contains the drawer that navigates user to fragments with map, schedule, info etc.
  */
-public class MainTabActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainTabActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawer;
     private NavigationView mNavView;
