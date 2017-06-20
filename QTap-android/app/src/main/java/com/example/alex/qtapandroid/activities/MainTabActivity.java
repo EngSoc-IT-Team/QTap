@@ -2,11 +2,11 @@ package com.example.alex.qtapandroid.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -48,10 +48,10 @@ public class MainTabActivity extends AppCompatActivity
         mNavView = (NavigationView) mDrawer.findViewById(R.id.nav_view);
 
         setSupportActionBar(toolbar);
-        mActionBar=getSupportActionBar();
+        mActionBar = getSupportActionBar();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawer.setDrawerListener(toggle);
+        mDrawer.addDrawerListener(toggle);
         toggle.syncState();
         mFragManager = getSupportFragmentManager();
 
@@ -127,7 +127,7 @@ public class MainTabActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         displayView(item.getItemId());
         return true;
     }
