@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -148,7 +149,10 @@ public class DayFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-
+        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.setTitle(getString(R.string.day_fragment));
+        }
     }
 
     public void changeDate() {

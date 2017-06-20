@@ -51,6 +51,10 @@ public class MonthFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.setTitle(getString(R.string.month_fragment));
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         mDateSelection.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
@@ -76,10 +80,6 @@ public class MonthFragment extends Fragment {
         bundle.putInt("month", dateSel.getMonth());
         bundle.putInt("year", dateSel.getYear());
         nextFrag.setArguments(bundle);
-        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setTitle("Day View");
-        }
         this.getFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, nextFrag)
                 .addToBackStack("Day View")

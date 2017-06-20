@@ -36,7 +36,6 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
     private DrawerLayout mDrawer;
     private NavigationView mNavView;
     private FragmentManager mFragManager;
-    private ActionBar mActionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +46,6 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
         mNavView = (NavigationView) mDrawer.findViewById(R.id.nav_view);
 
         setSupportActionBar(toolbar);
-        mActionBar = getSupportActionBar();
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
@@ -77,7 +75,7 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
             //set title to be for proper fragment
             String fragTag = mFragManager.getBackStackEntryAt(mFragManager.getBackStackEntryCount() - 2).getName(); //at count -2 is the fragment after going back
             if (getSupportActionBar() != null) {
-                getSupportActionBar().setTitle(fragTag);
+                //getSupportActionBar().setTitle(fragTag);
             }
             clearSelectedDrawerItem();
             int itemID = getSelectedDrawerItem(fragTag);
@@ -131,13 +129,6 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
         return true;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        String tag = mFragManager.getBackStackEntryAt(mFragManager.getBackStackEntryCount() - 1).getName(); //get current fragment
-        mActionBar.setTitle(tag);
-    }
-
     /**
      * logic to decide what fragment to show, based on what drawer item user clicked.
      * will attach new fragment.
@@ -180,9 +171,6 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
             ft.replace(R.id.content_frame, fragment);
             ft.addToBackStack(title); //title is the tag
             ft.commit();
-        }
-        if (title != null) {
-            mActionBar.setTitle(title);
         }
         mDrawer.closeDrawer(GravityCompat.START);
     }
