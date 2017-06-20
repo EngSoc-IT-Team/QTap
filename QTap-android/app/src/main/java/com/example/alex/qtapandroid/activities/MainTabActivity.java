@@ -34,7 +34,6 @@ import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 public class MainTabActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private DrawerLayout mDrawer;
-    private NavigationView mNavView;
     private FragmentManager mFragManager;
 
     @Override
@@ -43,7 +42,6 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
         setContentView(R.layout.activity_main_tab);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mNavView = (NavigationView) mDrawer.findViewById(R.id.nav_view);
 
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -51,51 +49,24 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
         mFragManager = getSupportFragmentManager();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         displayView(R.id.nav_day); //start at calendar view
+
         User u = (new UserManager(this)).getRow(1); //only ever one person in database
         View header = navigationView.getHeaderView(0);// get the existing headerView
         TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);
         name.setText(u.getNetid());
     }
 
-    /**
-     * does not call super onBackPressed.
-     * back closes drawer and sends user to calendar fragment (schedule).
-     * If already on calendar, exits app.
-     */
     @Override
     public void onBackPressed() {
         mDrawer.closeDrawer(GravityCompat.START);
         if (mFragManager.getBackStackEntryCount() <= 1) { //last item in back stack, so close app
             moveTaskToBack(true);
         } else {
-            //set title to be for proper fragment
-            String fragTag = mFragManager.getBackStackEntryAt(mFragManager.getBackStackEntryCount() - 2).getName(); //at count -2 is the fragment after going back
-            clearSelectedDrawerItem();
-            int itemID = getSelectedDrawerItem(fragTag);
-            mNavView.getMenu().findItem(itemID).setChecked(true);
             super.onBackPressed();
         }
-    }
-
-    /**
-     * finds the drawer menu ID that corresponds to a fragment
-     *
-     * @param fragTag Tag given to a fragment
-     * @return ID of the item on the drawer corresponding to the fragment, defaults to nav_day
-     */
-    private int getSelectedDrawerItem(String fragTag) {
-        if (fragTag.equals(mNavView.getMenu().findItem(R.id.nav_month).getTitle().toString())) {
-            return R.id.nav_month;
-        } else if (fragTag.equals(mNavView.getMenu().findItem(R.id.nav_map).getTitle().toString())) {
-            return R.id.nav_map;
-        } else if (fragTag.equals(mNavView.getMenu().findItem(R.id.nav_tools).getTitle().toString())) {
-            return R.id.nav_tools;
-        }
-        return R.id.nav_day;
     }
 
     @Override
@@ -158,9 +129,6 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
         }
 
         if (fragment != null) {
-            //set item chosen in drawer, unless going to activity
-            clearSelectedDrawerItem();
-            mNavView.getMenu().findItem(viewId).setChecked(true);
             //if chose a fragment, add to back stack
             FragmentTransaction ft = mFragManager.beginTransaction();
             ft.replace(R.id.content_frame, fragment);
@@ -168,16 +136,6 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
             ft.commit();
         }
         mDrawer.closeDrawer(GravityCompat.START);
-    }
-
-    /**
-     * Un-selects every item in the drawer because user selected another one
-     */
-    private void clearSelectedDrawerItem() {
-        mNavView.getMenu().findItem(R.id.nav_month).setChecked(false);
-        mNavView.getMenu().findItem(R.id.nav_map).setChecked(false);
-        mNavView.getMenu().findItem(R.id.nav_day).setChecked(false);
-        mNavView.getMenu().findItem(R.id.nav_tools).setChecked(false);
     }
 
     @Override

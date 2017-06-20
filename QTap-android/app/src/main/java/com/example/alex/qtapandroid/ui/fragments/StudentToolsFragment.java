@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,8 @@ import com.example.alex.qtapandroid.activities.EngContactsActivity;
  * Holds information pertinent to students
  */
 public class StudentToolsFragment extends Fragment {
+
+    private NavigationView mNavView;
 
     @Nullable
     @Override
@@ -85,6 +88,19 @@ public class StudentToolsFragment extends Fragment {
         if (actionbar != null) {
             actionbar.setTitle(getString(R.string.student_tools_fragment));
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mNavView.getMenu().findItem(R.id.nav_tools).setChecked(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
+        mNavView.getMenu().findItem(R.id.nav_tools).setChecked(true);
     }
 
     private void startBrowser(String url) {

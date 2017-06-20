@@ -2,6 +2,7 @@ package com.example.alex.qtapandroid.ui.fragments;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
@@ -32,11 +33,12 @@ import java.util.List;
 
 public class DayFragment extends Fragment {
 
-    public static final String TAG_TITLE="event_title";
-    public static final String TAG_DATE="date";
+    public static final String TAG_TITLE = "event_title";
+    public static final String TAG_DATE = "date";
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
+    private NavigationView mNavView;
     private View mView;
     private TextView mDateText;
     private String mDateString;
@@ -114,6 +116,19 @@ public class DayFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        mNavView.getMenu().findItem(R.id.nav_day).setChecked(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
+        mNavView.getMenu().findItem(R.id.nav_day).setChecked(true);
+    }
+
     public void changeDate() {
         mCalendar.add(Calendar.DAY_OF_YEAR, mNumDaysChange);
         mNumDaysChange = 0;
@@ -130,10 +145,10 @@ public class DayFragment extends Fragment {
             try {
                 if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
                     return false;
-                if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE ){
+                if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE) {
                     mNumDaysChange = 1;
                     mIsChanged = true;
-                } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE ){
+                } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE) {
                     mNumDaysChange = -1;
                     mIsChanged = true;
                 }

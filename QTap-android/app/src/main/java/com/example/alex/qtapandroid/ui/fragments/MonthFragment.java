@@ -2,6 +2,7 @@ package com.example.alex.qtapandroid.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -27,26 +28,39 @@ import java.util.Calendar;
  * Attached to MainTabActivity only.
  */
 public class MonthFragment extends Fragment {
-    //TODO replace literal strings with values from a Literals class
-    private static final String TAG = StudentToolsFragment.class.getSimpleName();
-    private static final String TAG_FRAGMENT = "AgendaFrag";
 
     private OneClassManager mOneClassManager;
     private CourseManager mCourseManager;
+
     private DatePicker mDateSelection;
+    private NavigationView mNavView;
+    private View mView;
 
     private TextView mDataInfo;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_month, container, false);
+        mView = inflater.inflate(R.layout.fragment_month, container, false);
 //        mDataInfo = (TextView) v.findViewById(R.id.calendarEvents);
-        mDateSelection = (DatePicker) v.findViewById(R.id.datePicker);
+        mDateSelection = (DatePicker) mView.findViewById(R.id.datePicker);
         mOneClassManager = new OneClassManager(this.getContext());
         mCourseManager = new CourseManager(this.getContext());
 //        setup();
-        return v;
+        return mView;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mNavView.getMenu().findItem(R.id.nav_month).setChecked(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
+        mNavView.getMenu().findItem(R.id.nav_month).setChecked(true);
     }
 
     @Override
@@ -72,7 +86,7 @@ public class MonthFragment extends Fragment {
     }
 
     public void getCalData() {
-        DatePicker dateSel = (DatePicker) getView().findViewById(R.id.datePicker);
+        DatePicker dateSel = (DatePicker) mView.findViewById(R.id.datePicker);
 
         DayFragment nextFrag = new DayFragment();
         Bundle bundle = new Bundle();
