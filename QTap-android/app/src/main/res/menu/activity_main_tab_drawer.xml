@@ -4,32 +4,32 @@
     <group
         android:id="@+id/drawer_menu"
         android:checkableBehavior="single">
-        <item android:title="Schedule">
+        <item android:title="@string/schedule_section">
             <menu>
                 <item
                     android:id="@+id/nav_day"
                     android:icon="@drawable/ic_menu_share"
-                    android:title="Day View"/>
+                    android:title="@string/day_fragment"/>
                 <item
                     android:id="@+id/nav_month"
                     android:icon="@drawable/ic_menu_camera"
-                    android:title="Month View"/>
+                    android:title="@string/month_fragment"/>
             </menu>
         </item>
-        <item android:title="Campus">
+        <item android:title="@string/campus_section">
             <menu>
                 <item
                     android:id="@+id/nav_map"
                     android:icon="@drawable/ic_menu_gallery"
-                    android:title="Map"/>
+                    android:title="@string/title_activity_maps"/>
             </menu>
         </item>
-        <item android:title="Information">
+        <item android:title="@string/information_section">
         <menu>
             <item
                 android:id="@+id/nav_tools"
                 android:icon="@drawable/ic_menu_manage"
-                android:title="Student Tools"/>
+                android:title="@string/student_tools_fragment"/>
         </menu>
     </item>
 

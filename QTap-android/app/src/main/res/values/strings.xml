@@ -61,7 +61,10 @@
     <string name="title_activity_settings">Settings</string>
     <string name="title_activity_about">About</string>
 
-
+    <!--strings for sections in drawer -->
+    <string name="schedule_section">Schedule</string>
+    <string name="campus_section">Campus</string>
+    <string name="information_section">Information</string>
 
     <!--URLs-->
     <string name="queens_url">http://www.queensu.ca/</string>
