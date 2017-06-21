@@ -10,12 +10,12 @@
     <string name="slide_4_desc">Easily pay with QTap at any roomNum on campus</string>
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
-    <string name="title_activity_welcome">Home Screen</string>
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
 
     <!-- Page names -->
+    <string name="title_login_activity">Login</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_emerg_contacts">Emergency Contacts</string>
     <string name="title_activity_eng_contacts">Engineering Contacts</string>
