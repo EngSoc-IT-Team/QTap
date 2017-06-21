@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -44,8 +45,7 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         setSupportActionBar(toolbar);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         mDrawer.addDrawerListener(toggle);
         toggle.syncState();
         mFragManager = getSupportFragmentManager();
@@ -108,7 +108,6 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
     private void displayView(int viewId) {
 
         Fragment fragment = null;
-
         switch (viewId) {
             case R.id.nav_month:
                 fragment = new MonthFragment();
@@ -127,7 +126,7 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
         if (fragment != null) {
             //if chose a fragment, add to back stack
             FragmentTransaction ft = mFragManager.beginTransaction();
-            ft.replace(R.id.content_frame, fragment).addToBackStack(null);
+            ft.addToBackStack(null).replace(R.id.content_frame, fragment);
             ft.commit();
         }
         mDrawer.closeDrawer(GravityCompat.START);

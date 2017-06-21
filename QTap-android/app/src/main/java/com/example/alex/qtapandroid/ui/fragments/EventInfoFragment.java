@@ -45,7 +45,6 @@ public class EventInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Bundle bundle = this.getArguments();
         String actionTitle = "";
-
         if (bundle != null) {
             actionTitle = bundle.getString("ACTION");
             mEventTitle = bundle.getString(DayFragment.TAG_TITLE);
@@ -129,31 +128,6 @@ public class EventInfoFragment extends Fragment {
 
         myView.setFocusableInTouchMode(true);
         myView.requestFocus();
-        myView.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_UP && keyCode == KeyEvent.KEYCODE_BACK) {
-                    DayFragment nextFrag = new DayFragment();
-                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        setSharedElementReturnTransition(TransitionInflater.from(
-                                getActivity()).inflateTransition(R.transition.card_transistion));
-                        setExitTransition(TransitionInflater.from(
-                                getActivity()).inflateTransition(android.R.transition.explode));
-
-                        nextFrag.setSharedElementEnterTransition(TransitionInflater.from(
-                                getActivity()).inflateTransition(R.transition.card_transistion));
-                        nextFrag.setEnterTransition(TransitionInflater.from(
-                                getActivity()).inflateTransition(android.R.transition.explode));
-                    }
-                    fragmentManager.beginTransaction()
-                            .replace(R.id.content_frame, nextFrag)
-                            .commit();
-                    return true;
-                }
-                return false;
-            }
-        });
     }
 
     @Override

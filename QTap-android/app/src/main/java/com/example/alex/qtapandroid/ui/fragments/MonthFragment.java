@@ -79,8 +79,8 @@ public class MonthFragment extends Fragment {
         bundle.putInt(TAG_MONTH, mDatePicker.getMonth());
         bundle.putInt(TAG_YEAR, mDatePicker.getYear());
         nextFrag.setArguments(bundle);
-        this.getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, nextFrag).addToBackStack(null)
+        this.getFragmentManager().beginTransaction().addToBackStack(null)
+                .replace(R.id.content_frame, nextFrag)
                 .commit();
     }
 }

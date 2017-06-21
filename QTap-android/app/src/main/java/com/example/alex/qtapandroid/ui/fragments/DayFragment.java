@@ -108,7 +108,7 @@ public class DayFragment extends Fragment {
                 nextFrag.setArguments(bundle);
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction()
+                fragmentManager.beginTransaction().addToBackStack(null)
                         .replace(R.id.content_frame, nextFrag)
                         .addSharedElement(card, cardName)
                         .commit();
