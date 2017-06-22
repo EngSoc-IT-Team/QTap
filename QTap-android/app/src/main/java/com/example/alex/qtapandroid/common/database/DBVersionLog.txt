@@ -1,4 +1,0 @@
-Name : Version : Reason
-
-Carson : 1 : Decrement to version 1 as database not fully created yet.
-Alex   : 2 : Changed to 2 so that it would install and run

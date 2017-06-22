@@ -14,9 +14,7 @@ import com.crashlytics.android.Crashlytics;
 public class DbHelper extends SQLiteOpenHelper {
 
     //**NOTE** this must be incremented if you are trying to run changes to the database schema
-    private static final int DATABASE_VERSION = 1;
-    //**NOTE** add your name, the database version and the reason it was changed to DBVersionLog.txt
-    //when you make a change to the database version
+    private static final int DATABASE_VERSION = 2;
 
     private static DbHelper mInstance = null;
 
@@ -44,9 +42,7 @@ public class DbHelper extends SQLiteOpenHelper {
         Crashlytics.logException(new Throwable("DB Version Change"));
         db.execSQL(SqlStringStatements.CREATE_USERS);
         db.execSQL(SqlStringStatements.CREATE_COURSES);
-        db.execSQL(SqlStringStatements.CREATE_BUILDINGS);
         db.execSQL(SqlStringStatements.CREATE_CLASSES);
-        // db.execSQL(CREATE_SERVICES);
     }
 
     @Override
@@ -54,9 +50,7 @@ public class DbHelper extends SQLiteOpenHelper {
         //deletes the database and then re-creates the new version
         db.execSQL(SqlStringStatements.DELETE_USERS);
         db.execSQL(SqlStringStatements.DELETE_COURSES);
-        db.execSQL(SqlStringStatements.DELETE_BUILDINGS);
         db.execSQL(SqlStringStatements.DELETE_CLASSES);
-        // db.execSQL(DELETE_SERVICES);
         onCreate(db);
     }
 
