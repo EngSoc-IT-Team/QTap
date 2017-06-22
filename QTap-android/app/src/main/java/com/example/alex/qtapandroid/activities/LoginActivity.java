@@ -106,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         if (!isLoggedIn) {
             final WebView browser = (WebView) findViewById(R.id.webView);
+            browser.getSettings().setSaveFormData(false); //disable autocomplete - more secure, keyboard popup blocks fields
 
             browser.getSettings().setJavaScriptEnabled(true); // needed to properly display page / scroll to chosen location
 
