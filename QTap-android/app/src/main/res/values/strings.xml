@@ -77,6 +77,7 @@
     <!-- strings used to get info from cloud DB-->
     <string name="db_all_emerg_contacts">http://qtap.engsoc.queensu.ca/database/get_all_emerg_contacts.php</string>
     <string name="db_all_eng_contacts">http://qtap.engsoc.queensu.ca/database/get_all_eng_contacts.php</string>
+    <string name="db_get_database">http://qtap.engsoc.queensu.ca/database/get_database.php</string>
 
     <string name="about_app">Welcome to QTap, thanks for downloading!\n\n
 When you login to Solus, your class calendar is downloaded and added to the app. The home screen is the day view. Here, you can see your classes for the day.\n\n
