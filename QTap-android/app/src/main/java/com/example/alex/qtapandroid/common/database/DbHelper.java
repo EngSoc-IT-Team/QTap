@@ -43,6 +43,8 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(SqlStringStatements.CREATE_USERS);
         db.execSQL(SqlStringStatements.CREATE_COURSES);
         db.execSQL(SqlStringStatements.CREATE_CLASSES);
+        db.execSQL(SqlStringStatements.CREATE_EMERGENCY_CONTACTS);
+        db.execSQL(SqlStringStatements.CREATE_ENGINEERING_CONTACTS);
     }
 
     @Override
@@ -51,6 +53,8 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(SqlStringStatements.DELETE_USERS);
         db.execSQL(SqlStringStatements.DELETE_COURSES);
         db.execSQL(SqlStringStatements.DELETE_CLASSES);
+        db.execSQL(SqlStringStatements.DELETE_EMERGENCY_CONTACTS);
+        db.execSQL(SqlStringStatements.DELETE_ENGINEERING_CONTACTS);
         onCreate(db);
     }
 
