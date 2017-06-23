@@ -53,9 +53,7 @@
         <activity
             android:name=".activities.AboutActivity"
             android:label="@string/title_activity_about"/>
-        <activity
-            android:name=".activities.EmergContactsActivity"
-            android:label="@string/title_activity_emerg_contacts"/>
+
         <activity
             android:name=".activities.EngContactsActivity"
             android:label="@string/title_activity_eng_contacts"/>

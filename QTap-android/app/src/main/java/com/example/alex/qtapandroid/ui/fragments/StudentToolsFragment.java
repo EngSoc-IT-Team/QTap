@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
@@ -30,6 +31,8 @@ public class StudentToolsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_student_tools, container, false);
+        final FragmentManager fm = getActivity().getSupportFragmentManager();
+
         CardView emergContactsCard = (CardView) v.findViewById(R.id.emerg_contacts_card);
         CardView engContactsCard = (CardView) v.findViewById(R.id.eng_contacts_card);
         CardView counsellingCard = (CardView) v.findViewById(R.id.counselling_card);
@@ -41,7 +44,7 @@ public class StudentToolsFragment extends Fragment {
         emergContactsCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), EmergContactsActivity.class));
+                fm.beginTransaction().addToBackStack(null).replace(R.id.content_frame, new EmergContactsActivity()).commit();
             }
         });
         engContactsCard.setOnClickListener(new View.OnClickListener() {
