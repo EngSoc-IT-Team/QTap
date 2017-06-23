@@ -8,11 +8,11 @@
             <menu>
                 <item
                     android:id="@+id/nav_day"
-                    android:icon="@drawable/ic_menu_share"
+                    android:icon="@mipmap/ic_today"
                     android:title="@string/day_fragment"/>
                 <item
                     android:id="@+id/nav_month"
-                    android:icon="@drawable/ic_menu_camera"
+                    android:icon="@mipmap/ic_calendar"
                     android:title="@string/month_fragment"/>
             </menu>
         </item>
@@ -20,7 +20,7 @@
             <menu>
                 <item
                     android:id="@+id/nav_map"
-                    android:icon="@drawable/ic_menu_gallery"
+                    android:icon="@mipmap/ic_map"
                     android:title="@string/title_activity_maps"/>
             </menu>
         </item>
