@@ -5,6 +5,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -38,6 +39,7 @@ public class EventInfoFragment extends Fragment {
     String mEventTitle, data2, mDate;
 
     private View myView;
+    private NavigationView mNavView;
     private MapView mMapView;
     private GoogleMap mGoogleMap;
 
@@ -125,9 +127,10 @@ public class EventInfoFragment extends Fragment {
     public void onResume() {
         super.onResume();
         mMapView.onResume();
-
         myView.setFocusableInTouchMode(true);
         myView.requestFocus();
+        mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
+        mNavView.getMenu().findItem(R.id.nav_day).setChecked(true);
     }
 
     @Override
@@ -140,6 +143,7 @@ public class EventInfoFragment extends Fragment {
     public void onPause() {
         super.onPause();
         mMapView.onPause();
+        mNavView.getMenu().findItem(R.id.nav_day).setChecked(false);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.example.alex.qtapandroid.ui.fragments;
 
 
 import android.support.annotation.Nullable;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -30,6 +31,8 @@ public class EmergContactsFragment extends ListFragment {
     private static final String TAG_NAME = "Name";
     private static final String TAG_NUMBER = "PhoneNumber";
     private static final String TAG_DESCRIPTION = "Description";
+
+    private NavigationView mNavView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +64,14 @@ public class EmergContactsFragment extends ListFragment {
     @Override
     public void onPause() {
         super.onPause();
+        mNavView.getMenu().findItem(R.id.nav_tools).setChecked(false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
+        mNavView.getMenu().findItem(R.id.nav_tools).setChecked(true);
         DatabaseAccessor.getDatabase().close();
     }
 }
