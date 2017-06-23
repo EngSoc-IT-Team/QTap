@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.activities.EmergContactsActivity;
 import com.example.alex.qtapandroid.activities.EngContactsActivity;
 
 
@@ -44,7 +43,7 @@ public class StudentToolsFragment extends Fragment {
         emergContactsCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fm.beginTransaction().addToBackStack(null).replace(R.id.content_frame, new EmergContactsActivity()).commit();
+                fm.beginTransaction().addToBackStack(null).replace(R.id.content_frame, new EmergContactsFragment()).commit();
             }
         });
         engContactsCard.setOnClickListener(new View.OnClickListener() {

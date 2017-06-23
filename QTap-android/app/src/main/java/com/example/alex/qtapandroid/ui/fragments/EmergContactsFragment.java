@@ -1,9 +1,8 @@
-package com.example.alex.qtapandroid.activities;
+package com.example.alex.qtapandroid.ui.fragments;
 
 
 
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -26,7 +25,7 @@ import java.util.HashMap;
  * Created by Carson on 12/06/2017.
  * Activity that displays emergency contact information held in cloud database
  */
-public class EmergContactsActivity extends ListFragment {
+public class EmergContactsFragment extends ListFragment {
 
     private static final String TAG_NAME = "Name";
     private static final String TAG_NUMBER = "PhoneNumber";
@@ -34,7 +33,7 @@ public class EmergContactsActivity extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.activity_emerg_contacts, container, false);
+        View v = inflater.inflate(R.layout.fragment_emerg_contacts, container, false);
         ArrayList<HashMap<String, String>> emergContactsList = new ArrayList<>();
         ArrayList<EmergencyContact> contacts = (new EmergencyContactsManager(getActivity().getApplicationContext())).getTable();
         for (EmergencyContact contact : contacts) {
@@ -55,7 +54,7 @@ public class EmergContactsActivity extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
         ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.title_activity_emerg_contacts));
+            actionbar.setTitle(getString(R.string.title_emergency_contacts));
         }
     }
 
