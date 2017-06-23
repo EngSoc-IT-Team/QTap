@@ -8,6 +8,8 @@ import android.util.Log;
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContacts;
 import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContactsManager;
+import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContacts;
+import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContactsManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,9 +30,15 @@ import java.util.logging.Logger;
  */
 public class GetCloudDb extends AsyncTask<Void, Void, Void> {
 
+    //tables
     private static final String TAG_EMERGNECY_CONTACTS = "EmergencyContacts";
+    private static final String TAG_ENGINEERING_CONTACTS = "EngineeringContacts";
+
+    //fields for tables
     private static final String TAG_SUCCESS = "Success";
     private static final String TAG_NAME = "Name";
+    private static final String TAG_EMAIL = "Email";
+    private static final String TAG_POSITION = "Position";
     private static final String TAG_NUMBER = "PhoneNumber";
     private static final String TAG_DESCRIPTION = "Description";
 
@@ -122,17 +130,32 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
 
     private void cloudToPhoneDB(JSONObject json) {
         emergencyContacts(json);
+        engineeringContacts(json);
     }
 
     private void emergencyContacts(JSONObject json) {
         try {
             JSONArray contacts = json.getJSONArray(TAG_EMERGNECY_CONTACTS);
-            EmergencyContactsManager eMan = new EmergencyContactsManager(mContext);
+            EmergencyContactsManager tableManager = new EmergencyContactsManager(mContext);
             for (int i = 0; i < contacts.length(); i++) {
                 JSONObject contact = contacts.getJSONObject(i);
-                eMan.insertRow(new EmergencyContacts(contact.getString(TAG_NAME), contact.getString(TAG_NUMBER), contact.getString(TAG_DESCRIPTION)));
+                tableManager.insertRow(new EmergencyContacts(contact.getString(TAG_NAME), contact.getString(TAG_NUMBER), contact.getString(TAG_DESCRIPTION)));
             }
-            EmergencyContacts.printEmergencyContacts(eMan.getTable());
+        } catch (JSONException e) {
+            Log.d("HELLOTHERE", "BAD: " + e);
+        }
+    }
+
+    private void engineeringContacts(JSONObject json) {
+        try {
+            JSONArray contacts = json.getJSONArray(TAG_ENGINEERING_CONTACTS);
+            EngineeringContactsManager tableManager = new EngineeringContactsManager(mContext);
+            for (int i = 0; i < contacts.length(); i++) {
+                JSONObject contact = contacts.getJSONObject(i);
+                tableManager.insertRow(new EngineeringContacts(contact.getString(TAG_NAME), contact.getString(TAG_EMAIL),
+                        contact.getString(TAG_POSITION), contact.getString(TAG_DESCRIPTION)));
+            }
+            EngineeringContacts.printEngineeringContacts(tableManager.getTable());
         } catch (JSONException e) {
             Log.d("HELLOTHERE", "BAD: " + e);
         }
