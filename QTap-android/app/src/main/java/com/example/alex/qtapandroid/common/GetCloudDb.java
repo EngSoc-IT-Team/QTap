@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContacts;
+import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContactsManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,10 +24,11 @@ import java.util.logging.Logger;
 
 /**
  * Created by Carson on 21/06/2017.
+ * Async task that downloads and parses the cloud database into the phone database.
  */
 public class GetCloudDb extends AsyncTask<Void, Void, Void> {
 
-    private static final String TAG_CONTACTS = "EmergencyContacts";
+    private static final String TAG_EMERGNECY_CONTACTS = "EmergencyContacts";
     private static final String TAG_SUCCESS = "Success";
     private static final String TAG_NAME = "Name";
     private static final String TAG_NUMBER = "PhoneNumber";
@@ -58,18 +61,14 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
         } catch (JSONException e) {
             Log.d("HELLOTHERE", "BAD: " + e);
         }
-        /*try {
+        try {
             int success = json.getInt(TAG_SUCCESS);
-            if (success == 1) {*/
-        Log.d("HELLOTHERE", "JSON\n" + json.toString());
-                /*JSONArray contacts = json.getJSONArray(TAG_CONTACTS);
-                 for (int i = 0; i < contacts.length(); i++) {
-                     JSONObject contact = contacts.getJSONObject(i);
-                 }
+            if (success == 1) {
+                cloudToPhoneDB(json);
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }*/
+        }
         return null;
     }
 
@@ -119,5 +118,23 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
             }
         }
         return null;
+    }
+
+    private void cloudToPhoneDB(JSONObject json) {
+        emergencyContacts(json);
+    }
+
+    private void emergencyContacts(JSONObject json) {
+        try {
+            JSONArray contacts = json.getJSONArray(TAG_EMERGNECY_CONTACTS);
+            EmergencyContactsManager eMan = new EmergencyContactsManager(mContext);
+            for (int i = 0; i < contacts.length(); i++) {
+                JSONObject contact = contacts.getJSONObject(i);
+                eMan.insertRow(new EmergencyContacts(contact.getString(TAG_NAME), contact.getString(TAG_NUMBER), contact.getString(TAG_DESCRIPTION)));
+            }
+            EmergencyContacts.printEmergencyContacts(eMan.getTable());
+        } catch (JSONException e) {
+            Log.d("HELLOTHERE", "BAD: " + e);
+        }
     }
 }

@@ -38,7 +38,7 @@ public class EmergencyContacts implements BaseColumns {
             output += "ID: " + contacts.get(i).getID() + " NAME: " + contacts.get(i).getName() + " PHONENUMBER: "
                     + contacts.get(i).getPhoneNumber() + " DESCRIPTION: " + contacts.get(i).getDescription();
         }
-        Log.d("SQLITE", output);
+        Log.d("SQLITEEMERG", output);
     }
 
     public long getID() {

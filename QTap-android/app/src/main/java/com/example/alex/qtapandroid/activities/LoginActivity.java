@@ -231,7 +231,6 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(final Boolean success) {
-            (new GetCloudDb(LoginActivity.this)).execute();
             mAuthTask = null;
             showProgress(true);
 
@@ -241,6 +240,7 @@ public class LoginActivity extends AppCompatActivity {
             if (success) {
 
                 if (!isLoggedIn) {
+                    (new GetCloudDb(LoginActivity.this)).execute();
                     // Allow for editing the preferences
                     SharedPreferences.Editor editor = preferences.edit();
                     // Create a string called "UserEmail" equal to mEmail
