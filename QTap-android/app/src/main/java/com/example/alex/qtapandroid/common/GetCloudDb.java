@@ -31,8 +31,8 @@ import java.util.logging.Logger;
 public class GetCloudDb extends AsyncTask<Void, Void, Void> {
 
     //tables
-    private static final String TAG_EMERGNECY_CONTACTS = "EmergencyContact";
-    private static final String TAG_ENGINEERING_CONTACTS = "EngineeringContact";
+    private static final String TAG_EMERGENCY_CONTACTS = "EmergencyContacts";
+    private static final String TAG_ENGINEERING_CONTACTS = "EngineeringContacts";
 
     //fields for tables
     private static final String TAG_SUCCESS = "Success";
@@ -43,7 +43,6 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
     private static final String TAG_DESCRIPTION = "Description";
 
     private ProgressDialog mProgressDialog;
-
     private Context mContext;
 
     public GetCloudDb(Context context) {
@@ -62,20 +61,16 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... voids) {
-        JSONObject json = null;
+        JSONObject json;
         try {
             //call php script on server that gets info from cloud database
             json = new JSONObject(getJSON(mContext.getString(R.string.db_get_database), 5000));
-        } catch (JSONException e) {
-            Log.d("HELLOTHERE", "BAD: " + e);
-        }
-        try {
             int success = json.getInt(TAG_SUCCESS);
             if (success == 1) {
                 cloudToPhoneDB(json);
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.d("HELLOTHERE", "BAD: " + e);
         }
         return null;
     }
@@ -135,12 +130,13 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
 
     private void emergencyContacts(JSONObject json) {
         try {
-            JSONArray contacts = json.getJSONArray(TAG_EMERGNECY_CONTACTS);
+            JSONArray contacts = json.getJSONArray(TAG_EMERGENCY_CONTACTS);
             EmergencyContactsManager tableManager = new EmergencyContactsManager(mContext);
             for (int i = 0; i < contacts.length(); i++) {
                 JSONObject contact = contacts.getJSONObject(i);
                 tableManager.insertRow(new EmergencyContact(contact.getString(TAG_NAME), contact.getString(TAG_NUMBER), contact.getString(TAG_DESCRIPTION)));
             }
+            EmergencyContact.printEmergencyContacts(tableManager.getTable());
         } catch (JSONException e) {
             Log.d("HELLOTHERE", "BAD: " + e);
         }
