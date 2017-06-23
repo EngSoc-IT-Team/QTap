@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.activities.EngContactsActivity;
 
 
 /**
@@ -49,7 +48,7 @@ public class StudentToolsFragment extends Fragment {
         engContactsCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getContext(), EngContactsActivity.class));
+                fm.beginTransaction().addToBackStack(null).replace(R.id.content_frame, new EngContactsFragment()).commit();
             }
         });
         counsellingCard.setOnClickListener(new View.OnClickListener() {

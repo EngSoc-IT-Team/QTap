@@ -54,9 +54,6 @@
             android:name=".activities.AboutActivity"
             android:label="@string/title_activity_about"/>
 
-        <activity
-            android:name=".activities.EngContactsActivity"
-            android:label="@string/title_activity_eng_contacts"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
