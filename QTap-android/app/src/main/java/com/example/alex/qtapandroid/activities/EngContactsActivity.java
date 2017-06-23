@@ -33,7 +33,7 @@ import java.util.logging.Logger;
  */
 public class EngContactsActivity extends ListActivity {
 
-    private static final String TAG_CONTACTS = "EngineeringContacts";
+    private static final String TAG_CONTACTS = "EngineeringContact";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_NAME = "Name";
     private static final String TAG_EMAIL = "Email";

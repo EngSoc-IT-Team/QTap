@@ -1,7 +1,7 @@
 package com.example.alex.qtapandroid.common.database;
 
-import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContacts;
-import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContacts;
+import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContact;
+import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContact;
 import com.example.alex.qtapandroid.common.database.courses.Course;
 import com.example.alex.qtapandroid.common.database.courses.OneClass;
 import com.example.alex.qtapandroid.common.database.users.User;
@@ -31,18 +31,18 @@ public class SqlStringStatements {
             OneClass.COLUMN_DAY + " TEXT," + OneClass.COLUMN_MONTH + " TEXT," + OneClass.COLUMN_YEAR +
             " TEXT," + OneClass.COLUMN_COURSE_ID + " INT );";
 
-    public static final String CREATE_ENGINEERING_CONTACTS = "CREATE TABLE " + EngineeringContacts.TABLE_NAME + "(" + EngineeringContacts._ID +
-            " INTEGER PRIMARY KEY," + EngineeringContacts.COLUMN_NAME + " TEXT," + EngineeringContacts.COLUMN_EMAIL + " TEXT,"
-            + EngineeringContacts.COLUMN_POSITION + " TEXT," + EngineeringContacts.COLUMN_DESCRIPTION + " TEXT);";
+    public static final String CREATE_ENGINEERING_CONTACTS = "CREATE TABLE " + EngineeringContact.TABLE_NAME + "(" + EngineeringContact._ID +
+            " INTEGER PRIMARY KEY," + EngineeringContact.COLUMN_NAME + " TEXT," + EngineeringContact.COLUMN_EMAIL + " TEXT,"
+            + EngineeringContact.COLUMN_POSITION + " TEXT," + EngineeringContact.COLUMN_DESCRIPTION + " TEXT);";
 
-    public static final String CREATE_EMERGENCY_CONTACTS = "CREATE TABLE " + EmergencyContacts.TABLE_NAME + "(" + EmergencyContacts._ID +
-            " INTEGER PRIMARY KEY," + EngineeringContacts.COLUMN_NAME + " TEXT," + EmergencyContacts.COLUMN_PHONE_NUMBER + " TEXT,"
-            + EmergencyContacts.COLUMN_DESCRIPTION + " TEXT);";
+    public static final String CREATE_EMERGENCY_CONTACTS = "CREATE TABLE " + EmergencyContact.TABLE_NAME + "(" + EmergencyContact._ID +
+            " INTEGER PRIMARY KEY," + EngineeringContact.COLUMN_NAME + " TEXT," + EmergencyContact.COLUMN_PHONE_NUMBER + " TEXT,"
+            + EmergencyContact.COLUMN_DESCRIPTION + " TEXT);";
 
     //Delete table statements
     public static final String DELETE_COURSES = "DROP TABLE IF EXISTS " + Course.TABLE_NAME;
     public static final String DELETE_USERS = "DROP TABLE IF EXISTS " + User.TABLE_NAME;
     public static final String DELETE_CLASSES = "DROP TABLE IF EXISTS " + OneClass.TABLE_NAME;
-    public static final String DELETE_ENGINEERING_CONTACTS = "DROP TABLE IF EXISTS " + EngineeringContacts.TABLE_NAME;
-    public static final String DELETE_EMERGENCY_CONTACTS = "DROP TABLE IF EXISTS " + EmergencyContacts.TABLE_NAME;
+    public static final String DELETE_ENGINEERING_CONTACTS = "DROP TABLE IF EXISTS " + EngineeringContact.TABLE_NAME;
+    public static final String DELETE_EMERGENCY_CONTACTS = "DROP TABLE IF EXISTS " + EmergencyContact.TABLE_NAME;
 }

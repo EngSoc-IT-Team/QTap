@@ -3,7 +3,6 @@ package com.example.alex.qtapandroid.common.database.contacts.engineering;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.provider.BaseColumns;
 
 import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 
@@ -11,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Created by Carson on 21/06/2017.
- * Handles rows in phone database for EngineeringContacts table.
+ * Handles rows in phone database for EngineeringContact table.
  */
 public class EngineeringContactsManager extends DatabaseAccessor {
     public EngineeringContactsManager(Context context) {
@@ -19,52 +18,52 @@ public class EngineeringContactsManager extends DatabaseAccessor {
     }
 
     /**
-     * Inserts a EngineeringContacts into the database.
+     * Inserts a EngineeringContact into the database.
      *
-     * @param contacts The EngineeringContacts to be inserted. Before calling it must have
+     * @param contacts The EngineeringContact to be inserted. Before calling it must have
      *                 the values to be inserted.
      * @return <long> The ID of the course just inserted. Set the id of the
-     * the EngineeringContacts inserted to be the return value.
+     * the EngineeringContact inserted to be the return value.
      */
-    public long insertRow(EngineeringContacts contacts) {
+    public long insertRow(EngineeringContact contacts) {
         ContentValues values = new ContentValues();
-        values.put(EngineeringContacts.COLUMN_NAME, contacts.getName());
-        values.put(EngineeringContacts.COLUMN_EMAIL, contacts.getEmail());
-        values.put(EngineeringContacts.COLUMN_POSITION, contacts.getPosition());
-        values.put(EngineeringContacts.COLUMN_DESCRIPTION, contacts.getDescription());
-        return getDatabase().insert(EngineeringContacts.TABLE_NAME, null, values);
+        values.put(EngineeringContact.COLUMN_NAME, contacts.getName());
+        values.put(EngineeringContact.COLUMN_EMAIL, contacts.getEmail());
+        values.put(EngineeringContact.COLUMN_POSITION, contacts.getPosition());
+        values.put(EngineeringContact.COLUMN_DESCRIPTION, contacts.getDescription());
+        return getDatabase().insert(EngineeringContact.TABLE_NAME, null, values);
     }
 
     /**
-     * Deletes a EngineeringContacts from the database.
+     * Deletes a EngineeringContact from the database.
      *
-     * @param contact The EngineeringContacts to be deleted. Identifies which EngineeringContacts
+     * @param contact The EngineeringContact to be deleted. Identifies which EngineeringContact
      *                using the ID of this parameter.
      */
-    public void deleteRow(EngineeringContacts contact) {
-        String selection = EngineeringContacts._ID + " LIKE ?";
+    public void deleteRow(EngineeringContact contact) {
+        String selection = EngineeringContact._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(contact.getID())};
-        getDatabase().delete(EngineeringContacts.TABLE_NAME, selection, selectionArgs);
+        getDatabase().delete(EngineeringContact.TABLE_NAME, selection, selectionArgs);
     }
 
     /**
-     * Gets the entire EngineeringContacts table.
+     * Gets the entire EngineeringContact table.
      *
-     * @return ArrayList of all the rows in the EngineeringContacts table.
+     * @return ArrayList of all the rows in the EngineeringContact table.
      */
-    public ArrayList<EngineeringContacts> getTable() {
+    public ArrayList<EngineeringContact> getTable() {
         String[] projection = {
-                EngineeringContacts._ID,
-                EngineeringContacts.COLUMN_NAME,
-                EngineeringContacts.COLUMN_EMAIL,
-                EngineeringContacts.COLUMN_POSITION,
-                EngineeringContacts.COLUMN_DESCRIPTION
+                EngineeringContact._ID,
+                EngineeringContact.COLUMN_NAME,
+                EngineeringContact.COLUMN_EMAIL,
+                EngineeringContact.COLUMN_POSITION,
+                EngineeringContact.COLUMN_DESCRIPTION
         };
-        ArrayList<EngineeringContacts> contacts = new ArrayList<>();
+        ArrayList<EngineeringContact> contacts = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
-        try (Cursor cursor = getDatabase().query(EngineeringContacts.TABLE_NAME, projection, null, null, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(EngineeringContact.TABLE_NAME, projection, null, null, null, null, null)) {
             while (cursor.moveToNext()) {
-                EngineeringContacts contact = getRow(cursor.getInt(EngineeringContacts.ID_POS));
+                EngineeringContact contact = getRow(cursor.getInt(EngineeringContact.ID_POS));
                 contacts.add(contact);
             }
             cursor.close();
@@ -73,28 +72,28 @@ public class EngineeringContactsManager extends DatabaseAccessor {
     }
 
     /**
-     * Gets a single known EngineeringContacts from the EngineeringContacts table.
+     * Gets a single known EngineeringContact from the EngineeringContact table.
      *
-     * @param id ID of the EngineeringContacts to get from the table.
-     * @return EngineeringContacts class obtained from the table. Contains all information
+     * @param id ID of the EngineeringContact to get from the table.
+     * @return EngineeringContact class obtained from the table. Contains all information
      * held in row.
      */
-    public EngineeringContacts getRow(long id) {
+    public EngineeringContact getRow(long id) {
         String[] projection = {
-                EngineeringContacts._ID,
-                EngineeringContacts.COLUMN_NAME,
-                EngineeringContacts.COLUMN_EMAIL,
-                EngineeringContacts.COLUMN_POSITION,
-                EngineeringContacts.COLUMN_DESCRIPTION
+                EngineeringContact._ID,
+                EngineeringContact.COLUMN_NAME,
+                EngineeringContact.COLUMN_EMAIL,
+                EngineeringContact.COLUMN_POSITION,
+                EngineeringContact.COLUMN_DESCRIPTION
         };
-        EngineeringContacts contact;
-        String selection = EngineeringContacts._ID + " LIKE ?";
+        EngineeringContact contact;
+        String selection = EngineeringContact._ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
-        try (Cursor cursor = getDatabase().query(EngineeringContacts.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
+        try (Cursor cursor = getDatabase().query(EngineeringContact.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             cursor.moveToNext();
-            contact = new EngineeringContacts(cursor.getString(EngineeringContacts.NAME_POS), cursor.getString(EngineeringContacts.EMAIL_POS),
-                    cursor.getString(EngineeringContacts.POSITION_POS), cursor.getString(EngineeringContacts.DESCRIPTION_POS));
-            contact.setID(cursor.getInt(EngineeringContacts.ID_POS));
+            contact = new EngineeringContact(cursor.getString(EngineeringContact.NAME_POS), cursor.getString(EngineeringContact.EMAIL_POS),
+                    cursor.getString(EngineeringContact.POSITION_POS), cursor.getString(EngineeringContact.DESCRIPTION_POS));
+            contact.setID(cursor.getInt(EngineeringContact.ID_POS));
             cursor.close();
             return contact; //return only when the cursor has been closed.
             //Return statement never missed, try block always finishes this.
@@ -103,29 +102,29 @@ public class EngineeringContactsManager extends DatabaseAccessor {
     }
 
     /**
-     * Deletes the entire EngineeringContacts table.
+     * Deletes the entire EngineeringContact table.
      */
     public void deleteTable() {
-        getDatabase().delete(EngineeringContacts.TABLE_NAME, null, null);
+        getDatabase().delete(EngineeringContact.TABLE_NAME, null, null);
     }
 
     /**
-     * Changes information to one pre-existing EngineeringContacts.
+     * Changes information to one pre-existing EngineeringContact.
      *
-     * @param oldContact EngineeringContacts class that is being replaced.
-     * @param newContact EngineeringContacts class that holds the new information.
-     * @return EngineeringContacts class containing updated information
+     * @param oldContact EngineeringContact class that is being replaced.
+     * @param newContact EngineeringContact class that holds the new information.
+     * @return EngineeringContact class containing updated information
      */
-    public EngineeringContacts updateRow(EngineeringContacts oldContact, EngineeringContacts newContact) {
+    public EngineeringContact updateRow(EngineeringContact oldContact, EngineeringContact newContact) {
         ContentValues values = new ContentValues();
-        values.put(EngineeringContacts.COLUMN_NAME, newContact.getName());
-        values.put(EngineeringContacts.COLUMN_EMAIL, newContact.getEmail());
-        values.put(EngineeringContacts.COLUMN_POSITION, newContact.getPosition());
-        values.put(EngineeringContacts.COLUMN_DESCRIPTION, newContact.getDescription());
+        values.put(EngineeringContact.COLUMN_NAME, newContact.getName());
+        values.put(EngineeringContact.COLUMN_EMAIL, newContact.getEmail());
+        values.put(EngineeringContact.COLUMN_POSITION, newContact.getPosition());
+        values.put(EngineeringContact.COLUMN_DESCRIPTION, newContact.getDescription());
 
-        String selection = EngineeringContacts._ID + " LIKE ?";
+        String selection = EngineeringContact._ID + " LIKE ?";
         String selectionArgs[] = {String.valueOf(oldContact.getID())};
-        getDatabase().update(EngineeringContacts.TABLE_NAME, values, selection, selectionArgs);
+        getDatabase().update(EngineeringContact.TABLE_NAME, values, selection, selectionArgs);
         newContact.setID(oldContact.getID());
         return newContact;
     }

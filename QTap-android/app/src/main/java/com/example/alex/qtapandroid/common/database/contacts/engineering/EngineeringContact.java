@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 /**
  * Created by Carson on 21/06/2017.
- * Defines schema for phone database table EngineeringContacts
+ * Defines schema for phone database table EngineeringContact
  */
-public class EngineeringContacts implements BaseColumns {
-    public static final String TABLE_NAME = "EngineeringContacts";
+public class EngineeringContact implements BaseColumns {
+    public static final String TABLE_NAME = "EngineeringContact";
     //columns
     public static final String COLUMN_NAME = "Name";
     public static final String COLUMN_EMAIL = "Email";
@@ -28,15 +28,15 @@ public class EngineeringContacts implements BaseColumns {
     //fields in database
     private String name, email, position, description;
 
-    public EngineeringContacts(String name, String email, String position, String description) {
+    public EngineeringContact(String name, String email, String position, String description) {
         this.name = name;
         this.email = email;
         this.position = position;
         this.description = description;
     }
 
-    public static void printEngineeringContacts(ArrayList<EngineeringContacts> contacts) {
-        String output = "USERS:\n";
+    public static void printEngineeringContacts(ArrayList<EngineeringContact> contacts) {
+        String output = "ENG CONTACTS:\n";
         for (int i = 0; i < contacts.size(); i++) {
             output += "ID: " + contacts.get(i).getID() + " NAME: " + contacts.get(i).getName() + " EMAIL: "
                     + contacts.get(i).getEmail() + " POSITION: " + contacts.get(i).getPosition() + " DESCRIPTION: " + contacts.get(i).getDescription();

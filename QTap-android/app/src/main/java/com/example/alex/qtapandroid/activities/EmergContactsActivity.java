@@ -33,7 +33,7 @@ import java.util.logging.Logger;
  */
 public class EmergContactsActivity extends ListActivity {
 
-    private static final String TAG_CONTACTS = "EmergencyContacts";
+    private static final String TAG_CONTACTS = "EmergencyContact";
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_NAME = "Name";
     private static final String TAG_NUMBER = "PhoneNumber";
