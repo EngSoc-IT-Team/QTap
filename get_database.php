@@ -44,7 +44,7 @@ if (mysql_num_rows($result) > 0) {
         // temp user array
         $product = array();
         $product["Name"] = $row["Name"];
-        $product["Purpose"] = $row["Purpose}"];;
+        $product["Purpose"] = $row["Purpose"];
         $product["BookRooms"] = $row["BookRooms"];
         $product["Food"] = $row["Food"];
         $product["ATM"] = $row["ATM"];

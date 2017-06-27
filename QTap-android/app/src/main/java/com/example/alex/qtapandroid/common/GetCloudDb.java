@@ -146,7 +146,6 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
                 JSONObject contact = contacts.getJSONObject(i);
                 tableManager.insertRow(new EmergencyContact(contact.getString(TAG_NAME), contact.getString(TAG_NUMBER), contact.getString(TAG_DESCRIPTION)));
             }
-            EmergencyContact.printEmergencyContacts(tableManager.getTable());
         } catch (JSONException e) {
             Log.d("HELLOTHERE", "BAD: " + e);
         }
@@ -168,14 +167,16 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
 
     private void buildings(JSONObject json) {
         try {
-            JSONArray buildings = json.getJSONArray(TAG_ENGINEERING_CONTACTS);
+            JSONArray buildings = json.getJSONArray(TAG_BUILDINGS);
             BuildingManager manager = new BuildingManager(mContext);
             for (int i = 0; i < buildings.length(); i++) {
                 JSONObject building = buildings.getJSONObject(i);
+                //getInt()>0 because SQL has 0/1 there, not real boolean
                 manager.insertRow(new Building(building.getString(TAG_NAME), building.getString(TAG_PURPOSE),
-                        building.getBoolean(TAG_BOOK_ROMMS), building.getBoolean(TAG_FOOD), building.getBoolean(TAG_ATM),
+                        building.getInt(TAG_BOOK_ROMMS) > 0, building.getInt(TAG_FOOD) > 0, building.getInt(TAG_ATM) > 0,
                         building.getDouble(TAG_LAT), building.getDouble(TAG_LON)));
             }
+            Building.printBuildings(manager.getTable());
         } catch (JSONException e) {
             Log.d("HELLOTHERE", "BAD: " + e);
         }
