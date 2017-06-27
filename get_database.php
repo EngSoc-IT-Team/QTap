@@ -35,6 +35,25 @@ if (mysql_num_rows($result) > 0) {
     }
 }
 
+//buildings
+$result = mysql_query("SELECT * FROM Buildings") or die(mysql_error());
+// check for empty result
+if (mysql_num_rows($result) > 0) {
+    $response["Buildings"] = array();
+    while ($row = mysql_fetch_array($result)) {
+        // temp user array
+        $product = array();
+        $product["Name"] = $row["Name"];
+        $product["Purpose"] = $row["Purpose}"];;
+        $product["BookRooms"] = $row["BookRooms"];
+        $product["Food"] = $row["Food"];
+        $product["ATM"] = $row["ATM"];
+        $product["Lat"] = $row["Lat"];
+        $product["Lon"] = $row["Lon"];
+        array_push($response["Buildings"], $product);
+    }
+}
+
 if (count($response) > 0) {
     $response["Success"] = 1;
 } else {
