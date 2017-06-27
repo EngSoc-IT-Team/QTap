@@ -29,6 +29,7 @@
     <string name="account">Account</string>
     <string name="options">Options</string>
     <string name="app_name">QLife</string>
+    <string name="buildings_fragment">Buildings</string>
     <string name="month_fragment">Month View</string>
     <string name="information_fragment">Information</string>
     <string name="student_tools_fragment">Student Tools</string>
@@ -60,6 +61,7 @@
     <string name="title_activity_about">About</string>
     <string name="message_no_events">No events today!</string>
     <string name="db_download_failed">Database download failed. Try logging out and back in.</string>
+    <string name="has_food">Building has food: </string>
 
     <!--strings for sections in drawer -->
     <string name="schedule_section">Schedule</string>

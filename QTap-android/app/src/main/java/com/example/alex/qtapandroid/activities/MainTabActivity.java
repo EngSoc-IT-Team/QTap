@@ -25,6 +25,7 @@ import com.example.alex.qtapandroid.common.database.buildings.Building;
 import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
+import com.example.alex.qtapandroid.ui.fragments.BuildingsFragment;
 import com.example.alex.qtapandroid.ui.fragments.MonthFragment;
 import com.example.alex.qtapandroid.ui.fragments.DayFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
@@ -59,7 +60,6 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
         View header = navigationView.getHeaderView(0);// get the existing headerView
         TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);
         name.setText(u.getNetid());
-        Building.printBuildings(new BuildingManager(this).getTable());
     }
 
     @Override
@@ -123,6 +123,9 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
                 break;
             case R.id.nav_tools:
                 fragment = new StudentToolsFragment();
+                break;
+            case R.id.nav_buildings:
+                fragment = new BuildingsFragment();
                 break;
         }
 

@@ -24,7 +24,7 @@ import java.util.HashMap;
 
 /**
  * Created by Carson on 12/06/2017.
- * Activity that displays emergency contact information held in cloud database
+ * Fragment that displays emergency contact information held in cloud database
  */
 public class EmergContactsFragment extends ListFragment {
 

@@ -176,7 +176,6 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
                         building.getInt(TAG_BOOK_ROMMS) > 0, building.getInt(TAG_FOOD) > 0, building.getInt(TAG_ATM) > 0,
                         building.getDouble(TAG_LAT), building.getDouble(TAG_LON)));
             }
-            Building.printBuildings(manager.getTable());
         } catch (JSONException e) {
             Log.d("HELLOTHERE", "BAD: " + e);
         }
