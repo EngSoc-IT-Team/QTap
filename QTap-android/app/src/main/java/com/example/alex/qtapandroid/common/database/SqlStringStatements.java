@@ -1,5 +1,6 @@
 package com.example.alex.qtapandroid.common.database;
 
+import com.example.alex.qtapandroid.common.database.buildings.Building;
 import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContact;
 import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContact;
 import com.example.alex.qtapandroid.common.database.courses.Course;
@@ -39,10 +40,15 @@ public class SqlStringStatements {
             " INTEGER PRIMARY KEY," + EngineeringContact.COLUMN_NAME + " TEXT," + EmergencyContact.COLUMN_PHONE_NUMBER + " TEXT,"
             + EmergencyContact.COLUMN_DESCRIPTION + " TEXT);";
 
+    public static final String CREATE_BUILDINGS = "CREATE TABLE " + Building.TABLE_NAME + "(" + Building._ID + " INTEGER PRIMARY KEY," +
+            Building.COLUMN_NAME + " TEXT," + Building.COLUMN_PURPOSE + " TEXT," + Building.COLUMN_BOOK_ROOMS + " INTEGER," + Building.COLUMN_FOOD
+            + " INTEGER," + Building.COLUMN_ATM + " INTEGER," + Building.COLUMN_LAT + " REAL," + Building.COLUMN_LON + " REAL);";
+
     //Delete table statements
     public static final String DELETE_COURSES = "DROP TABLE IF EXISTS " + Course.TABLE_NAME;
     public static final String DELETE_USERS = "DROP TABLE IF EXISTS " + User.TABLE_NAME;
     public static final String DELETE_CLASSES = "DROP TABLE IF EXISTS " + OneClass.TABLE_NAME;
     public static final String DELETE_ENGINEERING_CONTACTS = "DROP TABLE IF EXISTS " + EngineeringContact.TABLE_NAME;
     public static final String DELETE_EMERGENCY_CONTACTS = "DROP TABLE IF EXISTS " + EmergencyContact.TABLE_NAME;
+    public static final String DELETE_BUILDINGS = "DROP TABLE IF EXISTS " + Building.TABLE_NAME;
 }

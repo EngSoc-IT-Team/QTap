@@ -21,6 +21,8 @@ import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
+import com.example.alex.qtapandroid.common.database.buildings.Building;
+import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.MonthFragment;
@@ -57,6 +59,7 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
         View header = navigationView.getHeaderView(0);// get the existing headerView
         TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);
         name.setText(u.getNetid());
+        Building.printBuildings(new BuildingManager(this).getTable());
     }
 
     @Override

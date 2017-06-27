@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.database.buildings.Building;
+import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
 import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContact;
 import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContactsManager;
 import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContact;
@@ -33,6 +35,7 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
     //tables
     private static final String TAG_EMERGENCY_CONTACTS = "EmergencyContacts";
     private static final String TAG_ENGINEERING_CONTACTS = "EngineeringContacts";
+    private static final String TAG_BUILDINGS = "Buildings";
 
     //fields for tables
     private static final String TAG_SUCCESS = "Success";
@@ -41,6 +44,12 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
     private static final String TAG_POSITION = "Position";
     private static final String TAG_NUMBER = "PhoneNumber";
     private static final String TAG_DESCRIPTION = "Description";
+    private static final String TAG_PURPOSE = "Purpose";
+    private static final String TAG_BOOK_ROMMS = "BookRooms";
+    private static final String TAG_FOOD = "Food";
+    private static final String TAG_ATM = "ATM";
+    private static final String TAG_LAT = "Lat";
+    private static final String TAG_LON = "Lon";
 
     private ProgressDialog mProgressDialog;
     private Context mContext;
@@ -126,6 +135,7 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
     private void cloudToPhoneDB(JSONObject json) {
         emergencyContacts(json);
         engineeringContacts(json);
+        buildings(json);
     }
 
     private void emergencyContacts(JSONObject json) {
@@ -150,6 +160,21 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
                 JSONObject contact = contacts.getJSONObject(i);
                 tableManager.insertRow(new EngineeringContact(contact.getString(TAG_NAME), contact.getString(TAG_EMAIL),
                         contact.getString(TAG_POSITION), contact.getString(TAG_DESCRIPTION)));
+            }
+        } catch (JSONException e) {
+            Log.d("HELLOTHERE", "BAD: " + e);
+        }
+    }
+
+    private void buildings(JSONObject json) {
+        try {
+            JSONArray buildings = json.getJSONArray(TAG_ENGINEERING_CONTACTS);
+            BuildingManager manager = new BuildingManager(mContext);
+            for (int i = 0; i < buildings.length(); i++) {
+                JSONObject building = buildings.getJSONObject(i);
+                manager.insertRow(new Building(building.getString(TAG_NAME), building.getString(TAG_PURPOSE),
+                        building.getBoolean(TAG_BOOK_ROMMS), building.getBoolean(TAG_FOOD), building.getBoolean(TAG_ATM),
+                        building.getDouble(TAG_LAT), building.getDouble(TAG_LON)));
             }
         } catch (JSONException e) {
             Log.d("HELLOTHERE", "BAD: " + e);
