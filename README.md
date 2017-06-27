@@ -1,5 +1,7 @@
 # QTap
 
+Note that within the app, the name QLife is used. This name was decided after the project was started, so there is a disconnect between project file names and the names within the app.
+
 This is an Android application for Queen's students (mainly engineers) that shows pertinent Queen's information. Currently, only class schedule is shown, however, for the future, other infomation such as building hours and ATM locations will be incorporated.
 
 ## Cloud Database
