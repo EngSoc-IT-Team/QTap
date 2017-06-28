@@ -264,11 +264,12 @@ public class LoginActivity extends AppCompatActivity {
                         String url = preferences.getString("mIcsUrl", "noURL");
                         if (!url.equals("noURL")) {
                             Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
-                            downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
+                           //ADD BACK downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
                             Log.d(TAG, "Parsing...!");
                             parser.parseICSData();
                             Log.d(TAG, "Done!");
                         }
+                        parser.parseICSData(); //TESTING REMOVE AFTER
                     }
                     startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
 

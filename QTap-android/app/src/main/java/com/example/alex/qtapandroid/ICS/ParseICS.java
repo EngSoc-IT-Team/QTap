@@ -2,6 +2,7 @@ package com.example.alex.qtapandroid.ICS;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.os.Environment;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.DatePicker;
@@ -15,6 +16,7 @@ import com.example.alex.qtapandroid.common.database.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -67,7 +69,7 @@ public class ParseICS {
         String ret = "";
 
         try {
-            InputStream inputStream = mContext.openFileInput(path);
+            InputStream inputStream =new FileInputStream(path);// mContext.openFileInput(path);
 
             if (inputStream != null) {
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
@@ -129,8 +131,8 @@ public class ParseICS {
             boolean repeatWeekly = false;
             String rDayStr = "", rMonStr = "", rYrStr = "";
 
-            List<String> lines = readDownloadFile("cal.ics");
-
+            List<String> lines = readDownloadFile(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)+"/Nick Dal Farra Class Schedule.ics");//readDownloadFile("cal.ics");
+            Log.d("HELLOTHERE",Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString());
             int test = 1;
 
             for (String string : lines) {
