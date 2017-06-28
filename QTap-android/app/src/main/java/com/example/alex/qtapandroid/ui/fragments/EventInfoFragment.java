@@ -2,18 +2,13 @@ package com.example.alex.qtapandroid.ui.fragments;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.CardView;
-import android.transition.TransitionInflater;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -107,20 +102,11 @@ public class EventInfoFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         TextView eventName = (TextView) view.findViewById(R.id.EventName);
-        if (!mEventTitle.equals("No events today")) {
-            //have information to show
-            eventName.setText(mEventTitle);
-            TextView eventLoc = (TextView) view.findViewById(R.id.EventLoc);
-            eventLoc.setText(data2);
-            TextView eventDate = (TextView) view.findViewById(R.id.EventDate);
-            eventDate.setText(mEventTitle);
-        } else {
-            mMapView.setVisibility(View.GONE);
-            CardView c = (CardView) myView.findViewById(R.id.card_view_event);
-            c.setVisibility(View.GONE);
-            TextView t = (TextView) myView.findViewById(R.id.no_events_message);
-            t.setVisibility(View.VISIBLE);
-        }
+        eventName.setText(mEventTitle);
+        TextView eventLoc = (TextView) view.findViewById(R.id.EventLoc);
+        eventLoc.setText(data2);
+        TextView eventDate = (TextView) view.findViewById(R.id.EventDate);
+        eventDate.setText(mEventTitle);
     }
 
     @Override

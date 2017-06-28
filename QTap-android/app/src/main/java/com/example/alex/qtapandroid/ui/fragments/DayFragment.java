@@ -12,10 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.transition.TransitionInflater;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.annotation.Nullable;
@@ -43,7 +40,6 @@ public class DayFragment extends Fragment {
     private View mView;
     private TextView mDateText;
     private String mDateString;
-    private int mNumDaysChange;
     private Calendar mCalendar;
 
     @Nullable
@@ -167,7 +163,7 @@ public class DayFragment extends Fragment {
         ArrayList<OneClass> data = oneClassManager.getTable();
 
         int day, month, year;
-        boolean isInfo = false;
+        boolean eventsToday = false;
 
         int calDay = calendar.get(Calendar.DAY_OF_MONTH);
         int calMon = calendar.get(Calendar.MONTH) + 1;
@@ -193,12 +189,12 @@ public class DayFragment extends Fragment {
                 time.add(data.get(i).getStartTime() + "-" + data.get(i).getEndTime());
                 des.add(data.get(i).getType());
 
-                isInfo = true;
+                eventsToday = true;
             }
         }
 
-        if (!isInfo) {
-            result.add(new DataObject("No events today", date.toString()));
+        if (!eventsToday) {
+            (mView.findViewById(R.id.no_class_message)).setVisibility(View.VISIBLE);
             return result;
         }
 
