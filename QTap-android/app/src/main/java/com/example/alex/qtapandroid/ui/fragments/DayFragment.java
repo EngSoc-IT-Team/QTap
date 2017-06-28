@@ -19,6 +19,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.annotation.Nullable;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
@@ -43,7 +44,6 @@ public class DayFragment extends Fragment {
     private TextView mDateText;
     private String mDateString;
     private int mNumDaysChange;
-    private boolean mIsChanged;
     private Calendar mCalendar;
 
     @Nullable
@@ -70,9 +70,20 @@ public class DayFragment extends Fragment {
         mAdapter = new RecyclerViewAdapter(getDayEventData(mCalendar));
         mRecyclerView.setAdapter(mAdapter);
 
-        //need both view listeners as mView is little space above cards
-        mRecyclerView.setOnTouchListener(mGestureListener);
-        mView.setOnTouchListener(mGestureListener);
+        Button nextButton = (Button) mView.findViewById(R.id.next);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeDate(1);
+            }
+        });
+        Button prevButton = (Button) mView.findViewById(R.id.prev);
+        prevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeDate(-1);
+            }
+        });
 
         ((RecyclerViewAdapter) mAdapter).setOnItemClickListener(new RecyclerViewAdapter
                 .MyClickListener() {
@@ -138,46 +149,11 @@ public class DayFragment extends Fragment {
         mNavView.getMenu().findItem(R.id.nav_day).setChecked(true);
     }
 
-    public void changeDate() {
-        mCalendar.add(Calendar.DAY_OF_YEAR, mNumDaysChange);
-        mNumDaysChange = 0;
-        mIsChanged = false;
+    public void changeDate(int numChange) {
+        mCalendar.add(Calendar.DAY_OF_YEAR, numChange);
         mAdapter = new RecyclerViewAdapter(getDayEventData(mCalendar));
         mRecyclerView.setAdapter(mAdapter);
     }
-
-    final GestureDetector mGestureDetector = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener() {
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            final int SWIPE_MIN_DISTANCE = 100;
-            final int SWIPE_MAX_OFF_PATH = 250;
-            try {
-                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                    return false;
-                if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE) {
-                    mNumDaysChange = 1;
-                    mIsChanged = true;
-                } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE) {
-                    mNumDaysChange = -1;
-                    mIsChanged = true;
-                }
-            } catch (Exception e) {
-                //don't change day
-                Log.d("GESTURE", "onFling called, Error: " + e.getMessage());
-            }
-            return super.onFling(e1, e2, velocityX, velocityY);
-        }
-    });
-
-    View.OnTouchListener mGestureListener = new View.OnTouchListener() {
-        public boolean onTouch(View v, MotionEvent event) {
-            boolean worked = mGestureDetector.onTouchEvent(event);
-            if (mIsChanged) {
-                changeDate();
-            }
-            return worked;
-        }
-    };
 
     public ArrayList<DataObject> getDayEventData(Calendar calendar) {
         OneClassManager oneClassManager = new OneClassManager(this.getContext());
