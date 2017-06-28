@@ -26,7 +26,7 @@ import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
+    private final int REQUEST_LOCATION_PERMISSIONS = 1;
 
     private GoogleMap mMap;
 
@@ -44,7 +44,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .build();
     }
 
-    private void requestPermissions() {
+    private void requestLocationPermissions() {
         int accessCoarse = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION);
         int accessFine = ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION);
         List<String> listPermissionsNeeded = new ArrayList<>();
@@ -57,19 +57,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         if (!listPermissionsNeeded.isEmpty()) {
             ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray
-                    (new String[listPermissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
+                    (new String[listPermissionsNeeded.size()]), REQUEST_LOCATION_PERMISSIONS);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode==REQUEST_LOCATION_PERMISSIONS &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            mMap.setMyLocationEnabled(true);
         }
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+        //need permission to allow user to go to their location - check if already have it
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions();
+            requestLocationPermissions();
+        } else {
+            mMap.setMyLocationEnabled(true);
         }
-
-        mMap = googleMap;
-        mMap.setMyLocationEnabled(true);
         createMarkers();
         //move map to ILC area
         CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(44.228185, -76.492447)).zoom(16).build();
