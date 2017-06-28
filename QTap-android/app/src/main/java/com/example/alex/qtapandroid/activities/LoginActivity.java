@@ -291,16 +291,6 @@ public class LoginActivity extends AppCompatActivity {
                             if (cal.after(lastWeek)) {
                                 Log.d(TAG, "data is less than one week old");
 
-                                //// Remove this section after school calendar exists again
-                                final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
-                                final ParseICS parser = new ParseICS(LoginActivity.this);
-                                String url = "http://enterpriseair.tk/temp/testCal.ics";  // TODO: remove this test url
-                                downloadICS.execute(url);
-                                Log.d(TAG, "Parsing...!");
-                                parser.parseICSData();
-                                Log.d(TAG, "Done! -> Starting");
-                                //// Remove this section after debugging finished
-
                                 startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
                             }
                         } catch (ParseException e) {
