@@ -152,6 +152,8 @@ public class DayFragment extends Fragment {
     }
 
     public ArrayList<DataObject> getDayEventData(Calendar calendar) {
+        TextView noClassMessage=(TextView)mView.findViewById(R.id.no_class_message);
+        noClassMessage.setVisibility(View.GONE); //updates day view when go to new day - may have class
         OneClassManager oneClassManager = new OneClassManager(this.getContext());
 
         List<String> list = new ArrayList<String>();
@@ -194,7 +196,7 @@ public class DayFragment extends Fragment {
         }
 
         if (!eventsToday) {
-            (mView.findViewById(R.id.no_class_message)).setVisibility(View.VISIBLE);
+            noClassMessage.setVisibility(View.VISIBLE);
             return result;
         }
 
