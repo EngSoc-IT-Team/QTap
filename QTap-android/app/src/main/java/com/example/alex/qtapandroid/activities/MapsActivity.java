@@ -26,7 +26,7 @@ import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    private final int REQUEST_LOCATION_PERMISSIONS = 1;
+    public static final int REQUEST_LOCATION_PERMISSIONS = 1;
 
     private GoogleMap mMap;
 

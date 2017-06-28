@@ -3,6 +3,7 @@ package com.example.alex.qtapandroid.ui.fragments;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.activities.MapsActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -29,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventInfoFragment extends Fragment {
-    private final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
 
     String mEventTitle, data2, mDate;
 
@@ -67,8 +68,9 @@ public class EventInfoFragment extends Fragment {
                 if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
                         ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions();
+                } else {
+                    mGoogleMap.setMyLocationEnabled(true);
                 }
-                mGoogleMap.setMyLocationEnabled(true);
                 String loc = data2.substring(data2.indexOf("at:") + 4, data2.length());
                 double[] address = icsToBuilding.getAddress(loc);
                 LatLng building = new LatLng(address[0], address[1]);
@@ -95,7 +97,7 @@ public class EventInfoFragment extends Fragment {
         }
         if (!listPermissionsNeeded.isEmpty()) {
             ActivityCompat.requestPermissions(getActivity(),
-                    listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
+                    listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), MapsActivity.REQUEST_LOCATION_PERMISSIONS);
         }
     }
 
@@ -136,5 +138,14 @@ public class EventInfoFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         mMapView.onDestroy();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == MapsActivity.REQUEST_LOCATION_PERMISSIONS &&
+                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            mGoogleMap.setMyLocationEnabled(true);
+        }
     }
 }
