@@ -18,8 +18,12 @@ import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 
 import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Activity for the settings. Can see NetID, time since calendar was last synced and can logout here
@@ -58,7 +62,22 @@ public class SettingsActivity extends AppCompatActivity {
         String uNetID = user.get(0).getNetid(); //only ever one user in database
         TextView netID = (TextView) findViewById(R.id.netID);
         TextView date = (TextView) findViewById(R.id.login_date);
+        TextView calDate = (TextView)  findViewById(R.id.calendar_date);
         date.setText(currentDateTimeString);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+        Calendar cal = Calendar.getInstance();;
+        String calInitDate = user.get(0).getDateInit();
+        calDate.setText(calInitDate);
+
+        try {
+            cal.setTime(sdf.parse(user.get(0).getDateInit()));// all done
+            SimpleDateFormat initDate = new SimpleDateFormat("MMM d, y h:m:s a");
+            initDate.setCalendar(cal);
+            calDate.setText(initDate.format((cal.getTime())));
+        }catch (ParseException e){
+
+        }
         netID.setText(uNetID);
     }
 

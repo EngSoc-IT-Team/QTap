@@ -199,7 +199,7 @@ public class DayFragment extends Fragment {
             noClassMessage.setVisibility(View.VISIBLE);
             return result;
         }
-
+            (mView.findViewById(R.id.no_class_message)).setVisibility(View.GONE);
 
         int startHour;
         int startMin;

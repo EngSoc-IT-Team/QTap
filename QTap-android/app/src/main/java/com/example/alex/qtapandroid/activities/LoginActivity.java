@@ -265,6 +265,8 @@ public class LoginActivity extends AppCompatActivity {
                         if (!url.equals("noURL")) {
                             Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
                            //ADD BACK downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
+                            url = "http://enterpriseair.tk/temp/testCal.ics"; // Add this line for debugging purposes - TODO: Remove this bypass
+                            downloadICS.execute(url); // Not sure why this was removed, it's kinda important :/
                             Log.d(TAG, "Parsing...!");
                             parser.parseICSData();
                             Log.d(TAG, "Done!");
@@ -288,6 +290,7 @@ public class LoginActivity extends AppCompatActivity {
                             cal.setTime(sdf.parse(user.get(0).getDateInit()));// all done
                             if (cal.after(lastWeek)) {
                                 Log.d(TAG, "data is less than one week old");
+
                                 startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
                             }
                         } catch (ParseException e) {
@@ -295,8 +298,6 @@ public class LoginActivity extends AppCompatActivity {
                         }
 
                     }
-                    final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
-                    Log.d(TAG, "done!");
                 }
                 startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
             }
