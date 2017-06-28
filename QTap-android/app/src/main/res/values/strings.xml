@@ -52,6 +52,7 @@
     <string name="logout">Log Out</string>
     <string name="faculty">Faculty</string>
     <string name="about">About</string>
+    <string name="prev">PREV</string>
 
     <!-- other strings -->
     <string name="ellipses">&#8226;</string>
