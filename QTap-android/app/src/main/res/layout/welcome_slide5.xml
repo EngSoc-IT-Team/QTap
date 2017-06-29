@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/holo_red_dark">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/holo_red_dark">
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -14,26 +14,27 @@
         <ImageView
             android:layout_width="@dimen/img_width_height"
             android:layout_height="@dimen/img_width_height"
-            android:src="@drawable/ic_it_team_svg" />
+            android:src="@drawable/ic_it_team_svg"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Brought to you by:"
+            android:layout_marginTop="10dp"
+            android:text="@string/brought_by"
             android:textColor="@android:color/white"
             android:textSize="@dimen/slide_title"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="5dp"
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
-            android:text="Queen's Engineering Society's IT Team"
+            android:text="@string/it_team"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="@dimen/slide_desc" />
+            android:textSize="@dimen/slide_desc"/>
 
     </LinearLayout>
 

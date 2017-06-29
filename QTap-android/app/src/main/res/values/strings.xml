@@ -1,14 +1,16 @@
 <resources>
     <!--sections for introduction screen -->
-    <string name="slide_1_title">Welcome to QTap!</string>
+    <string name="slide_1_title">Welcome to QLife!</string>
     <string name="slide_1_desc">The one app for all of your Queen\'s needs</string>
     <string name="slide_2_title">Class Schedule</string>
     <string name="slide_2_desc">See when your classes are</string>
     <string name="slide_3_title">Campus Info</string>
-    <string name="slide_3_desc">Easily check building hours, ATM locations and more</string>
+    <string name="slide_3_desc">Easily check building hours, food locations and more</string>
     <string name="slide_4_title">Queens Food</string>
-    <string name="slide_4_desc">Easily pay with QTap at any roomNum on campus</string>
+    <string name="slide_4_desc">Easily pay with QLife at any roomNum on campus</string>
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="brought_by">Brought to you by</string>
+    <string name="it_team">Queen\'s Engineering Society IT Team</string>
     <string name="play_again">Play Again</string>
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
