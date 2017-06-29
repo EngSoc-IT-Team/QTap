@@ -5,9 +5,11 @@
     <string name="slide_2_title">Class Schedule</string>
     <string name="slide_2_desc">See when your classes are</string>
     <string name="slide_3_title">Campus Info</string>
+    <string name="slide_4_title">Information in the Cloud</string>
+    <string name="slide_4_desc">Your information is downloaded when you login. After logging in, you don\'t need an Internet connection!</string>
     <string name="slide_3_desc">Easily check building hours, food locations and more</string>
-    <string name="slide_4_title">Queens Food</string>
-    <string name="slide_4_desc">Easily pay with QLife at any roomNum on campus</string>
+    <string name="slide_5_title">Queens Food</string>
+    <string name="slide_5_desc">Easily pay with QLife at any roomNum on campus</string>
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="brought_by">Brought to you by</string>
     <string name="it_team">Queen\'s Engineering Society IT Team</string>
