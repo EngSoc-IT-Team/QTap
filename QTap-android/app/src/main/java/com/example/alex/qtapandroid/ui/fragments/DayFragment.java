@@ -12,6 +12,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.transition.TransitionInflater;
+import android.util.Log;
+import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.activities.MainTabActivity;
 import com.example.alex.qtapandroid.common.card.elements.DataObject;
 import com.example.alex.qtapandroid.common.card.elements.RecyclerViewAdapter;
 import com.example.alex.qtapandroid.common.database.courses.OneClass;
@@ -27,12 +30,17 @@ import com.example.alex.qtapandroid.common.database.courses.OneClassManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 public class DayFragment extends Fragment {
 
     public static final String TAG_TITLE = "event_title";
     public static final String TAG_DATE = "date";
+
+    private static int mInstances = 0;
+    private static SparseIntArray mArray = new SparseIntArray();
+    private int mTotalDaysChange = 0;
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
@@ -71,6 +79,7 @@ public class DayFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 changeDate(1);
+                mTotalDaysChange += 1;
             }
         });
         Button prevButton = (Button) mView.findViewById(R.id.prev);
@@ -78,6 +87,7 @@ public class DayFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 changeDate(-1);
+                mTotalDaysChange += -1;
             }
         });
 
@@ -133,15 +143,34 @@ public class DayFragment extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mInstances++;
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
+        if (!((MainTabActivity) getActivity()).isToActivity()) {
+            mArray.put(mInstances, mTotalDaysChange); //save number of days to move day view
+        } else {
+            mArray.put(mInstances, 0);
+        }
         mNavView.getMenu().findItem(R.id.nav_day).setChecked(false);
+    }
+
+    @Override
+    public void onDestroy() {
+        mArray.delete(mInstances); //instance gone, don't need entry
+        mInstances--;
+        super.onDestroy();
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
+        changeDate(mArray.get(mInstances, 0)); //account for day changed before moved fragments
         mNavView.getMenu().findItem(R.id.nav_day).setChecked(true);
     }
 
@@ -152,7 +181,7 @@ public class DayFragment extends Fragment {
     }
 
     public ArrayList<DataObject> getDayEventData(Calendar calendar) {
-        TextView noClassMessage=(TextView)mView.findViewById(R.id.no_class_message);
+        TextView noClassMessage = (TextView) mView.findViewById(R.id.no_class_message);
         noClassMessage.setVisibility(View.GONE); //updates day view when go to new day - may have class
         OneClassManager oneClassManager = new OneClassManager(this.getContext());
 

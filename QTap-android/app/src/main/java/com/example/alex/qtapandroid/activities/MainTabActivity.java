@@ -37,6 +37,8 @@ import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
  */
 public class MainTabActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    private boolean mToActivity;
+
     private DrawerLayout mDrawer;
     private FragmentManager mFragManager;
 
@@ -64,8 +66,10 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
 
     @Override
     public void onBackPressed() {
+        mToActivity=false;
         mDrawer.closeDrawer(GravityCompat.START);
         if (mFragManager.getBackStackEntryCount() <= 1) { //last item in back stack, so close app
+            mToActivity=true;
             moveTaskToBack(true);
         } else {
             super.onBackPressed();
@@ -81,12 +85,15 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        mToActivity=false;
         switch (item.getItemId()) {
             case R.id.settings:
+                mToActivity=true;
                 Intent settings = new Intent(MainTabActivity.this, SettingsActivity.class);
                 startActivity(settings);
                 break;
             case R.id.about:
+                mToActivity=true;
                 Intent about = new Intent(MainTabActivity.this, AboutActivity.class);
                 startActivity(about);
                 break;
@@ -109,13 +116,14 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
      * @param viewId the ID of the drawer item user clicked.
      */
     private void displayView(int viewId) {
-
+        mToActivity=false;
         Fragment fragment = null;
         switch (viewId) {
             case R.id.nav_month:
                 fragment = new MonthFragment();
                 break;
             case R.id.nav_map:
+                mToActivity=true;
                 startActivity(new Intent(MainTabActivity.this, MapsActivity.class));
                 break;
             case R.id.nav_day:
@@ -142,5 +150,9 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
     protected void onPause() {
         super.onPause();
         DatabaseAccessor.getDatabase().close(); //ensures only one database connection is open at a time
+    }
+
+    public boolean isToActivity() {
+        return mToActivity;
     }
 }
