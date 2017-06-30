@@ -6,16 +6,22 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.buildings.Building;
 import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,8 +50,8 @@ public class BuildingsFragment extends ListFragment {
         for (Building building : buildings) {
             HashMap<String, String> map = new HashMap<>();
             map.put(TAG_NAME, building.getName());
-            String food = building.getFood() ? "Yes" : "No";
             map.put(TAG_PURPOSE, building.getPurpose());
+            String food = building.getFood() ? "Yes" : "No";
             map.put(TAG_FOOD, food);
             buildingsList.add(map);
         }
