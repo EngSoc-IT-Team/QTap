@@ -12,6 +12,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.alex.qtapandroid.common.PrefManager;
 import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.SqlStringStatements;
@@ -52,7 +53,9 @@ public class SettingsActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 ClearData(v);
-                Intent intent = new Intent(SettingsActivity.this, LoginActivity.class);
+                PrefManager mPrefManager = new PrefManager(getApplicationContext());
+                mPrefManager.setFirstTimeLaunch(true);
+                Intent intent = new Intent(SettingsActivity.this, StartupActivity.class);
                 startActivity(intent);
                 finish();
             }

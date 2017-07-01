@@ -290,6 +290,19 @@ public class LoginActivity extends AppCompatActivity {
                                 Log.d(TAG, "data is less than one week old");
 
                                 startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
+                            } else {
+                                final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
+                                final ParseICS parser = new ParseICS(LoginActivity.this);
+                                String url = preferences.getString("mIcsUrl", "noURL");
+                                if (!url.equals("noURL")) {
+                                    Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
+                                    //ADD BACK downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
+                                    url = "http://enterpriseair.tk/temp/testCal.ics"; // Add this line for debugging purposes - TODO: Remove this bypass
+                                    downloadICS.execute(url); // Not sure why this was removed, it's kinda important :/
+                                    Log.d(TAG, "Parsing...!");
+                                    parser.parseICSData();
+                                    Log.d(TAG, "Done!");
+                                }
                             }
                         } catch (ParseException e) {
 
