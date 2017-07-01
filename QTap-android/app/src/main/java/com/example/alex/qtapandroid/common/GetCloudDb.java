@@ -23,10 +23,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -145,43 +141,9 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
     private void emergencyContacts(JSONObject json) {
         try {
             JSONArray contacts = json.getJSONArray(TAG_EMERGENCY_CONTACTS);
-
-            JSONArray sortedJsonArray = new JSONArray();
-
-            List<JSONObject> jsonValues = new ArrayList<JSONObject>();
-            for (int i = 0; i < contacts.length(); i++) {
-                jsonValues.add(contacts.getJSONObject(i));
-            }
-            Collections.sort( jsonValues, new Comparator<JSONObject>() {
-                //You can change "Name" with "ID" if you want to sort by ID
-                private static final String KEY_NAME = "Name";
-
-                @Override
-                public int compare(JSONObject a, JSONObject b) {
-                    String valA = new String();
-                    String valB = new String();
-
-                    try {
-                        valA = (String) a.get(KEY_NAME);
-                        valB = (String) b.get(KEY_NAME);
-                    }
-                    catch (JSONException e) {
-                        //do something
-                    }
-
-                    return valA.compareTo(valB);
-                    //if you want to change the sort order, simply use the following:
-                    //return -valA.compareTo(valB);
-                }
-            });
-
-            for (int i = 0; i < contacts.length(); i++) {
-                sortedJsonArray.put(jsonValues.get(i));
-            }
-
             EmergencyContactsManager tableManager = new EmergencyContactsManager(mContext);
             for (int i = 0; i < contacts.length(); i++) {
-                JSONObject contact = sortedJsonArray.getJSONObject(i);
+                JSONObject contact = contacts.getJSONObject(i);
                 tableManager.insertRow(new EmergencyContact(contact.getString(TAG_NAME), contact.getString(TAG_NUMBER), contact.getString(TAG_DESCRIPTION)));
             }
         } catch (JSONException e) {
@@ -192,43 +154,9 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
     private void engineeringContacts(JSONObject json) {
         try {
             JSONArray contacts = json.getJSONArray(TAG_ENGINEERING_CONTACTS);
-
-            JSONArray sortedJsonArray = new JSONArray();
-
-            List<JSONObject> jsonValues = new ArrayList<JSONObject>();
-            for (int i = 0; i < contacts.length(); i++) {
-                jsonValues.add(contacts.getJSONObject(i));
-            }
-            Collections.sort( jsonValues, new Comparator<JSONObject>() {
-                //You can change "Name" with "ID" if you want to sort by ID
-                private static final String KEY_NAME = "Name";
-
-                @Override
-                public int compare(JSONObject a, JSONObject b) {
-                    String valA = new String();
-                    String valB = new String();
-
-                    try {
-                        valA = (String) a.get(KEY_NAME);
-                        valB = (String) b.get(KEY_NAME);
-                    }
-                    catch (JSONException e) {
-                        //do something
-                    }
-
-                    return valA.compareTo(valB);
-                    //if you want to change the sort order, simply use the following:
-                    //return -valA.compareTo(valB);
-                }
-            });
-
-            for (int i = 0; i < contacts.length(); i++) {
-                sortedJsonArray.put(jsonValues.get(i));
-            }
-
             EngineeringContactsManager tableManager = new EngineeringContactsManager(mContext);
             for (int i = 0; i < contacts.length(); i++) {
-                JSONObject contact = sortedJsonArray.getJSONObject(i);
+                JSONObject contact = contacts.getJSONObject(i);
                 tableManager.insertRow(new EngineeringContact(contact.getString(TAG_NAME), contact.getString(TAG_EMAIL),
                         contact.getString(TAG_POSITION), contact.getString(TAG_DESCRIPTION)));
             }
@@ -240,43 +168,9 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
     private void buildings(JSONObject json) {
         try {
             JSONArray buildings = json.getJSONArray(TAG_BUILDINGS);
-
-            JSONArray sortedJsonArray = new JSONArray();
-
-            List<JSONObject> jsonValues = new ArrayList<JSONObject>();
-            for (int i = 0; i < buildings.length(); i++) {
-                jsonValues.add(buildings.getJSONObject(i));
-            }
-            Collections.sort( jsonValues, new Comparator<JSONObject>() {
-                //You can change "Name" with "ID" if you want to sort by ID
-                private static final String KEY_NAME = "Name";
-
-                @Override
-                public int compare(JSONObject a, JSONObject b) {
-                    String valA = new String();
-                    String valB = new String();
-
-                    try {
-                        valA = (String) a.get(KEY_NAME);
-                        valB = (String) b.get(KEY_NAME);
-                    }
-                    catch (JSONException e) {
-                        //do something
-                    }
-
-                    return valA.compareTo(valB);
-                    //if you want to change the sort order, simply use the following:
-                    //return -valA.compareTo(valB);
-                }
-            });
-
-            for (int i = 0; i < buildings.length(); i++) {
-                sortedJsonArray.put(jsonValues.get(i));
-            }
-
             BuildingManager manager = new BuildingManager(mContext);
             for (int i = 0; i < buildings.length(); i++) {
-                JSONObject building = sortedJsonArray.getJSONObject(i);
+                JSONObject building = buildings.getJSONObject(i);
                 //getInt()>0 because SQL has 0/1 there, not real boolean
                 manager.insertRow(new Building(building.getString(TAG_NAME), building.getString(TAG_PURPOSE),
                         building.getInt(TAG_BOOK_ROMMS) > 0, building.getInt(TAG_FOOD) > 0, building.getInt(TAG_ATM) > 0,
