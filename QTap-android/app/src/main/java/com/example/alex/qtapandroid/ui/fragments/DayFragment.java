@@ -63,8 +63,8 @@ public class DayFragment extends Fragment {
             mCalendar.set(Calendar.DAY_OF_MONTH, bundle.getInt(MonthFragment.TAG_DAY));
             mCalendar.set(Calendar.MONTH, bundle.getInt(MonthFragment.TAG_MONTH));
             mCalendar.set(Calendar.YEAR, bundle.getInt(MonthFragment.TAG_YEAR));
-        } else {
-            mCalendar.setTimeInMillis(System.currentTimeMillis());
+        } else { // Do nothing, calendar is the right data already
+
         }
 
         mRecyclerView = (RecyclerView) mView.findViewById(R.id.my_recycler_view);
