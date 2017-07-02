@@ -222,12 +222,12 @@ public class ParseICS {
                         year = Integer.parseInt(sTime.substring(0, 4));
                     } else if (string.contains("DTEND")) {
                         eTime = string.replaceAll("[^0-9]", "");
-//                        Log.d(TAG, "time that's crashing: " + eTime);
                         hour = Integer.parseInt(eTime.substring(8, 10));
                         minute = Integer.parseInt(eTime.substring(10, 12));
 
                     } else if (string.contains("SUMMARY")) {
-                        name = (string.substring(string.lastIndexOf(":") + 1));
+                        //take part of string that is the course code
+                        name = (string.substring(string.lastIndexOf(":") + 1, string.indexOf(" ", string.indexOf(" ") + 1)));
                     }
                 }
             }

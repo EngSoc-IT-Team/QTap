@@ -9,7 +9,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +31,7 @@ import java.util.List;
 
 public class EventInfoFragment extends Fragment {
 
-    private String mEventTitle, data2, mDate;
-
+    private String mEventTitle, mEventLoc, mDate;
     private View myView;
     private NavigationView mNavView;
     private MapView mMapView;
@@ -44,7 +42,7 @@ public class EventInfoFragment extends Fragment {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             mEventTitle = bundle.getString(DayFragment.TAG_TITLE);
-            data2 = bundle.getString("data2");
+            mEventLoc = bundle.getString(DayFragment.TAG_LOC);
             mDate = bundle.getString(DayFragment.TAG_DATE);
         }
         myView = inflater.inflate(R.layout.fragment_event_info, container, false);
@@ -68,7 +66,7 @@ public class EventInfoFragment extends Fragment {
                 } else {
                     mGoogleMap.setMyLocationEnabled(true);
                 }
-                String loc = data2.substring(data2.indexOf("at:") + 4, data2.length());
+                String loc = mEventLoc.substring(mEventLoc.indexOf("at:") + 4, mEventLoc.length());
                 double[] address = icsToBuilding.getAddress(loc);
                 LatLng building = new LatLng(address[0], address[1]);
                 mGoogleMap.addMarker(new MarkerOptions().position(building).title(loc)).showInfoWindow();
@@ -100,12 +98,12 @@ public class EventInfoFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        TextView eventDate = (TextView) view.findViewById(R.id.EventDate);
+        eventDate.setText(mDate);
+        TextView eventLoc = (TextView) view.findViewById(R.id.EventLoc);
+        eventLoc.setText(mEventLoc);
         TextView eventName = (TextView) view.findViewById(R.id.EventName);
         eventName.setText(mEventTitle);
-        TextView eventLoc = (TextView) view.findViewById(R.id.EventLoc);
-        eventLoc.setText(data2);
-        TextView eventDate = (TextView) view.findViewById(R.id.EventDate);
-        eventDate.setText(mEventTitle);
     }
 
     @Override

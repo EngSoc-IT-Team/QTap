@@ -37,6 +37,7 @@ public class DayFragment extends Fragment {
 
     public static final String TAG_TITLE = "event_title";
     public static final String TAG_DATE = "date";
+    public static final String TAG_LOC = "event_locat";
 
     private static int mInstances = 0;
     private static SparseIntArray mArray = new SparseIntArray();
@@ -117,7 +118,7 @@ public class DayFragment extends Fragment {
 
                 Bundle bundle = new Bundle();
                 bundle.putString(TAG_TITLE, data.getmText1());
-                bundle.putString("data2", data.getmText2());
+                bundle.putString(TAG_LOC, data.getmText2());
                 bundle.putString(TAG_DATE, mDateString);
                 bundle.putString("TRANS_TEXT", cardName);
                 nextFrag.setArguments(bundle);
