@@ -12,7 +12,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
 import android.transition.TransitionInflater;
-import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,7 +29,7 @@ import com.example.alex.qtapandroid.common.database.courses.OneClassManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.List;
 
 public class DayFragment extends Fragment {
@@ -56,7 +55,7 @@ public class DayFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         mView = inflater.inflate(R.layout.fragment_day, container, false);
-        mDateText = (TextView) mView.findViewById(R.id.DateTextDisplay);
+        mDateText = (TextView) mView.findViewById(R.id.date);
 
         Bundle bundle = getArguments();
         mCalendar = Calendar.getInstance();
@@ -200,11 +199,9 @@ public class DayFragment extends Fragment {
         int calYear = calendar.get(Calendar.YEAR);
 
         CharSequence f = DateFormat.format("yyyy-MM-dd", calendar.getTime());
-        CharSequence date = DateFormat.format("EEE, d MMM, yyyy", mCalendar.getTime());
+        CharSequence date = DateFormat.format("EEEE, MMMM d, yyyy", mCalendar.getTime());
         mDateString = date.toString();
-
         mDateText.setText(date);
-//        list.add("Showing Information For: " + mDate);
 
         for (int i = 0; i < data.size(); i++) {             // look for the selected
             // day in the events from the database
