@@ -32,7 +32,7 @@ import java.util.List;
 
 public class EventInfoFragment extends Fragment {
 
-    String mEventTitle, data2, mDate;
+    private String mEventTitle, data2, mDate;
 
     private View myView;
     private NavigationView mNavView;
@@ -42,14 +42,11 @@ public class EventInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Bundle bundle = this.getArguments();
-        String actionTitle = "";
         if (bundle != null) {
-            actionTitle = bundle.getString("ACTION");
             mEventTitle = bundle.getString(DayFragment.TAG_TITLE);
             data2 = bundle.getString("data2");
             mDate = bundle.getString(DayFragment.TAG_DATE);
         }
-        getActivity().setTitle(actionTitle);
         myView = inflater.inflate(R.layout.fragment_event_info, container, false);
         mMapView = (MapView) myView.findViewById(R.id.event_map);
         mMapView.onCreate(savedInstanceState);
@@ -74,7 +71,7 @@ public class EventInfoFragment extends Fragment {
                 String loc = data2.substring(data2.indexOf("at:") + 4, data2.length());
                 double[] address = icsToBuilding.getAddress(loc);
                 LatLng building = new LatLng(address[0], address[1]);
-                mGoogleMap.addMarker(new MarkerOptions().position(building).title(loc).snippet(mEventTitle)).showInfoWindow();
+                mGoogleMap.addMarker(new MarkerOptions().position(building).title(loc)).showInfoWindow();
 
                 //For zooming automatically to the location of the marker
                 CameraPosition cameraPosition = new CameraPosition.Builder().target(building).zoom(16).build();
