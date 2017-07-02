@@ -36,7 +36,7 @@ if (mysql_num_rows($result) > 0) {
 }
 
 //buildings
-$result = mysql_query("SELECT * FROM Buildings") or die(mysql_error());
+$result = mysql_query("SELECT * FROM Buildings ORDER BY Name") or die(mysql_error());
 // check for empty result
 if (mysql_num_rows($result) > 0) {
     $response["Buildings"] = array();
