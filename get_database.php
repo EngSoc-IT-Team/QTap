@@ -54,6 +54,23 @@ if (mysql_num_rows($result) > 0) {
     }
 }
 
+//food
+$result = mysql_query("SELECT * FROM Food ORDER BY Name") or die(mysql_error());
+// check for empty result
+if (mysql_num_rows($result) > 0) {
+    $response["Food"] = array();
+    while ($row = mysql_fetch_array($result)) {
+        // temp user array
+        $product = array();
+        $product["Name"] = $row["Name"];
+        $product["MealPlan"] = $row["MealPlan"];
+        $product["Card"] = $row["Card"];
+        $product["Information"] = $row["Information"];
+        $product["BuildingID"] = $row["BuildingID"];
+        array_push($response["Food"], $product);
+    }
+}
+
 if (count($response) > 0) {
     $response["Success"] = 1;
 } else {
