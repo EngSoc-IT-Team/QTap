@@ -6,22 +6,16 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.buildings.Building;
 import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,14 +26,6 @@ import java.util.HashMap;
  */
 public class BuildingsFragment extends ListFragment {
 
-    private static final String TAG_NAME = "Name";
-    private static final String TAG_PURPOSE = "Purpose";
-    private static final String TAG_BOOK_ROOMS = "BookRooms";
-    private static final String TAG_FOOD = "Food";
-    private static final String TAG_ATM = "ATM";
-    private static final String TAG_LAT = "Lat";
-    private static final String TAG_LON = "Lon";
-
     private NavigationView mNavView;
 
     @Override
@@ -49,14 +35,14 @@ public class BuildingsFragment extends ListFragment {
         ArrayList<Building> buildings = (new BuildingManager(getActivity().getApplicationContext())).getTable();
         for (Building building : buildings) {
             HashMap<String, String> map = new HashMap<>();
-            map.put(TAG_NAME, building.getName());
-            map.put(TAG_PURPOSE, building.getPurpose());
+            map.put(Building.COLUMN_NAME, building.getName());
+            map.put(Building.COLUMN_PURPOSE, building.getPurpose());
             String food = building.getFood() ? "Yes" : "No";
-            map.put(TAG_FOOD, food);
+            map.put(Building.COLUMN_FOOD, food);
             buildingsList.add(map);
         }
         ListAdapter adapter = new SimpleAdapter(getActivity().getApplicationContext(), buildingsList,
-                R.layout.buildings_list_item, new String[]{TAG_NAME, TAG_PURPOSE, TAG_FOOD}, new int[]{R.id.name, R.id.purpose, R.id.food});
+                R.layout.buildings_list_item, new String[]{Building.COLUMN_NAME, Building.COLUMN_PURPOSE, Building.COLUMN_FOOD}, new int[]{R.id.name, R.id.purpose, R.id.food});
         setListAdapter(adapter);
         return v;
     }

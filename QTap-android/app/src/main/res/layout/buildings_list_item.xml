@@ -60,7 +60,6 @@
                     android:layout_height="wrap_content"
                     android:layout_toEndOf="@id/has_food"
                     android:paddingTop="8dp"
-                    android:text="asdf"
                     android:textSize="13sp"/>
             </RelativeLayout>
         </LinearLayout>

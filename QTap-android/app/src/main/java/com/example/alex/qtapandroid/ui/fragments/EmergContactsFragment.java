@@ -1,7 +1,6 @@
 package com.example.alex.qtapandroid.ui.fragments;
 
 
-
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ListFragment;
@@ -28,10 +27,6 @@ import java.util.HashMap;
  */
 public class EmergContactsFragment extends ListFragment {
 
-    private static final String TAG_NAME = "Name";
-    private static final String TAG_NUMBER = "PhoneNumber";
-    private static final String TAG_DESCRIPTION = "Description";
-
     private NavigationView mNavView;
 
     @Override
@@ -41,13 +36,14 @@ public class EmergContactsFragment extends ListFragment {
         ArrayList<EmergencyContact> contacts = (new EmergencyContactsManager(getActivity().getApplicationContext())).getTable();
         for (EmergencyContact contact : contacts) {
             HashMap<String, String> map = new HashMap<>();
-            map.put(TAG_NAME, contact.getName());
-            map.put(TAG_NUMBER, contact.getPhoneNumber());
-            map.put(TAG_DESCRIPTION, contact.getDescription());
+            map.put(EmergencyContact.COLUMN_NAME, contact.getName());
+            map.put(EmergencyContact.COLUMN_PHONE_NUMBER, contact.getPhoneNumber());
+            map.put(EmergencyContact.COLUMN_DESCRIPTION, contact.getDescription());
             emergContactsList.add(map);
         }
         ListAdapter adapter = new SimpleAdapter(getActivity().getApplicationContext(), emergContactsList,
-                R.layout.emerg_contacts_list_item, new String[]{TAG_NAME, TAG_NUMBER, TAG_DESCRIPTION}, new int[]{R.id.name, R.id.number, R.id.description});
+                R.layout.emerg_contacts_list_item, new String[]{EmergencyContact.COLUMN_NAME, EmergencyContact.COLUMN_PHONE_NUMBER,
+                EmergencyContact.COLUMN_DESCRIPTION}, new int[]{R.id.name, R.id.number, R.id.description});
         setListAdapter(adapter);
         return v;
     }

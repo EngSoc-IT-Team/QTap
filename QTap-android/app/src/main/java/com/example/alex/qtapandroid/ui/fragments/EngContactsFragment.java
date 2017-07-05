@@ -27,11 +27,6 @@ import java.util.HashMap;
  */
 public class EngContactsFragment extends ListFragment {
 
-    private static final String TAG_NAME = "Name";
-    private static final String TAG_EMAIL = "Email";
-    private static final String TAG_POSITION = "Position";
-    private static final String TAG_DESCRIPTION = "Description";
-
     private NavigationView mNavView;
 
     @Override
@@ -41,14 +36,15 @@ public class EngContactsFragment extends ListFragment {
         ArrayList<EngineeringContact> contacts = (new EngineeringContactsManager(getActivity().getApplicationContext())).getTable();
         for (EngineeringContact contact : contacts) {
             HashMap<String, String> map = new HashMap<>();
-            map.put(TAG_NAME, contact.getName());
-            map.put(TAG_EMAIL, contact.getEmail());
-            map.put(TAG_POSITION, contact.getPosition());
-            map.put(TAG_DESCRIPTION, contact.getDescription());
+            map.put(EngineeringContact.COLUMN_NAME, contact.getName());
+            map.put(EngineeringContact.COLUMN_EMAIL, contact.getEmail());
+            map.put(EngineeringContact.COLUMN_POSITION, contact.getPosition());
+            map.put(EngineeringContact.COLUMN_DESCRIPTION, contact.getDescription());
             engContactsList.add(map);
         }
         ListAdapter adapter = new SimpleAdapter(getActivity().getApplicationContext(), engContactsList,
-                R.layout.eng_contacts_list_item, new String[]{TAG_NAME, TAG_EMAIL, TAG_POSITION, TAG_DESCRIPTION}, new int[]{R.id.name, R.id.email, R.id.position, R.id.description});
+                R.layout.eng_contacts_list_item, new String[]{EngineeringContact.COLUMN_NAME, EngineeringContact.COLUMN_EMAIL,
+                EngineeringContact.COLUMN_POSITION, EngineeringContact.COLUMN_DESCRIPTION}, new int[]{R.id.name, R.id.email, R.id.position, R.id.description});
         setListAdapter(adapter);
         return v;
     }
