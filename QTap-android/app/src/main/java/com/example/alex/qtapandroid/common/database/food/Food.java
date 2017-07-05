@@ -57,12 +57,12 @@ public class Food implements BaseColumns {
     private int buildingID;
     private String name, information;
     private boolean mealPlan, card;
-    private float monStartHours, monStopHours, tueStartHours, tueStopHours, wedStartHours, wedStopHours, thurStartHours,
+    private double monStartHours, monStopHours, tueStartHours, tueStopHours, wedStartHours, wedStopHours, thurStartHours,
             thurStopHours, friStartHours, friStopHours, satStartHours, satStopHours, sunStartHours, sunStopHours;
 
-    public Food(String name, int buildingID, String information, boolean mealPlan, boolean card, float monStartHours, float monStopHours, float tueStartHours,
-                float tueStopHours, float wedStartHours, float wedStopHours, float thurStartHours, float thurStopHours, float friStartHours,
-                float friStopHours, float satStartHours, float satStopHours, float sunStartHours, float sunStopHours) {
+    public Food(String name, int buildingID, String information, boolean mealPlan, boolean card, double monStartHours, double monStopHours, double tueStartHours,
+                double tueStopHours, double wedStartHours, double wedStopHours, double thurStartHours, double thurStopHours, double friStartHours,
+                double friStopHours, double satStartHours, double satStopHours, double sunStartHours, double sunStopHours) {
         this.name = name;
         this.buildingID = buildingID;
         this.information = information;
@@ -141,115 +141,115 @@ public class Food implements BaseColumns {
         this.card = card;
     }
 
-    public float getMonStartHours() {
+    public double getMonStartHours() {
         return monStartHours;
     }
 
-    public void setMonStartHours(float monStartHours) {
+    public void setMonStartHours(double monStartHours) {
         this.monStartHours = monStartHours;
     }
 
-    public float getMonStopHours() {
+    public double getMonStopHours() {
         return monStopHours;
     }
 
-    public void setMonStopHours(float monStopHours) {
+    public void setMonStopHours(double monStopHours) {
         this.monStopHours = monStopHours;
     }
 
-    public float getTueStartHours() {
+    public double getTueStartHours() {
         return tueStartHours;
     }
 
-    public void setTueStartHours(float tueStartHours) {
+    public void setTueStartHours(double tueStartHours) {
         this.tueStartHours = tueStartHours;
     }
 
-    public float getTueStopHours() {
+    public double getTueStopHours() {
         return tueStopHours;
     }
 
-    public void setTueStopHours(float tueStopHours) {
+    public void setTueStopHours(double tueStopHours) {
         this.tueStopHours = tueStopHours;
     }
 
-    public float getWedStartHours() {
+    public double getWedStartHours() {
         return wedStartHours;
     }
 
-    public void setWedStartHours(float wedStartHours) {
+    public void setWedStartHours(double wedStartHours) {
         this.wedStartHours = wedStartHours;
     }
 
-    public float getWedStopHours() {
+    public double getWedStopHours() {
         return wedStopHours;
     }
 
-    public void setWedStopHours(float wedStopHours) {
+    public void setWedStopHours(double wedStopHours) {
         this.wedStopHours = wedStopHours;
     }
 
-    public float getThurStartHours() {
+    public double getThurStartHours() {
         return thurStartHours;
     }
 
-    public void setThurStartHours(float thurStartHours) {
+    public void setThurStartHours(double thurStartHours) {
         this.thurStartHours = thurStartHours;
     }
 
-    public float getThurStopHours() {
+    public double getThurStopHours() {
         return thurStopHours;
     }
 
-    public void setThurStopHours(float thurStopHours) {
+    public void setThurStopHours(double thurStopHours) {
         this.thurStopHours = thurStopHours;
     }
 
-    public float getFriStartHours() {
+    public double getFriStartHours() {
         return friStartHours;
     }
 
-    public void setFriStartHours(float friStartHours) {
+    public void setFriStartHours(double friStartHours) {
         this.friStartHours = friStartHours;
     }
 
-    public float getFriStopHours() {
+    public double getFriStopHours() {
         return friStopHours;
     }
 
-    public void setFriStopHours(float friStopHours) {
+    public void setFriStopHours(double friStopHours) {
         this.friStopHours = friStopHours;
     }
 
-    public float getSatStartHours() {
+    public double getSatStartHours() {
         return satStartHours;
     }
 
-    public void setSatStartHours(float satStartHours) {
+    public void setSatStartHours(double satStartHours) {
         this.satStartHours = satStartHours;
     }
 
-    public float getSatStopHours() {
+    public double getSatStopHours() {
         return satStopHours;
     }
 
-    public void setSatStopHours(float satStopHours) {
+    public void setSatStopHours(double satStopHours) {
         this.satStopHours = satStopHours;
     }
 
-    public float getSunStartHours() {
+    public double getSunStartHours() {
         return sunStartHours;
     }
 
-    public void setSunStartHours(float sunStartHours) {
+    public void setSunStartHours(double sunStartHours) {
         this.sunStartHours = sunStartHours;
     }
 
-    public float getSunStopHours() {
+    public double getSunStopHours() {
         return sunStopHours;
     }
 
-    public void setSunStopHours(float sunStopHours) {
+    public void setSunStopHours(double sunStopHours) {
         this.sunStopHours = sunStopHours;
     }
 }

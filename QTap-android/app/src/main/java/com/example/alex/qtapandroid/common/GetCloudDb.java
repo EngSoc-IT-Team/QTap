@@ -12,6 +12,8 @@ import com.example.alex.qtapandroid.common.database.contacts.emergency.Emergency
 import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContactsManager;
 import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContact;
 import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContactsManager;
+import com.example.alex.qtapandroid.common.database.food.Food;
+import com.example.alex.qtapandroid.common.database.food.FoodManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -32,24 +34,7 @@ import java.util.logging.Logger;
  */
 public class GetCloudDb extends AsyncTask<Void, Void, Void> {
 
-    //tables
-    private static final String TAG_EMERGENCY_CONTACTS = "EmergencyContacts";
-    private static final String TAG_ENGINEERING_CONTACTS = "EngineeringContacts";
-    private static final String TAG_BUILDINGS = "Buildings";
-
-    //fields for tables
     private static final String TAG_SUCCESS = "Success";
-    private static final String TAG_NAME = "Name";
-    private static final String TAG_EMAIL = "Email";
-    private static final String TAG_POSITION = "Position";
-    private static final String TAG_NUMBER = "PhoneNumber";
-    private static final String TAG_DESCRIPTION = "Description";
-    private static final String TAG_PURPOSE = "Purpose";
-    private static final String TAG_BOOK_ROMMS = "BookRooms";
-    private static final String TAG_FOOD = "Food";
-    private static final String TAG_ATM = "ATM";
-    private static final String TAG_LAT = "Lat";
-    private static final String TAG_LON = "Lon";
 
     private ProgressDialog mProgressDialog;
     private Context mContext;
@@ -136,15 +121,17 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
         emergencyContacts(json);
         engineeringContacts(json);
         buildings(json);
+        food(json);
     }
 
     private void emergencyContacts(JSONObject json) {
         try {
-            JSONArray contacts = json.getJSONArray(TAG_EMERGENCY_CONTACTS);
+            JSONArray contacts = json.getJSONArray(EmergencyContact.TABLE_NAME);
             EmergencyContactsManager tableManager = new EmergencyContactsManager(mContext);
             for (int i = 0; i < contacts.length(); i++) {
                 JSONObject contact = contacts.getJSONObject(i);
-                tableManager.insertRow(new EmergencyContact(contact.getString(TAG_NAME), contact.getString(TAG_NUMBER), contact.getString(TAG_DESCRIPTION)));
+                tableManager.insertRow(new EmergencyContact(contact.getString(EmergencyContact.COLUMN_NAME),
+                        contact.getString(EmergencyContact.COLUMN_PHONE_NUMBER), contact.getString(EmergencyContact.COLUMN_DESCRIPTION)));
             }
         } catch (JSONException e) {
             Log.d("HELLOTHERE", "BAD: " + e);
@@ -153,12 +140,12 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
 
     private void engineeringContacts(JSONObject json) {
         try {
-            JSONArray contacts = json.getJSONArray(TAG_ENGINEERING_CONTACTS);
+            JSONArray contacts = json.getJSONArray(EngineeringContact.TABLE_NAME);
             EngineeringContactsManager tableManager = new EngineeringContactsManager(mContext);
             for (int i = 0; i < contacts.length(); i++) {
                 JSONObject contact = contacts.getJSONObject(i);
-                tableManager.insertRow(new EngineeringContact(contact.getString(TAG_NAME), contact.getString(TAG_EMAIL),
-                        contact.getString(TAG_POSITION), contact.getString(TAG_DESCRIPTION)));
+                tableManager.insertRow(new EngineeringContact(contact.getString(EngineeringContact.COLUMN_NAME), contact.getString(EngineeringContact.COLUMN_EMAIL),
+                        contact.getString(EngineeringContact.COLUMN_POSITION), contact.getString(EngineeringContact.COLUMN_DESCRIPTION)));
             }
         } catch (JSONException e) {
             Log.d("HELLOTHERE", "BAD: " + e);
@@ -167,14 +154,34 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
 
     private void buildings(JSONObject json) {
         try {
-            JSONArray buildings = json.getJSONArray(TAG_BUILDINGS);
+            JSONArray buildings = json.getJSONArray(Building.TABLE_NAME);
             BuildingManager manager = new BuildingManager(mContext);
             for (int i = 0; i < buildings.length(); i++) {
                 JSONObject building = buildings.getJSONObject(i);
                 //getInt()>0 because SQL has 0/1 there, not real boolean
-                manager.insertRow(new Building(building.getString(TAG_NAME), building.getString(TAG_PURPOSE),
-                        building.getInt(TAG_BOOK_ROMMS) > 0, building.getInt(TAG_FOOD) > 0, building.getInt(TAG_ATM) > 0,
-                        building.getDouble(TAG_LAT), building.getDouble(TAG_LON)));
+                manager.insertRow(new Building(building.getString(Building.COLUMN_NAME), building.getString(Building.COLUMN_PURPOSE),
+                        building.getInt(Building.COLUMN_BOOK_ROOMS) > 0, building.getInt(Building.COLUMN_FOOD) > 0, building.getInt(Building.COLUMN_ATM) > 0,
+                        building.getDouble(Building.COLUMN_LAT), building.getDouble(Building.COLUMN_LON)));
+            }
+        } catch (JSONException e) {
+            Log.d("HELLOTHERE", "BAD: " + e);
+        }
+    }
+
+    private void food(JSONObject json) {
+        try {
+            JSONArray food = json.getJSONArray(Food.TABLE_NAME);
+            FoodManager manager = new FoodManager(mContext);
+            for (int i = 0; i < food.length(); i++) {
+                JSONObject oneFood = food.getJSONObject(i);
+                //getInt()>0 because SQL has 0/1 there, not real boolean
+                manager.insertRow(new Food(oneFood.getString(Food.COLUMN_NAME), oneFood.getInt(Food.COLUMN_BUILDING_ID),
+                        oneFood.getString(Food.COLUMN_INFORMATION), oneFood.getInt(Food.COLUMN_MEAL_PLAN) > 0, oneFood.getInt(Food.COLUMN_CARD) > 0,
+                        oneFood.getDouble(Food.COLUMN_MON_START_HOURS), oneFood.getDouble(Food.COLUMN_MON_STOP_HOURS), oneFood.getDouble(Food.COLUMN_TUE_START_HOURS),
+                        oneFood.getDouble(Food.COLUMN_TUE_STOP_HOURS), oneFood.getDouble(Food.COLUMN_WED_START_HOURS), oneFood.getDouble(Food.COLUMN_WED_STOP_HOURS),
+                        oneFood.getDouble(Food.COLUMN_THUR_START_HOURS), oneFood.getDouble(Food.COLUMN_THUR_STOP_HOURS), oneFood.getDouble(Food.COLUMN_FRI_START_HOURS),
+                        oneFood.getDouble(Food.COLUMN_FRI_STOP_HOURS), oneFood.getDouble(Food.COLUMN_SAT_START_HOURS),
+                        oneFood.getDouble(Food.COLUMN_SAT_STOP_HOURS), oneFood.getDouble(Food.COLUMN_SUN_START_HOURS), oneFood.getDouble(Food.COLUMN_SUN_STOP_HOURS)));
             }
         } catch (JSONException e) {
             Log.d("HELLOTHERE", "BAD: " + e);
