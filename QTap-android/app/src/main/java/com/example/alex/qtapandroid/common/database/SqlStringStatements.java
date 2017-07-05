@@ -5,6 +5,7 @@ import com.example.alex.qtapandroid.common.database.contacts.emergency.Emergency
 import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContact;
 import com.example.alex.qtapandroid.common.database.courses.Course;
 import com.example.alex.qtapandroid.common.database.courses.OneClass;
+import com.example.alex.qtapandroid.common.database.food.Food;
 import com.example.alex.qtapandroid.common.database.users.User;
 
 /**
@@ -17,7 +18,7 @@ public class SqlStringStatements {
     public static final String PHONE_DATABASE_NAME = "QTAP_PHONE.db";
 
     //create table statements
-    protected static final String CREATE_COURSES = "CREATE TABLE " + Course.TABLE_NAME + "(" +
+    public static final String CREATE_COURSES = "CREATE TABLE " + Course.TABLE_NAME + "(" +
             Course._ID + " INTEGER PRIMARY KEY," + Course.COLUMN_TITLE + " TEXT);";
 
     public static final String CREATE_USERS = "CREATE TABLE " + User.TABLE_NAME + "(" +
@@ -44,6 +45,13 @@ public class SqlStringStatements {
             Building.COLUMN_NAME + " TEXT," + Building.COLUMN_PURPOSE + " TEXT," + Building.COLUMN_BOOK_ROOMS + " INTEGER," + Building.COLUMN_FOOD
             + " INTEGER," + Building.COLUMN_ATM + " INTEGER," + Building.COLUMN_LAT + " REAL," + Building.COLUMN_LON + " REAL);";
 
+    public static final String CREATE_FOOD = "CREATE TABLE " + Food.TABLE_NAME + "(" + Food._ID + " INTEGER PRIMARY KEY," + Food.COLUMN_NAME + " TEXT," + Food.COLUMN_MEAL_PLAN +
+            " INTEGER," + Food.COLUMN_CARD + " INTEGER," + Food.COLUMN_INFORMATION + " TEXT," + Food.COLUMN_BUILDING_ID + " INTEGER," + Food.COLUMN_MON_START_HOURS + " REAL," +
+            Food.COLUMN_MON_STOP_HOURS + " REAL," + Food.COLUMN_TUE_START_HOURS + " REAL," + Food.COLUMN_TUE_STOP_HOURS + " REAL," + Food.COLUMN_WED_START_HOURS + " REAL," +
+            Food.COLUMN_WED_STOP_HOURS + " REAL," + Food.COLUMN_THUR_START_HOURS + " REAL," + Food.COLUMN_THUR_STOP_HOURS + " REAL," + Food.COLUMN_FRI_START_HOURS + " REAL," +
+            Food.COLUMN_FRI_STOP_HOURS + " REAL," + Food.COLUMN_SAT_START_HOURS + " REAL," + Food.COLUMN_SAT_STOP_HOURS + " REAL," + Food.COLUMN_SUN_START_HOURS + " REAL," +
+            Food.COLUMN_SUN_STOP_HOURS + " REAL);";
+
     //Delete table statements
     public static final String DELETE_COURSES = "DROP TABLE IF EXISTS " + Course.TABLE_NAME;
     public static final String DELETE_USERS = "DROP TABLE IF EXISTS " + User.TABLE_NAME;
@@ -51,4 +59,5 @@ public class SqlStringStatements {
     public static final String DELETE_ENGINEERING_CONTACTS = "DROP TABLE IF EXISTS " + EngineeringContact.TABLE_NAME;
     public static final String DELETE_EMERGENCY_CONTACTS = "DROP TABLE IF EXISTS " + EmergencyContact.TABLE_NAME;
     public static final String DELETE_BUILDINGS = "DROP TABLE IF EXISTS " + Building.TABLE_NAME;
+    public static final String DELETE_FOOD = "DROP TABLE IF EXISTS " + Food.TABLE_NAME;
 }
