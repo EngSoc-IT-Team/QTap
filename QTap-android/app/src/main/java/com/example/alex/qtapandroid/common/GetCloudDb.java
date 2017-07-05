@@ -176,8 +176,7 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
             for (int i = 0; i < food.length(); i++) {
                 JSONObject oneFood = food.getJSONObject(i);
                 //getInt()>0 because SQL has 0/1 there, not real boolean
-                int buildingID = oneFood.get(Food.COLUMN_BUILDING_ID) == null ? -1 : oneFood.getInt(Food.COLUMN_BUILDING_ID);
-                manager.insertRow(new Food(oneFood.getString(Food.COLUMN_NAME), buildingID,
+                manager.insertRow(new Food(oneFood.getString(Food.COLUMN_NAME), oneFood.getInt(Food.COLUMN_BUILDING_ID),
                         oneFood.getString(Food.COLUMN_INFORMATION), oneFood.getInt(Food.COLUMN_MEAL_PLAN) > 0, oneFood.getInt(Food.COLUMN_CARD) > 0,
                         oneFood.getDouble(Food.COLUMN_MON_START_HOURS), oneFood.getDouble(Food.COLUMN_MON_STOP_HOURS), oneFood.getDouble(Food.COLUMN_TUE_START_HOURS),
                         oneFood.getDouble(Food.COLUMN_TUE_STOP_HOURS), oneFood.getDouble(Food.COLUMN_WED_START_HOURS), oneFood.getDouble(Food.COLUMN_WED_STOP_HOURS),
@@ -185,7 +184,6 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
                         oneFood.getDouble(Food.COLUMN_FRI_STOP_HOURS), oneFood.getDouble(Food.COLUMN_SAT_START_HOURS),
                         oneFood.getDouble(Food.COLUMN_SAT_STOP_HOURS), oneFood.getDouble(Food.COLUMN_SUN_START_HOURS), oneFood.getDouble(Food.COLUMN_SUN_STOP_HOURS)));
             }
-            Food.printFood(manager.getTable());
         } catch (JSONException e) {
             Log.d("HELLOTHERE", "BAD: " + e);
         }

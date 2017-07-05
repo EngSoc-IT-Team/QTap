@@ -2,6 +2,7 @@ package com.example.alex.qtapandroid.common.database.food;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 
 import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
@@ -155,11 +156,13 @@ public class FoodManager extends DatabaseAccessor {
     /**
      * Gets a single known Food from the Food table.
      *
-     * @param buildingID building ID of the Food to get from the table.
+     * @param sBuildingID building ID of the Food to get from the table. String to differentiate from long ID getRow
+     *                    string converted to int inside method.
      * @return Food class obtained from the table. Contains all information
      * held in row.
      */
-    public Food getRow(int buildingID) {
+    public Food getRow(String sBuildingID) {
+        int buildingID = Integer.parseInt(sBuildingID);
         String[] projection = {
                 Food._ID,
                 Food.COLUMN_NAME,
