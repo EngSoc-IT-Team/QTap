@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Defines schema for phone database table EngineeringContact
  */
 public class EngineeringContact implements BaseColumns {
-    public static final String TABLE_NAME = "EngineeringContact";
+    public static final String TABLE_NAME = "EngineeringContacts";
     //columns
     public static final String COLUMN_NAME = "Name";
     public static final String COLUMN_EMAIL = "Email";

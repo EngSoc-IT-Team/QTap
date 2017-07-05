@@ -52,7 +52,7 @@ public class SettingsActivity extends AppCompatActivity {
                 clearData(v);
                 PrefManager mPrefManager = new PrefManager(getApplicationContext());
                 mPrefManager.setFirstTimeLaunch(true);
-                Intent intent = new Intent(SettingsActivity.this, MainTabActivity.class);
+                Intent intent = new Intent(SettingsActivity.this, StartupActivity.class);
                 startActivity(intent);
                 finish();
             }

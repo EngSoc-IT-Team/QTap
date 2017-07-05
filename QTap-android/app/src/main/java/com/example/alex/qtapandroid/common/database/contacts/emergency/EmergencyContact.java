@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Schema for phone database EmergencyContact table.
  */
 public class EmergencyContact implements BaseColumns {
-    public static final String TABLE_NAME = "EmergencyContact";
+    public static final String TABLE_NAME = "EmergencyContacts";
     //columns
     public static final String COLUMN_NAME = "Name";
     public static final String COLUMN_PHONE_NUMBER = "PhoneNumber";
