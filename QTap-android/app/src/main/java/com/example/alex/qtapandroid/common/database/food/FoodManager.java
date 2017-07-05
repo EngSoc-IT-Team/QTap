@@ -153,6 +153,56 @@ public class FoodManager extends DatabaseAccessor {
     }
 
     /**
+     * Gets a single known Food from the Food table.
+     *
+     * @param buildingID building ID of the Food to get from the table.
+     * @return Food class obtained from the table. Contains all information
+     * held in row.
+     */
+    public Food getRow(int buildingID) {
+        String[] projection = {
+                Food._ID,
+                Food.COLUMN_NAME,
+                Food.COLUMN_MEAL_PLAN,
+                Food.COLUMN_CARD,
+                Food.COLUMN_INFORMATION,
+                Food.COLUMN_BUILDING_ID,
+                Food.COLUMN_MON_START_HOURS,
+                Food.COLUMN_MON_STOP_HOURS,
+                Food.COLUMN_TUE_START_HOURS,
+                Food.COLUMN_TUE_STOP_HOURS,
+                Food.COLUMN_WED_START_HOURS,
+                Food.COLUMN_WED_STOP_HOURS,
+                Food.COLUMN_THUR_START_HOURS,
+                Food.COLUMN_THUR_STOP_HOURS,
+                Food.COLUMN_FRI_START_HOURS,
+                Food.COLUMN_FRI_STOP_HOURS,
+                Food.COLUMN_SAT_START_HOURS,
+                Food.COLUMN_SAT_STOP_HOURS,
+                Food.COLUMN_SUN_START_HOURS,
+                Food.COLUMN_SUN_STOP_HOURS
+        };
+        Food food;
+        String selection = Food.COLUMN_BUILDING_ID + " LIKE ?";
+        String[] selectionArgs = {String.valueOf(buildingID)};
+        try (Cursor cursor = getDatabase().query(Food.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
+            cursor.moveToNext();
+            //getInt()>0 because SQLite doesn't have boolean types - 1 is true, 0 is false
+            food = new Food(cursor.getString(Food.POS_NAME), cursor.getInt(Food.POS_BUILDING_ID),
+                    cursor.getString(Food.POS_INFORMATION), cursor.getInt(Food.POS_MEAL_PLAN) > 0, cursor.getInt(Food.POS_CARD) > 0,
+                    cursor.getFloat(Food.POS_MON_START_HOURS), cursor.getFloat(Food.POS_MON_STOP_HOURS), cursor.getFloat(Food.POS_TUE_START_HOURS),
+                    cursor.getFloat(Food.POS_TUE_STOP_HOURS), cursor.getFloat(Food.POS_WED_START_HOURS), cursor.getFloat(Food.POS_WED_STOP_HOURS),
+                    cursor.getFloat(Food.POS_THUR_START_HOURS), cursor.getFloat(Food.POS_THUR_STOP_HOURS), cursor.getFloat(Food.POS_FRI_START_HOURS),
+                    cursor.getFloat(Food.POS_FRI_STOP_HOURS), cursor.getFloat(Food.POS_SAT_START_HOURS),
+                    cursor.getFloat(Food.POS_SAT_STOP_HOURS), cursor.getFloat(Food.POS_SUN_START_HOURS), cursor.getFloat(Food.POS_SUN_STOP_HOURS));
+            food.setID(cursor.getInt(Food.POS_ID));
+            cursor.close();
+            return food; //return only when the cursor has been closed.
+            //Return statement never missed, try block always finishes this.
+        }
+    }
+
+    /**
      * Deletes the entire Food table.
      */
     public void deleteTable() {
