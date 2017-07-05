@@ -42,6 +42,7 @@
     <string name="about_fragment">About</string>
     <string name="agenda_fragment">Agenda</string>
     <string name="day_fragment">Day View</string>
+    <string name="food_fragment">Food Establishments</string>
 
     <!--strings for button names -->
     <string name="title_emergency_contacts">Emergency Contacts</string>
@@ -58,6 +59,7 @@
     <string name="faculty">Faculty</string>
     <string name="about">About</string>
     <string name="prev">PREV</string>
+    <string name="food">Food</string>
 
     <!-- other strings -->
     <string name="ellipses">&#8226;</string>
@@ -68,6 +70,8 @@
     <string name="message_no_class">No class today!</string>
     <string name="db_download_failed">Database download failed. Try logging out and back in.</string>
     <string name="has_food">Building has food: </string>
+    <string name="takes_meal_plan">Accepts meal plan: </string>
+    <string name="takes_card">Accepts debit/credit: </string>
     <string name="title_class">Class</string>
     <string name="logged_out">Logged out</string>
 

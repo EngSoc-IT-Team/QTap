@@ -26,6 +26,11 @@
                     android:id="@+id/nav_buildings"
                     android:icon="@mipmap/ic_building"
                     android:title="@string/buildings_fragment"/>
+
+                <item
+                    android:id="@+id/nav_food"
+                    android:icon="@mipmap/ic_food"
+                    android:title="@string/food"/>
             </menu>
         </item>
         <item android:title="@string/information_section">

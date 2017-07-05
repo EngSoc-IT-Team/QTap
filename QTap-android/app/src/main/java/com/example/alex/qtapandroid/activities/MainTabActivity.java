@@ -26,6 +26,7 @@ import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
 import com.example.alex.qtapandroid.common.database.users.User;
 import com.example.alex.qtapandroid.common.database.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.BuildingsFragment;
+import com.example.alex.qtapandroid.ui.fragments.FoodFragment;
 import com.example.alex.qtapandroid.ui.fragments.MonthFragment;
 import com.example.alex.qtapandroid.ui.fragments.DayFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
@@ -66,10 +67,10 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
 
     @Override
     public void onBackPressed() {
-        mToActivity=false;
+        mToActivity = false;
         mDrawer.closeDrawer(GravityCompat.START);
         if (mFragManager.getBackStackEntryCount() <= 1) { //last item in back stack, so close app
-            mToActivity=true;
+            mToActivity = true;
             moveTaskToBack(true);
         } else {
             super.onBackPressed();
@@ -85,15 +86,15 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mToActivity=false;
+        mToActivity = false;
         switch (item.getItemId()) {
             case R.id.settings:
-                mToActivity=true;
+                mToActivity = true;
                 Intent settings = new Intent(MainTabActivity.this, SettingsActivity.class);
                 startActivity(settings);
                 break;
             case R.id.about:
-                mToActivity=true;
+                mToActivity = true;
                 Intent about = new Intent(MainTabActivity.this, AboutActivity.class);
                 startActivity(about);
                 break;
@@ -116,14 +117,14 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
      * @param viewId the ID of the drawer item user clicked.
      */
     private void displayView(int viewId) {
-        mToActivity=false;
+        mToActivity = false;
         Fragment fragment = null;
         switch (viewId) {
             case R.id.nav_month:
                 fragment = new MonthFragment();
                 break;
             case R.id.nav_map:
-                mToActivity=true;
+                mToActivity = true;
                 startActivity(new Intent(MainTabActivity.this, MapsActivity.class));
                 break;
             case R.id.nav_day:
@@ -134,6 +135,9 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
                 break;
             case R.id.nav_buildings:
                 fragment = new BuildingsFragment();
+                break;
+            case R.id.nav_food:
+                fragment = new FoodFragment();
                 break;
         }
 
