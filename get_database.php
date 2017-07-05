@@ -67,6 +67,20 @@ if (mysql_num_rows($result) > 0) {
         $product["Card"] = $row["Card"];
         $product["Information"] = $row["Information"];
         $product["BuildingID"] = $row["BuildingID"];
+        $product["MonStartHours"] = $row["MonStartHours"];
+        $product["MonStopHours"] = $row["MonStopHours"];
+        $product["TueStartHours"] = $row["TueStartHours"];
+        $product["TueStopHours"] = $row["TueStopHours"];
+        $product["WedStartHours"] = $row["WedStartHours"];
+        $product["WedStopHours"] = $row["WedStopHours"];
+        $product["ThurStartHours"] = $row["ThurStartHours"];
+        $product["ThurStopHours"] = $row["ThurStopHours"];
+        $product["FriStartHours"] = $row["FriStartHours"];
+        $product["FriStopHours"] = $row["FriStopHours"];
+        $product["SatStartHours"] = $row["SatStartHours"];
+        $product["SatStopHours"] = $row["SatStopHours"];
+        $product["SunStartHours"] = $row["SunStartHours"];
+        $product["SunStopHours"] = $row["SunStopHours"];
         array_push($response["Food"], $product);
     }
 }
