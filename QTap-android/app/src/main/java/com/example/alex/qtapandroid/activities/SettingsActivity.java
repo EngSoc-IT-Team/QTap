@@ -12,6 +12,7 @@ import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.alex.qtapandroid.common.PrefManager;
 import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
@@ -52,6 +53,7 @@ public class SettingsActivity extends AppCompatActivity {
                 clearData(v);
                 PrefManager mPrefManager = new PrefManager(getApplicationContext());
                 mPrefManager.setFirstTimeLaunch(true);
+                Toast.makeText(SettingsActivity.this, getString(R.string.logged_out), Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(SettingsActivity.this, StartupActivity.class);
                 startActivity(intent);
                 finish();

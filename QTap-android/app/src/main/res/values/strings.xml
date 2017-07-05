@@ -69,6 +69,7 @@
     <string name="db_download_failed">Database download failed. Try logging out and back in.</string>
     <string name="has_food">Building has food: </string>
     <string name="title_class">Class</string>
+    <string name="logged_out">Logged out</string>
 
     <!--strings for sections in drawer -->
     <string name="schedule_section">Schedule</string>
@@ -83,8 +84,6 @@
     <string name="career_url">http://careers.queensu.ca/students</string>
 
     <!-- strings used to get info from cloud DB-->
-    <string name="db_all_emerg_contacts">http://qtap.engsoc.queensu.ca/database/get_all_emerg_contacts.php</string>
-    <string name="db_all_eng_contacts">http://qtap.engsoc.queensu.ca/database/get_all_eng_contacts.php</string>
     <string name="db_get_database">http://qtap.engsoc.queensu.ca/database/get_database.php</string>
 
     <string name="about_app">Welcome to QLife, thanks for downloading!\n\n
