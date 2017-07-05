@@ -14,6 +14,7 @@ import android.widget.SimpleAdapter;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
+import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
 import com.example.alex.qtapandroid.common.database.food.Food;
 import com.example.alex.qtapandroid.common.database.food.FoodManager;
 
@@ -33,9 +34,12 @@ public class FoodFragment extends ListFragment {
         View v = inflater.inflate(R.layout.fragment_food, container, false);
         ArrayList<HashMap<String, String>> foodList = new ArrayList<>();
         ArrayList<Food> food = (new FoodManager(getActivity().getApplicationContext())).getTable();
+        BuildingManager buildingManager = new BuildingManager(getContext());
         for (Food oneFood : food) {
             HashMap<String, String> map = new HashMap<>();
             map.put(Food.COLUMN_NAME, oneFood.getName());
+            //key is buildingID but that's just to avoid hardcoding - actually building name
+            map.put(Food.COLUMN_BUILDING_ID, buildingManager.getRow(oneFood.getBuildingID()).getName());
             String takesMeal = oneFood.isMealPlan() ? "Yes" : "No";
             map.put(Food.COLUMN_MEAL_PLAN, takesMeal);
             String takesCard = oneFood.isCard() ? "Yes" : "No";
@@ -43,8 +47,8 @@ public class FoodFragment extends ListFragment {
             foodList.add(map);
         }
         ListAdapter adapter = new SimpleAdapter(getActivity().getApplicationContext(), foodList,
-                R.layout.food_list_item, new String[]{Food.COLUMN_NAME, Food.COLUMN_MEAL_PLAN, Food.COLUMN_CARD},
-                new int[]{R.id.name, R.id.has_meal_plan, R.id.takes_card});
+                R.layout.food_list_item, new String[]{Food.COLUMN_NAME, Food.COLUMN_BUILDING_ID, Food.COLUMN_MEAL_PLAN, Food.COLUMN_CARD},
+                new int[]{R.id.name, R.id.building, R.id.meal_plan, R.id.card});
         setListAdapter(adapter);
         return v;
     }
