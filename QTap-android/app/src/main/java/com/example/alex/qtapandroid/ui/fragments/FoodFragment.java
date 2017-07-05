@@ -39,7 +39,8 @@ public class FoodFragment extends ListFragment {
             HashMap<String, String> map = new HashMap<>();
             map.put(Food.COLUMN_NAME, oneFood.getName());
             //key is buildingID but that's just to avoid hardcoding - actually building name
-            map.put(Food.COLUMN_BUILDING_ID, buildingManager.getRow(oneFood.getBuildingID()).getName());
+            //ID+1 because cloud DB starts at ID 0, phone starts at 1
+            map.put(Food.COLUMN_BUILDING_ID, buildingManager.getRow(oneFood.getBuildingID() + 1).getName());
             String takesMeal = oneFood.isMealPlan() ? "Yes" : "No";
             map.put(Food.COLUMN_MEAL_PLAN, takesMeal);
             String takesCard = oneFood.isCard() ? "Yes" : "No";

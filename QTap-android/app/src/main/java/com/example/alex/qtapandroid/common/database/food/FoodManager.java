@@ -93,7 +93,8 @@ public class FoodManager extends DatabaseAccessor {
         };
         ArrayList<Food> food = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
-        try (Cursor cursor = getDatabase().query(Food.TABLE_NAME, projection, null, null, null, null, null)) {
+        //order table by name, ascending
+        try (Cursor cursor = getDatabase().query(Food.TABLE_NAME, projection, null, null, null, null, Food.COLUMN_NAME + " ASC")) {
             while (cursor.moveToNext()) {
                 Food oneFood = getRow(cursor.getInt(Food.POS_ID));
                 food.add(oneFood);

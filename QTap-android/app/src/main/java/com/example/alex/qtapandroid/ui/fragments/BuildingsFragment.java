@@ -33,7 +33,6 @@ public class BuildingsFragment extends ListFragment {
         View v = inflater.inflate(R.layout.fragment_buildings, container, false);
         ArrayList<HashMap<String, String>> buildingsList = new ArrayList<>();
         ArrayList<Building> buildings = (new BuildingManager(getActivity().getApplicationContext())).getTable();
-        Building.printBuildings(buildings);
         for (Building building : buildings) {
             HashMap<String, String> map = new HashMap<>();
             map.put(Building.COLUMN_NAME, building.getName());

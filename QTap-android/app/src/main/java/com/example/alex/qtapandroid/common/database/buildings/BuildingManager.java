@@ -68,7 +68,8 @@ public class BuildingManager extends DatabaseAccessor {
         };
         ArrayList<Building> buildings = new ArrayList<>();
         //try with resources - automatically closes cursor whether or not its completed normally
-        try (Cursor cursor = getDatabase().query(Building.TABLE_NAME, projection, null, null, null, null, null)) {
+        //order by building name
+        try (Cursor cursor = getDatabase().query(Building.TABLE_NAME, projection, null, null, null, null, Building.COLUMN_NAME + " ASC")) {
             while (cursor.moveToNext()) {
                 Building building = getRow(cursor.getInt(Building.ID_POS));
                 buildings.add(building);
