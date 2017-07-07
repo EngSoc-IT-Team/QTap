@@ -4,11 +4,11 @@
     <item
         android:id="@+id/settings"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/activity_settings"
         app:showAsAction="never"/>
     <item
         android:id="@+id/review"
         android:orderInCategory="100"
-        android:title="@string/title_review_activity"
+        android:title="@string/activity_review"
         app:showAsAction="never"/>
 </menu>

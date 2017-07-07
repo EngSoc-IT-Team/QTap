@@ -54,7 +54,7 @@ public class EngContactsFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
         ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.title_engineering_contacts));
+            actionbar.setTitle(getString(R.string.fragment_eng_contacts));
         }
     }
 

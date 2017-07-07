@@ -12,7 +12,6 @@
         android:layout_gravity="top"
         android:layout_margin="5dp"
         android:elevation="15dp"
-        android:transitionName="@string/transistion_event_info"
         card_view:cardCornerRadius="2dp"
         card_view:contentPadding="10dp">
 

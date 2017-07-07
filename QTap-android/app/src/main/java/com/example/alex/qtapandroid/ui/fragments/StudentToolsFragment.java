@@ -87,7 +87,7 @@ public class StudentToolsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.student_tools_fragment));
+            actionbar.setTitle(getString(R.string.fragment_student_tools));
         }
     }
 

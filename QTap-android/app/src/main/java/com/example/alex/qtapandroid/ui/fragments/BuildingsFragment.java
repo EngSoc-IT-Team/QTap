@@ -52,7 +52,7 @@ public class BuildingsFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
         ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.buildings_fragment));
+            actionbar.setTitle(getString(R.string.fragment_buildings));
         }
     }
 

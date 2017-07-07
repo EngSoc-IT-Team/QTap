@@ -59,7 +59,7 @@ public class FoodFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
         ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.food_fragment));
+            actionbar.setTitle(getString(R.string.fragment_food));
         }
     }
 

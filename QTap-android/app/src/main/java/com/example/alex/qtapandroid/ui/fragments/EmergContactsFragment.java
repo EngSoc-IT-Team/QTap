@@ -53,7 +53,7 @@ public class EmergContactsFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
         ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.title_emergency_contacts));
+            actionbar.setTitle(getString(R.string.fragment_emerg_contacts));
         }
     }
 

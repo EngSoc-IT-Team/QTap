@@ -57,7 +57,7 @@ public class MonthFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.month_fragment));
+            actionbar.setTitle(getString(R.string.fragment_month));
         }
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());

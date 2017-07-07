@@ -29,7 +29,6 @@ import com.example.alex.qtapandroid.common.database.courses.OneClassManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class DayFragment extends Fragment {
@@ -136,7 +135,7 @@ public class DayFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.day_fragment));
+            actionbar.setTitle(getString(R.string.fragment_day));
         }
     }
 

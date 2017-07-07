@@ -1,84 +1,52 @@
 <resources>
-    <!--sections for introduction screen -->
-    <string name="slide_1_title">Welcome to QLife!</string>
-    <string name="slide_1_desc">The one app for all of your Queen\'s needs</string>
-    <string name="slide_2_title">Class Schedule</string>
-    <string name="slide_2_desc">See when your classes are</string>
-    <string name="slide_3_title">Campus Info</string>
-    <string name="slide_4_title">Information in the Cloud</string>
-    <string name="slide_4_desc">Your information is downloaded when you login. After logging in, you don\'t need an Internet connection!</string>
-    <string name="slide_3_desc">Easily check building hours, food locations and more</string>
-    <string name="slide_5_title">Queens Food</string>
-    <string name="slide_5_desc">Easily pay with QLife at any roomNum on campus</string>
-    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="app_name">QLife</string>
+
+    <!--Activity names-->
+    <string name="activity_login">Login</string>
+    <string name="activity_maps">Map</string>
+    <string name="activity_settings">Settings</string>
+    <string name="activity_about">About</string>
+    <string name="activity_review">Review</string>
+
+    <!--Fragment names-->
+    <string name="fragment_day">Day View</string>
+    <string name="fragment_month">Month View</string>
+    <string name="fragment_buildings">Buildings</string>
+    <string name="fragment_food">Food Establishments</string>
+    <string name="fragment_student_tools">Student Tools</string>
+    <string name="fragment_emerg_contacts">Emergency Contacts</string>
+    <string name="fragment_eng_contacts">Engineering Contacts</string>
+
+    <!--Short text in app-->
     <string name="brought_by">Brought to you by</string>
     <string name="it_team">Queen\'s Engineering Society IT Team</string>
+    <string name="current_user">Current User:</string>
+    <string name="login_date">Last Login:</string>
+    <string name="has_food">Building has food: </string>
+    <string name="takes_meal_plan">Accepts meal plan: </string>
+    <string name="takes_card">Accepts debit/credit: </string>
+    <string name="no_events">No events today</string>
+    <string name="resources">Resources</string>
+    <string name="links">Links</string>
+
+    <!--Button text-->
     <string name="play_again">Play Again</string>
     <string name="next">NEXT</string>
     <string name="skip">SKIP</string>
     <string name="start">GOT IT</string>
-
-    <!-- Page names -->
-    <string name="title_login_activity">Login</string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_about">About</string>
-    <string name="section_format">Hello World from section: %1$d</string>
-    <string name="title_activity_main_tab">MainTabActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_activity_maps">Map</string>
-    <string name="resources">Resources</string>
-    <string name="links">Links</string>
-    <string name="account">Account</string>
-    <string name="options">Options</string>
-    <string name="app_name">QLife</string>
-    <string name="buildings_fragment">Buildings</string>
-    <string name="month_fragment">Month View</string>
-    <string name="information_fragment">Information</string>
-    <string name="student_tools_fragment">Student Tools</string>
-    <string name="its_fragment">ITS</string>
-    <string name="engsoc_fragment">Eng Soc</string>
-    <string name="about_fragment">About</string>
-    <string name="agenda_fragment">Agenda</string>
-    <string name="day_fragment">Day View</string>
-    <string name="food_fragment">Food Establishments</string>
-    <string name="title_review_activity">Review</string>
-
-    <!--strings for button names -->
-    <string name="title_emergency_contacts">Emergency Contacts</string>
-    <string name="title_engineering_contacts">Engineering Contacts</string>
     <string name="counselling_services">Counselling Services</string>
     <string name="career_services">Career Services</string>
     <string name="solus">Solus</string>
     <string name="outlook365">Outlook 365</string>
     <string name="onq">OnQ</string>
-    <string name="current_user">Current User:</string>
-    <string name="login_date">Last Login:</string>
-    <string name="calendar_date">Calendar Updated On:</string>
     <string name="logout">Log Out</string>
-    <string name="faculty">Faculty</string>
-    <string name="about">About</string>
     <string name="prev">PREV</string>
     <string name="food">Food</string>
     <string name="review_app">Review on Play Store</string>
     <string name="suggestions">Give suggestions</string>
-
-    <!-- other strings -->
-    <string name="ellipses">&#8226;</string>
-    <string name="init_database">Initializing Database</string>
-    <string name="no_events">No events today</string>
-    <string name="title_activity_settings">Settings</string>
-    <string name="title_activity_about">About</string>
-    <string name="message_no_class">No class today!</string>
-    <string name="db_download_failed">Database download failed. Try logging out and back in.</string>
-    <string name="has_food">Building has food: </string>
-    <string name="takes_meal_plan">Accepts meal plan: </string>
-    <string name="takes_card">Accepts debit/credit: </string>
     <string name="title_class">Class</string>
-    <string name="logged_out">Logged out</string>
 
-    <!--strings for sections in drawer -->
+    <!--sections in drawer-->
     <string name="schedule_section">Schedule</string>
     <string name="campus_section">Campus</string>
     <string name="information_section">Information</string>
@@ -92,7 +60,28 @@
     <string name="suggestions_url">http://qtap.engsoc.queensu.ca/improvements.html</string>
     <string name="db_get_database">http://qtap.engsoc.queensu.ca/database/get_database.php</string>
 
-    <!--long strings with info-->
+    <!-- other strings -->
+    <string name="ellipses">&#8226;</string>
+    <string name="init_database">Initializing Database</string>
+    <string name="message_no_class">No class today!</string>
+    <string name="db_download_failed">Database download failed. Try logging out and back in.</string>
+    <string name="logged_out">Logged out</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!--sections for introduction screen -->
+    <string name="slide_1_title">Welcome to QLife!</string>
+    <string name="slide_1_desc">The one app for all of your Queen\'s needs</string>
+    <string name="slide_2_title">Class Schedule</string>
+    <string name="slide_2_desc">See when your classes are</string>
+    <string name="slide_3_title">Campus Info</string>
+    <string name="slide_4_title">Information in the Cloud</string>
+    <string name="slide_4_desc">Your information is downloaded when you login. After logging in, you don\'t need an Internet connection!</string>
+    <string name="slide_3_desc">Easily check building hours, food locations and more</string>
+    <string name="slide_5_title">Queens Food</string>
+    <string name="slide_5_desc">Easily pay with QLife at any roomNum on campus</string>
+
+    <!--paragraphs in app-->
     <string name="about_app">Welcome to QLife, thanks for downloading!\n\n
 When you login to Solus, your class calendar is downloaded and added to the app. The home screen is the day view. Here, you can see your classes for the day.\n\n
 If you swipe from the left side, a menu opens up with information about Queens and the campus. You can also choose the month view, where you can pick a specific day to view your class schedule.\n\n
@@ -102,79 +91,4 @@ Shout out to the 2016-17 Engineering Society IT Team for making this! It\'s not 
 
     <string name="ask_suggestions">If you liked the app, please use the button below to review it on the Play Store!\n\nIf you have any suggestions for improvements, please feel free to email
     doit@engsoc.queensu.ca or submit a suggestion using the button below!</string>
-
-    <!--STRINGS MAYBE CAN BE DELETED -->
-    <!-- Example General settings -->
-    <string name="pref_header_general">General</string>
-
-    <string name="pref_title_social_recommendations">Enable social recommendations</string>
-    <string name="pref_description_social_recommendations">Recommendations for people to contact
-        based on your message history
-    </string>
-
-    <string name="pref_title_display_name">Display name</string>
-    <string name="pref_default_display_name">John Smith</string>
-
-    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
-    <string-array name="pref_example_list_titles">
-        <item>Always</item>
-        <item>When possible</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_example_list_values">
-        <item>1</item>
-        <item>0</item>
-        <item>-1</item>
-    </string-array>
-
-    <!-- Example settings for Data & Sync -->
-    <string name="pref_header_data_sync">Data &amp; sync</string>
-
-    <string name="pref_title_sync_frequency">Sync frequency</string>
-    <string-array name="pref_sync_frequency_titles">
-        <item>15 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>3 hours</item>
-        <item>6 hours</item>
-        <item>Never</item>
-    </string-array>
-    <string-array name="pref_sync_frequency_values">
-        <item>15</item>
-        <item>30</item>
-        <item>60</item>
-        <item>180</item>
-        <item>360</item>
-        <item>-1</item>
-    </string-array>
-
-    <string-array name="list_preference_entries">
-        <item>Entry 1</item>
-        <item>Entry 2</item>
-        <item>Entry 3</item>
-    </string-array>
-
-    <string-array name="list_preference_entry_values">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
-
-    <string-array name="multi_select_list_preference_default_value"/>
-
-    <string name="pref_title_system_sync_settings">System sync settings</string>
-
-    <!-- Example settings for Notifications -->
-    <string name="pref_header_notifications">Notifications</string>
-
-    <string name="pref_title_new_message_notifications">New message notifications</string>
-
-    <string name="pref_title_ringtone">Ringtone</string>
-    <string name="pref_ringtone_silent">Silent</string>
-
-    <string name="pref_title_vibrate">Vibrate</string>
-    <string name="title_activity_tester">tester</string>
-
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="transistion_event_info"/>
 </resources>
