@@ -90,13 +90,15 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
         switch (item.getItemId()) {
             case R.id.settings:
                 mToActivity = true;
-                Intent settings = new Intent(MainTabActivity.this, SettingsActivity.class);
-                startActivity(settings);
+                startActivity(new Intent(MainTabActivity.this, SettingsActivity.class));
                 break;
             case R.id.about:
                 mToActivity = true;
-                Intent about = new Intent(MainTabActivity.this, AboutActivity.class);
-                startActivity(about);
+                startActivity(new Intent(MainTabActivity.this, AboutActivity.class));
+                break;
+            case R.id.review:
+                mToActivity = true;
+                startActivity(new Intent(MainTabActivity.this, ReviewActivity.class));
                 break;
         }
         return false;

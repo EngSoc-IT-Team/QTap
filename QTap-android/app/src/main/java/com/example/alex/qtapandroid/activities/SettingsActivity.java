@@ -81,8 +81,10 @@ public class SettingsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
-                Intent about = new Intent(SettingsActivity.this, AboutActivity.class);
-                startActivity(about);
+                startActivity(new Intent(SettingsActivity.this, AboutActivity.class));
+                break;
+            case R.id.review:
+                startActivity(new Intent(SettingsActivity.this, ReviewActivity.class));
                 break;
         }
         return false;

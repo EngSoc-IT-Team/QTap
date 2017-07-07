@@ -10,21 +10,20 @@ import android.view.MenuItem;
 import com.example.alex.qtapandroid.R;
 
 /**
- * Created by Carson on 06/06/2017.
- * In options menu, contains information about app
+ * Created by Carson on 06/07/2017.
+ * Activity that sends user to review app on Play store and suggest improvements with web form
  */
-public class AboutActivity extends AppCompatActivity {
-
+public class ReviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about);
+        setContentView(R.layout.activity_review);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.about_menu, menu);
+        getMenuInflater().inflate(R.menu.review_menu, menu);
         return true;
     }
 
@@ -32,11 +31,10 @@ public class AboutActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.settings:
-                Intent settings = new Intent(AboutActivity.this, SettingsActivity.class);
-                startActivity(settings);
+                startActivity(new Intent(ReviewActivity.this, SettingsActivity.class));
                 break;
-            case R.id.review:
-                startActivity(new Intent(AboutActivity.this, ReviewActivity.class));
+            case R.id.about:
+                startActivity(new Intent(ReviewActivity.this, AboutActivity.class));
                 break;
         }
         return false;

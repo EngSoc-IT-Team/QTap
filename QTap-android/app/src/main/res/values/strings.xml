@@ -43,6 +43,7 @@
     <string name="agenda_fragment">Agenda</string>
     <string name="day_fragment">Day View</string>
     <string name="food_fragment">Food Establishments</string>
+    <string name="title_review_activity">Review</string>
 
     <!--strings for button names -->
     <string name="title_emergency_contacts">Emergency Contacts</string>
