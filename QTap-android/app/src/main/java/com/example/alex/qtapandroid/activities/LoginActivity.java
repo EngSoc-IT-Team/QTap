@@ -96,14 +96,14 @@ public class LoginActivity extends AppCompatActivity {
         mProgressView = findViewById(R.id.login_progress);
         UserManager mUserManager = new UserManager(this.getApplicationContext());
         ArrayList<User> user = mUserManager.getTable();
-        if (!user.isEmpty())    // if the user has logged in already
+       /* if (!user.isEmpty())    // if the user has logged in already
         {
             if (user.get(0).getIcsURL() != "" && user.get(0).getIcsURL().contains(".ics")) {
                 Log.d(TAG, "user is logged in");
                 isLoggedIn = true;
                 attemptLogin();
             }
-        }
+        }*/
         if (!isLoggedIn) {
             final WebView browser = (WebView) findViewById(R.id.webView);
             browser.getSettings().setSaveFormData(false); //disable autocomplete - more secure, keyboard popup blocks fields
@@ -221,13 +221,10 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            //User userInDB = mUserManager.getRow(1); //only ever one user in the database
-            if (!isLoggedIn) {
-                SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa");
-                String formattedDate = df.format(Calendar.getInstance().getTime());
-                User newUser = new User(netid, "", "", formattedDate, mIcsUrl); //TODO ask for their name
-                mUserManager.insertRow(newUser);
-            }
+            SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa", Locale.CANADA);
+            String formattedDate = df.format(Calendar.getInstance().getTime());
+            User newUser = new User(netid, "", "", formattedDate, mIcsUrl);
+            mUserManager.insertRow(newUser);
             return true;
         }
 

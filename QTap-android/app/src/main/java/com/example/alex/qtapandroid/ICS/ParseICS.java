@@ -25,6 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
@@ -232,7 +233,7 @@ public class ParseICS {
                     }
                 }
             }
-            SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa");
+            SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa", Locale.CANADA);
             String formattedDate = df.format(Calendar.getInstance().getTime());
 
             String uName = user.get(0).getFirstName();
