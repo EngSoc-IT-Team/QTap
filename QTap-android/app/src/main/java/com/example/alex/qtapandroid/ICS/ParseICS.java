@@ -19,6 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -97,10 +98,10 @@ public class ParseICS {
         mOneClassManager = new OneClassManager(mContext);
         mCourseManager = new CourseManager(mContext);
 
-        boolean isInit = false;
+        boolean isInit = true;
 
         // see if user has initialized database yet, and if the database is up to date
-        for (int i = 0; i < user.size(); i++) {
+        /*for (int i = 0; i < user.size(); i++) {
 
             if (!user.get(i).getDateInit().isEmpty()) {
                 String rTime = user.get(i).getDateInit();
@@ -117,7 +118,7 @@ public class ParseICS {
                     isInit = true;
                 }
             }
-        }
+        }*/
 
         if (mOneClassManager.getTable().isEmpty() || !isInit) {
             mOneClassManager.deleteTable();
@@ -231,15 +232,15 @@ public class ParseICS {
                     }
                 }
             }
-            Date d = new Date();
-            CharSequence s = DateFormat.format("yyyy-MM-dd hh:mm:ss", d.getTime());
+            SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa");
+            String formattedDate = df.format(Calendar.getInstance().getTime());
 
             String uName = user.get(0).getFirstName();
             String uLastName = user.get(0).getLastName();
             String uNetID = user.get(0).getNetid();
             String uURL = user.get(0).getIcsURL();
 
-            User nUser = new User(uNetID, uName, uLastName, s.toString(), uURL);
+            User nUser = new User(uNetID, uName, uLastName, formattedDate, uURL);
             mUserManager.updateRow(user.get(0), nUser);
         }
     }

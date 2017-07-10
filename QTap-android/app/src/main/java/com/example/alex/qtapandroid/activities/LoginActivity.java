@@ -223,7 +223,9 @@ public class LoginActivity extends AppCompatActivity {
         protected Boolean doInBackground(Void... params) {
             //User userInDB = mUserManager.getRow(1); //only ever one user in the database
             if (!isLoggedIn) {
-                User newUser = new User(netid, "", "", "", mIcsUrl); //TODO ask for their name
+                SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa");
+                String formattedDate = df.format(Calendar.getInstance().getTime());
+                User newUser = new User(netid, "", "", formattedDate, mIcsUrl); //TODO ask for their name
                 mUserManager.insertRow(newUser);
             }
             return true;

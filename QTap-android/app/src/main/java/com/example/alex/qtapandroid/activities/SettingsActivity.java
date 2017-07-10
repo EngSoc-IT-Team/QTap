@@ -60,14 +60,13 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
         UserManager mUserManager = new UserManager(this.getApplicationContext());
-        ArrayList<User> user = mUserManager.getTable();
-        String uNetID = user.get(0).getNetid(); //only ever one user in database
+        ArrayList<User> users = mUserManager.getTable();
+        User user = users.get(0); //only ever one user in database
         TextView netID = (TextView) findViewById(R.id.netID);
         TextView date = (TextView) findViewById(R.id.login_date);
-        date.setText(currentDateTimeString);
-        netID.setText(uNetID);
+        date.setText(user.getDateInit());
+        netID.setText(user.getNetid());
     }
 
     @Override
