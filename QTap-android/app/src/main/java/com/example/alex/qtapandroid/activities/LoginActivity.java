@@ -36,55 +36,32 @@ import java.util.Calendar;
 import java.util.Locale;
 
 /**
- * A login screen that offers login via email/password.
+ * A login screen that offers login to my.queensu.ca via netid/password SSO.
  */
 public class LoginActivity extends AppCompatActivity {
 
-    public static final String TAG = DownloadICSFile.class.getSimpleName();
-
     //Keep track of the login task to ensure we can cancel it if requested
     private UserLoginTask mAuthTask = null;
-
-    // UI references.
     private View mProgressView;
     private View mLoginFormView;
 
     public static String mIcsUrl = "";
     public static String mUserEmail = "";
 
-    private boolean isLoggedIn = false;
-    private boolean isInit = true;
-
-
-    //TODO document and remove literals
-
     public void tryProcessHtml(String html) {
-        if (html == null)
-            return;
-
-        if (html.contains("Class Schedule")) {
+        if (html != null && html.contains("Class Schedule")) {
             html = html.replaceAll("\n", "");
             int index = html.indexOf("Class Schedule");
             html = html.substring(index);
             String indexing = "Your URL for the Class Schedule Subscription pilot service is ";
             index = html.indexOf(indexing) + indexing.length();
             String URL = html.substring(index, index + 200);
-            URL = URL.substring(0, URL.indexOf(".ics") + 4);
-            mIcsUrl = URL;
-            Log.d("WEB", "URL: " + URL);
-
+            mIcsUrl = URL.substring(0, URL.indexOf(".ics") + 4);
             index = URL.indexOf("/FU/") + 4;
             mUserEmail = URL.substring(index, URL.indexOf("-", index + 1));
             mUserEmail += "@queensu.ca";
-            setText(mUserEmail);
             attemptLogin();
         }
-    }
-
-    private void setText(String userEmail) {
-        TextView dataInfo = (TextView) findViewById(R.id.userEmail);
-        dataInfo.setText(userEmail);
-        Log.d("WEB", "User Email: " + userEmail);
     }
 
     @Override
@@ -94,52 +71,29 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-        UserManager mUserManager = new UserManager(this.getApplicationContext());
-        ArrayList<User> user = mUserManager.getTable();
-       /* if (!user.isEmpty())    // if the user has logged in already
-        {
-            if (user.get(0).getIcsURL() != "" && user.get(0).getIcsURL().contains(".ics")) {
-                Log.d(TAG, "user is logged in");
-                isLoggedIn = true;
-                attemptLogin();
+        final WebView browser = (WebView) findViewById(R.id.webView);
+        browser.getSettings().setSaveFormData(false); //disable autocomplete - more secure, keyboard popup blocks fields
+        browser.getSettings().setJavaScriptEnabled(true); // needed to properly display page / scroll to chosen location
+
+        browser.setWebViewClient(new WebViewClient() {
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                if (browser.getUrl().contains("login.queensu.ca"))
+                    browser.loadUrl("javascript:document.getElementById('queensbody').scrollIntoView();");
+
+                browser.evaluateJavascript("(function() { return ('<html>'+document." +
+                                "getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
+                        new ValueCallback<String>() {
+                            @Override
+                            public void onReceiveValue(String html) {
+                                tryProcessHtml(html);
+                            }
+                        });
             }
-        }*/
-        if (!isLoggedIn) {
-            final WebView browser = (WebView) findViewById(R.id.webView);
-            browser.getSettings().setSaveFormData(false); //disable autocomplete - more secure, keyboard popup blocks fields
 
-            browser.getSettings().setJavaScriptEnabled(true); // needed to properly display page / scroll to chosen location
-
-            browser.setWebViewClient(new WebViewClient() {
-
-                @Override
-                public void onPageFinished(WebView view, String url) {
-
-//                    String hash = "username";
-
-//                    browser.loadUrl("javascript:(function() { " +
-//                            "window.location.hash='#" + hash + "';" +
-//                            "})()");
-                    if (browser.getUrl().contains("login.queensu.ca"))
-                        browser.loadUrl("javascript:document.getElementById('queensbody').scrollIntoView();");
-
-                    browser.evaluateJavascript("(function() { return ('<html>'+document." +
-                                    "getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
-                            new ValueCallback<String>() {
-                                @Override
-                                public void onReceiveValue(String html) {
-                                    tryProcessHtml(html);
-                                }
-                            });
-
-
-                }
-
-            });
-
-            browser.loadUrl("http://my.queensu.ca/software-centre");
-
-        }
+        });
+        browser.loadUrl("http://my.queensu.ca/software-centre");
     }
 
     /**
@@ -148,7 +102,6 @@ public class LoginActivity extends AppCompatActivity {
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-
         if (mAuthTask != null) {
             return;
         }
@@ -164,35 +117,25 @@ public class LoginActivity extends AppCompatActivity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
+        int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
+        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+        mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+            }
+        });
 
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
-            mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
+        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+        mProgressView.animate().setDuration(shortAnimTime).alpha(
+                show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+            }
+        });
     }
 
     @Override
@@ -205,7 +148,7 @@ public class LoginActivity extends AppCompatActivity {
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String netid;
         private UserManager mUserManager;
@@ -237,72 +180,57 @@ public class LoginActivity extends AppCompatActivity {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
             if (success) {
+                (new GetCloudDb(LoginActivity.this)).execute();
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("UserEmail", netid + "@queensu.ca");
+                editor.apply();
 
-                if (!isLoggedIn) {
-                    (new GetCloudDb(LoginActivity.this)).execute();
-                    // Allow for editing the preferences
-                    SharedPreferences.Editor editor = preferences.edit();
-                    // Create a string called "UserEmail" equal to mEmail
-
-
-                    editor.putString("UserEmail", netid + "@queensu.ca");
+                // DO LOGIC FOR GENERATING ICS FILE HERE....
+                if (!mIcsUrl.equals("") && mIcsUrl.contains(".ics")) {
+                    editor.putString("mIcsUrl", mIcsUrl);   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
                     editor.apply();
-
-                    // DO LOGIC FOR GENERATING ICS FILE HERE....
-                    if (!mIcsUrl.equals("") && mIcsUrl.contains(".ics")) {
-                        editor.putString("mIcsUrl", mIcsUrl);   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
-                        editor.apply();
-                    } else {
-                        editor.putString("mIcsUrl", "Error, failed to download calendar!");   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
-                        editor.apply();
-                    }
-                    final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
-                    final ParseICS parser = new ParseICS(LoginActivity.this);
-                    String url = preferences.getString("mIcsUrl", "noURL");
-                    if (!url.equals("noURL")) {
-                        Log.d(TAG, "PAY ATTENTION _________________________________________________________________________________________________________________________________________________________________________________!");
-                        //ADD BACK downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
-                        url = "http://enterpriseair.tk/temp/testCal.ics"; // Add this line for debugging purposes - TODO: Remove this bypass
-                        downloadICS.execute(url); // Not sure why this was removed, it's kinda important :/
-                        Log.d(TAG, "Parsing...!");
-                        parser.parseICSData();
-                        Log.d(TAG, "Done!");
-                    }
-                    //parser.parseICSData(); //TESTING REMOVE AFTER
-
-                    startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
-
                 } else {
-                    UserManager mUserManager = new UserManager(getApplicationContext());
-                    ArrayList<User> user = mUserManager.getTable();
+                    editor.putString("mIcsUrl", "Error, failed to download calendar!");   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
+                    editor.apply();
+                }
+                final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
+                final ParseICS parser = new ParseICS(LoginActivity.this);
+                String url = preferences.getString("mIcsUrl", "noURL");
+                if (!url.equals("noURL")) {
+                    //ADD BACK downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
+                    url = "http://enterpriseair.tk/temp/testCal.ics"; // Add this line for debugging purposes - TODO: Remove this bypass
+                    downloadICS.execute(url);
+                    parser.parseICSData();
+                }
+                startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
+
+            } else {
+                UserManager mUserManager = new UserManager(getApplicationContext());
+                ArrayList<User> user = mUserManager.getTable();
 
 
-                    if (!user.get(0).getDateInit().equals("")) { // if the database is up to date
-                        Calendar cal = Calendar.getInstance();
-                        Calendar lastWeek = Calendar.getInstance();
-                        lastWeek.add(Calendar.DAY_OF_YEAR, -7);
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+                if (!user.get(0).getDateInit().equals("")) { // if the database is up to date
+                    Calendar cal = Calendar.getInstance();
+                    Calendar lastWeek = Calendar.getInstance();
+                    lastWeek.add(Calendar.DAY_OF_YEAR, -7);
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
 
-                        try {
-                            cal.setTime(sdf.parse(user.get(0).getDateInit()));// all done
-                            if (cal.after(lastWeek)) {
-                                Log.d(TAG, "data is less than one week old");
-
-                                startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
-                            } else {    // if the user IS logged in, but the database is more than a week old
-                                final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
-                                final ParseICS parser = new ParseICS(LoginActivity.this);
-                                String url = preferences.getString("mIcsUrl", "noURL");
-                                if (!url.equals("noURL")) {
-                                    url = "http://enterpriseair.tk/temp/testCal.ics"; // Add this line for debugging purposes - TODO: Remove this bypass
-                                    downloadICS.execute(url); // Not sure why this was removed, it's kinda important :/
-                                    parser.parseICSData();
-                                }
+                    try {
+                        cal.setTime(sdf.parse(user.get(0).getDateInit()));// all done
+                        if (cal.after(lastWeek)) {
+                            startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
+                        } else {    // if the user IS logged in, but the database is more than a week old
+                            final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
+                            final ParseICS parser = new ParseICS(LoginActivity.this);
+                            String url = preferences.getString("mIcsUrl", "noURL");
+                            if (!url.equals("noURL")) {
+                                url = "http://enterpriseair.tk/temp/testCal.ics"; // Add this line for debugging purposes - TODO: Remove this bypass
+                                downloadICS.execute(url); // Not sure why this was removed, it's kinda important :/
+                                parser.parseICSData();
                             }
-                        } catch (ParseException e) {
-
                         }
-
+                    } catch (ParseException e) {
+                        Log.e("LoginActivity", "ERROR: " + e);
                     }
                 }
                 startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
