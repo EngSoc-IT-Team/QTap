@@ -2,6 +2,7 @@ package com.example.alex.qtapandroid.activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 
 import android.content.Context;
@@ -65,6 +66,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
+    @SuppressLint("SetJavaScriptEnabled")
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
