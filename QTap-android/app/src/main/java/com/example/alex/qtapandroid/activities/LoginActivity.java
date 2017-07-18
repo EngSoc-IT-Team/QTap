@@ -19,7 +19,6 @@ import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import com.example.alex.qtapandroid.ICS.ParseICS;
 import com.example.alex.qtapandroid.R;

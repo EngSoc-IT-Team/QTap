@@ -85,6 +85,43 @@ if (mysql_num_rows($result) > 0) {
     }
 }
 
+//cafs
+$result = mysql_query("SELECT * FROM Cafeterias") or die(mysql_error());
+// check for empty result
+if (mysql_num_rows($result) > 0) {
+    $response["Cafeterias"] = array();
+    while ($row = mysql_fetch_array($result)) {
+        // temp user array
+        $product = array();
+        $product["Name"] = $row["Name"];
+        $product["WeekBreakfastStart"] = $row["WeekBreakfastStart"];
+        $product["WeekBreakfastStop"] = $row["WeekBreakfastStop"];
+        $product["FriBreakfastStart"] = $row["FriBreakfastStart"];
+        $product["FriBreakfastStop"] = $row["FriBreakfastStop"];
+        $product["SatBreakfastStart"] = $row["SatBreakfastStart"];
+        $product["SatBreakfastStop"] = $row["SatBreakfastStop"];
+        $product["SunBreakfastStart"] = $row["SunBreakfastStart"];
+        $product["SunBreakfastStop"] = $row["SunBreakfastStop"];
+        $product["WeekLunchStart"] = $row["WeekLunchStart"];
+        $product["WeekLunchStop"] = $row["WeekLunchStop"];
+        $product["FriLunchStart"] = $row["FriLunchStart"];
+        $product["FriLunchStop"] = $row["FriLunchStop"];
+        $product["SatLunchStart"] = $row["SatLunchStart"];
+        $product["SatLunchStop"] = $row["SatLunchStop"];
+        $product["SunLunchStart"] = $row["SunLunchStart"];
+        $product["SunLunchStop"] = $row["SunLunchStop"];
+        $product["WeekDinnerStart"] = $row["WeekDinnerStart"];
+        $product["WeekDinnerStop"] = $row["WeekDinnerStop"];
+        $product["FriDinnerStart"] = $row["FriDinnerStart"];
+        $product["FriDinnerStop"] = $row["FriDinnerStop"];
+        $product["SatDinnerStart"] = $row["SatDinnerStart"];
+        $product["SatDinnerStop"] = $row["SatDinnerStop"];
+        $product["SunDinnerStart"] = $row["SunDinnerStart"];
+        $product["SunDinnerStop"] = $row["SunDinnerStop"];
+        array_push($response["Cafeterias"], $product);
+    }
+}
+
 if (count($response) > 0) {
     $response["Success"] = 1;
 } else {
