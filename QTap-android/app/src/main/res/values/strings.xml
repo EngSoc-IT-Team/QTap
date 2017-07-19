@@ -29,6 +29,13 @@
     <string name="no_events">No events today</string>
     <string name="resources">Resources</string>
     <string name="links">Links</string>
+    <string name="week_hours">Mon - Thurs</string>
+    <string name="fri_hours">Friday</string>
+    <string name="sat_hours">Saturday</string>
+    <string name="sun_hours">Sunday</string>
+    <string name="breakfast">Breakfast</string>
+    <string name="lunch">Lunch</string>
+    <string name="dinner">Dinner</string>
 
     <!--Button text-->
     <string name="play_again">Play Again</string>

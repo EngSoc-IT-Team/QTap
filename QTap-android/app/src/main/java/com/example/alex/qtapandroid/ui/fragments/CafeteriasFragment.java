@@ -38,17 +38,70 @@ public class CafeteriasFragment extends ListFragment {
         BuildingManager buildingManager = new BuildingManager(getContext());
         for (Cafeteria caf : cafs) {
             HashMap<String, String> map = new HashMap<>();
+
             map.put(Cafeteria.COLUMN_NAME, caf.getName());
             //key is buildingID but that's just to avoid hardcoding - actually building name
             //ID+1 because cloud DB starts at ID 0, phone starts at 1
             map.put(Cafeteria.COLUMN_BUILDING_ID, buildingManager.getRow(caf.getBuildingID()).getName());
+
+            //use start for key for hours
+            map.put(Cafeteria.COLUMN_WEEK_BREAKFAST_START, getHours(caf.getWeekBreakfastStart(), caf.getWeekBreakfastStop()));
+            map.put(Cafeteria.COLUMN_FRI_BREAKFAST_START, getHours(caf.getFriBreakfastStart(), caf.getFriBreakfastStop()));
+            map.put(Cafeteria.COLUMN_SAT_BREAKFAST_START, getHours(caf.getSatBreakfastStart(), caf.getSatBreakfastStop()));
+            map.put(Cafeteria.COLUMN_SUN_BREAKFAST_START, getHours(caf.getSunBreakfastStart(), caf.getSunBreakfastStop()));
+            map.put(Cafeteria.COLUMN_WEEK_LUNCH_START, getHours(caf.getWeekLunchStart(), caf.getWeekLunchStop()));
+            map.put(Cafeteria.COLUMN_FRI_LUNCH_START, getHours(caf.getFriLunchStart(), caf.getFriLunchStop()));
+            map.put(Cafeteria.COLUMN_SAT_LUNCH_START, getHours(caf.getSatLunchStart(), caf.getSatLunchStop()));
+            map.put(Cafeteria.COLUMN_SUN_LUNCH_START, getHours(caf.getSunLunchStart(), caf.getSunLunchStop()));
+            map.put(Cafeteria.COLUMN_WEEK_DINNER_START, getHours(caf.getWeekDinnerStart(), caf.getWeekDinnerStop()));
+            map.put(Cafeteria.COLUMN_FRI_DINNER_START, getHours(caf.getFriDinnerStart(), caf.getFriDinnerStop()));
+            map.put(Cafeteria.COLUMN_SAT_DINNER_START, getHours(caf.getSatDinnerStart(), caf.getSatDinnerStop()));
+            map.put(Cafeteria.COLUMN_SUN_DINNER_START, getHours(caf.getSunDinnerStart(), caf.getSunDinnerStop()));
+
             cafList.add(map);
         }
         ListAdapter adapter = new SimpleAdapter(getActivity().getApplicationContext(), cafList,
-                R.layout.cafeteria_list_item, new String[]{Cafeteria.COLUMN_NAME, Cafeteria.COLUMN_BUILDING_ID},
-                new int[]{R.id.name, R.id.building});
+                R.layout.cafeteria_list_item, new String[]{Cafeteria.COLUMN_NAME, Cafeteria.COLUMN_BUILDING_ID,
+                Cafeteria.COLUMN_WEEK_BREAKFAST_START, Cafeteria.COLUMN_FRI_BREAKFAST_START, Cafeteria.COLUMN_SAT_BREAKFAST_START,
+                Cafeteria.COLUMN_SUN_BREAKFAST_START, Cafeteria.COLUMN_WEEK_LUNCH_START, Cafeteria.COLUMN_FRI_LUNCH_START,
+                Cafeteria.COLUMN_SAT_LUNCH_START, Cafeteria.COLUMN_SUN_LUNCH_START, Cafeteria.COLUMN_WEEK_DINNER_START,
+                Cafeteria.COLUMN_FRI_DINNER_START, Cafeteria.COLUMN_SAT_DINNER_START, Cafeteria.COLUMN_SUN_DINNER_START},
+                new int[]{R.id.name, R.id.building, R.id.week_breakfast, R.id.fri_breakfast, R.id.sat_breakfast, R.id.sun_breakfast,
+                        R.id.week_lunch, R.id.fri_lunch, R.id.sat_lunch, R.id.sun_lunch, R.id.week_dinner, R.id.fri_dinner, R.id.sat_dinner,
+                        R.id.sun_dinner});
         setListAdapter(adapter);
         return v;
+    }
+
+    private String getHours(double startHour, double endHour) {
+        //check for closed all day flag
+        if (startHour < 0) {
+            return "Closed";
+        }
+
+        String start = "";
+        if (startHour < 1 || startHour >= 13) { //24 hour time
+            start += String.valueOf(startHour - 12);
+        } else {
+            start += String.valueOf(startHour);
+        }
+        if (startHour < 12) {
+            start += " am";
+        } else {
+            start += " pm";
+        }
+        String end = "";
+        if (endHour < 1 || endHour >= 13) { //24 hour time
+            end += String.valueOf(endHour - 12);
+        } else {
+            end += String.valueOf(endHour);
+        }
+        if (endHour < 12) {
+            end += " am";
+        } else {
+            end += " pm";
+        }
+        return start + " to " + end;
     }
 
     @Override
