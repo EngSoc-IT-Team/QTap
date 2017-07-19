@@ -94,6 +94,7 @@ if (mysql_num_rows($result) > 0) {
         // temp user array
         $product = array();
         $product["Name"] = $row["Name"];
+        $product["BuildingID"] = $orw["BuildingID"];
         $product["WeekBreakfastStart"] = $row["WeekBreakfastStart"];
         $product["WeekBreakfastStop"] = $row["WeekBreakfastStop"];
         $product["FriBreakfastStart"] = $row["FriBreakfastStart"];
