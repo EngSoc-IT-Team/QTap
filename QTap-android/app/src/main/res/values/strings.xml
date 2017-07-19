@@ -12,6 +12,7 @@
     <string name="fragment_day">Day View</string>
     <string name="fragment_month">Month View</string>
     <string name="fragment_buildings">Buildings</string>
+    <string name="fragment_cafeterias">Cafeterias</string>
     <string name="fragment_food">Food Establishments</string>
     <string name="fragment_student_tools">Student Tools</string>
     <string name="fragment_emerg_contacts">Emergency Contacts</string>

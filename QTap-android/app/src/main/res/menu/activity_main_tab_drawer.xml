@@ -26,7 +26,10 @@
                     android:id="@+id/nav_buildings"
                     android:icon="@mipmap/ic_building"
                     android:title="@string/fragment_buildings"/>
-
+                <item
+                    android:id="@+id/nav_cafeterias"
+                    android:icon="@mipmap/ic_restaurant"
+                    android:title="@string/fragment_cafeterias"/>
                 <item
                     android:id="@+id/nav_food"
                     android:icon="@mipmap/ic_food"

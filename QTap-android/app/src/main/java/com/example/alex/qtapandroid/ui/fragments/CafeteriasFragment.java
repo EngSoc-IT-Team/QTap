@@ -15,6 +15,8 @@ import android.widget.SimpleAdapter;
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
+import com.example.alex.qtapandroid.common.database.cafeterias.Cafeteria;
+import com.example.alex.qtapandroid.common.database.cafeterias.CafeteriaManager;
 import com.example.alex.qtapandroid.common.database.food.Food;
 import com.example.alex.qtapandroid.common.database.food.FoodManager;
 
@@ -22,34 +24,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * Created by Carson on 05/07/2017.
- * Fragment displaying data in phone database regarding food establishments.
+ * Created by Carson on 18/07/2017.
+ * Fragment that displays the cafeterias in the phone database.
  */
-public class FoodFragment extends ListFragment {
-
+public class CafeteriasFragment extends ListFragment {
     private NavigationView mNavView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_food, container, false);
-        ArrayList<HashMap<String, String>> foodList = new ArrayList<>();
-        ArrayList<Food> food = (new FoodManager(getActivity().getApplicationContext())).getTable();
+        ArrayList<HashMap<String, String>> cafList = new ArrayList<>();
+        ArrayList<Cafeteria> cafs = (new CafeteriaManager(getActivity().getApplicationContext())).getTable();
         BuildingManager buildingManager = new BuildingManager(getContext());
-        for (Food oneFood : food) {
+        for (Cafeteria caf : cafs) {
             HashMap<String, String> map = new HashMap<>();
-            map.put(Food.COLUMN_NAME, oneFood.getName());
+            map.put(Cafeteria.COLUMN_NAME, caf.getName());
             //key is buildingID but that's just to avoid hardcoding - actually building name
             //ID+1 because cloud DB starts at ID 0, phone starts at 1
-            map.put(Food.COLUMN_BUILDING_ID, buildingManager.getRow(oneFood.getBuildingID()).getName());
-            String takesMeal = oneFood.isMealPlan() ? "Yes" : "No";
-            map.put(Food.COLUMN_MEAL_PLAN, takesMeal);
-            String takesCard = oneFood.isCard() ? "Yes" : "No";
-            map.put(Food.COLUMN_CARD, takesCard);
-            foodList.add(map);
+            map.put(Cafeteria.COLUMN_BUILDING_ID, buildingManager.getRow(caf.getBuildingID()).getName());
+            cafList.add(map);
         }
-        ListAdapter adapter = new SimpleAdapter(getActivity().getApplicationContext(), foodList,
-                R.layout.food_list_item, new String[]{Food.COLUMN_NAME, Food.COLUMN_BUILDING_ID, Food.COLUMN_MEAL_PLAN, Food.COLUMN_CARD},
-                new int[]{R.id.name, R.id.building, R.id.meal_plan, R.id.card});
+        ListAdapter adapter = new SimpleAdapter(getActivity().getApplicationContext(), cafList,
+                R.layout.cafeteria_list_item, new String[]{Cafeteria.COLUMN_NAME, Cafeteria.COLUMN_BUILDING_ID},
+                new int[]{R.id.name, R.id.building});
         setListAdapter(adapter);
         return v;
     }
@@ -59,21 +56,21 @@ public class FoodFragment extends ListFragment {
         super.onViewCreated(view, savedInstanceState);
         ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.fragment_food));
+            actionbar.setTitle(getString(R.string.fragment_cafeterias));
         }
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mNavView.getMenu().findItem(R.id.nav_food).setChecked(false);
+        mNavView.getMenu().findItem(R.id.nav_cafeterias).setChecked(false);
     }
 
     @Override
     public void onResume() {
         super.onResume();
         mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
-        mNavView.getMenu().findItem(R.id.nav_food).setChecked(true);
+        mNavView.getMenu().findItem(R.id.nav_cafeterias).setChecked(true);
         DatabaseAccessor.getDatabase().close();
     }
 }
