@@ -1,6 +1,7 @@
 package com.example.alex.qtapandroid.common.database;
 
 import com.example.alex.qtapandroid.common.database.buildings.Building;
+import com.example.alex.qtapandroid.common.database.cafeterias.Cafeteria;
 import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContact;
 import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContact;
 import com.example.alex.qtapandroid.common.database.courses.Course;
@@ -52,6 +53,15 @@ public class SqlStringStatements {
             Food.COLUMN_FRI_STOP_HOURS + " REAL," + Food.COLUMN_SAT_START_HOURS + " REAL," + Food.COLUMN_SAT_STOP_HOURS + " REAL," + Food.COLUMN_SUN_START_HOURS + " REAL," +
             Food.COLUMN_SUN_STOP_HOURS + " REAL);";
 
+    public static final String CREATE_CAFETERIAS = "CREATE TABLE " + Cafeteria.TABLE_NAME + "(" + Cafeteria._ID + " INTEGER PRIMARY KEY," + Cafeteria.COLUMN_NAME + " TEXT," +
+            Cafeteria.COLUMN_BUILDING_ID + " INTEGER," + Cafeteria.COLUMN_WEEK_BREAKFAST_START + " REAL," +
+            Cafeteria.COLUMN_WEEK_BREAKFAST_STOP + " REAL," + Cafeteria.COLUMN_FRI_BREAKFAST_START + " REAL," + Cafeteria.COLUMN_FRI_BREAKFAST_STOP + " REAL," + Cafeteria.COLUMN_SAT_BREAKFAST_START + " REAL," +
+            Cafeteria.COLUMN_SAT_BREAKFAST_STOP + " REAL," + Cafeteria.COLUMN_SUN_BREAKFAST_START + " REAL," + Cafeteria.COLUMN_SUN_BREAKFAST_STOP + " REAL," + Cafeteria.COLUMN_WEEK_LUNCH_START + " REAL," +
+            Cafeteria.COLUMN_WEEK_LUNCH_STOP + " REAL," + Cafeteria.COLUMN_FRI_LUNCH_START + " REAL," + Cafeteria.COLUMN_FRI_LUNCH_STOP + " REAL," + Cafeteria.COLUMN_SAT_LUNCH_START + " REAL," +
+            Cafeteria.COLUMN_SAT_LUNCH_STOP + " REAL," + Cafeteria.COLUMN_SUN_LUNCH_START + " REAL," + Cafeteria.COLUMN_SUN_LUNCH_STOP + " REAL," + Cafeteria.COLUMN_WEEK_DINNER_START + " REAL,"
+            + Cafeteria.COLUMN_WEEK_DINNER_STOP + " REAL," + Cafeteria.COLUMN_FRI_DINNER_START + " REAL," + Cafeteria.COLUMN_FRI_DINNER_STOP + " REAL," + Cafeteria.COLUMN_SAT_DINNER_START + " REAL,"
+            + Cafeteria.COLUMN_SAT_DINNER_STOP + " REAL," + Cafeteria.COLUMN_SUN_DINNER_START + " REAL," + Cafeteria.COLUMN_SUN_DINNER_STOP + " REAL);";
+
     //Delete table statements
     public static final String DELETE_COURSES = "DROP TABLE IF EXISTS " + Course.TABLE_NAME;
     public static final String DELETE_USERS = "DROP TABLE IF EXISTS " + User.TABLE_NAME;
@@ -60,4 +70,5 @@ public class SqlStringStatements {
     public static final String DELETE_EMERGENCY_CONTACTS = "DROP TABLE IF EXISTS " + EmergencyContact.TABLE_NAME;
     public static final String DELETE_BUILDINGS = "DROP TABLE IF EXISTS " + Building.TABLE_NAME;
     public static final String DELETE_FOOD = "DROP TABLE IF EXISTS " + Food.TABLE_NAME;
+    public static final String DELETE_CAFETERIAS = "DROP TABLE IF EXISTS " + Cafeteria.TABLE_NAME;
 }

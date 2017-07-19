@@ -8,6 +8,8 @@ import android.util.Log;
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.buildings.Building;
 import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
+import com.example.alex.qtapandroid.common.database.cafeterias.Cafeteria;
+import com.example.alex.qtapandroid.common.database.cafeterias.CafeteriaManager;
 import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContact;
 import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContactsManager;
 import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContact;
@@ -122,6 +124,7 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
         engineeringContacts(json);
         buildings(json);
         food(json);
+        cafeterias(json);
     }
 
     private void emergencyContacts(JSONObject json) {
@@ -169,7 +172,6 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
     }
 
     private void food(JSONObject json) {
-        Log.d("SQLITEFOOD", "JSON: " + json.toString());
         try {
             JSONArray food = json.getJSONArray(Food.TABLE_NAME);
             FoodManager manager = new FoodManager(mContext);
@@ -183,6 +185,31 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
                         oneFood.getDouble(Food.COLUMN_THUR_START_HOURS), oneFood.getDouble(Food.COLUMN_THUR_STOP_HOURS), oneFood.getDouble(Food.COLUMN_FRI_START_HOURS),
                         oneFood.getDouble(Food.COLUMN_FRI_STOP_HOURS), oneFood.getDouble(Food.COLUMN_SAT_START_HOURS),
                         oneFood.getDouble(Food.COLUMN_SAT_STOP_HOURS), oneFood.getDouble(Food.COLUMN_SUN_START_HOURS), oneFood.getDouble(Food.COLUMN_SUN_STOP_HOURS)));
+            }
+        } catch (JSONException e) {
+            Log.d("HELLOTHERE", "BAD: " + e);
+        }
+    }
+
+    private void cafeterias(JSONObject json) {
+        try {
+            JSONArray cafs = json.getJSONArray(Cafeteria.TABLE_NAME);
+            CafeteriaManager manager = new CafeteriaManager(mContext);
+            for (int i = 0; i < cafs.length(); i++) {
+                JSONObject caf = cafs.getJSONObject(i);
+                manager.insertRow(new Cafeteria(caf.getString(Cafeteria.COLUMN_NAME), caf.getInt(Cafeteria.COLUMN_BUILDING_ID),
+                        caf.getDouble(Cafeteria.COLUMN_WEEK_BREAKFAST_START), caf.getDouble(Cafeteria.COLUMN_WEEK_BREAKFAST_STOP),
+                        caf.getDouble(Cafeteria.COLUMN_FRI_BREAKFAST_START), caf.getDouble(Cafeteria.COLUMN_FRI_BREAKFAST_STOP),
+                        caf.getDouble(Cafeteria.COLUMN_SAT_BREAKFAST_START), caf.getDouble(Cafeteria.COLUMN_SAT_BREAKFAST_STOP),
+                        caf.getDouble(Cafeteria.COLUMN_SUN_BREAKFAST_START), caf.getDouble(Cafeteria.COLUMN_SUN_BREAKFAST_STOP),
+                        caf.getDouble(Cafeteria.COLUMN_WEEK_LUNCH_START), caf.getDouble(Cafeteria.COLUMN_WEEK_LUNCH_STOP),
+                        caf.getDouble(Cafeteria.COLUMN_FRI_LUNCH_START), caf.getDouble(Cafeteria.COLUMN_FRI_LUNCH_STOP),
+                        caf.getDouble(Cafeteria.COLUMN_SAT_LUNCH_START), caf.getDouble(Cafeteria.COLUMN_SAT_LUNCH_STOP),
+                        caf.getDouble(Cafeteria.COLUMN_SUN_LUNCH_START), caf.getDouble(Cafeteria.COLUMN_SUN_LUNCH_STOP),
+                        caf.getDouble(Cafeteria.COLUMN_WEEK_DINNER_START), caf.getDouble(Cafeteria.COLUMN_WEEK_DINNER_STOP),
+                        caf.getDouble(Cafeteria.COLUMN_FRI_DINNER_START), caf.getDouble(Cafeteria.COLUMN_FRI_DINNER_STOP),
+                        caf.getDouble(Cafeteria.COLUMN_SAT_DINNER_START), caf.getDouble(Cafeteria.COLUMN_SAT_DINNER_STOP),
+                        caf.getDouble(Cafeteria.COLUMN_SUN_DINNER_START), caf.getDouble(Cafeteria.COLUMN_SUN_DINNER_STOP)));
             }
         } catch (JSONException e) {
             Log.d("HELLOTHERE", "BAD: " + e);
