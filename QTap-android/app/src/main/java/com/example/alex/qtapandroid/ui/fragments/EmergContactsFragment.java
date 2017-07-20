@@ -31,7 +31,7 @@ public class EmergContactsFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_emerg_contacts, container, false);
+        View v = inflater.inflate(R.layout.fragment_list, container, false);
         ArrayList<HashMap<String, String>> emergContactsList = new ArrayList<>();
         ArrayList<EmergencyContact> contacts = (new EmergencyContactsManager(getActivity().getApplicationContext())).getTable();
         for (EmergencyContact contact : contacts) {
