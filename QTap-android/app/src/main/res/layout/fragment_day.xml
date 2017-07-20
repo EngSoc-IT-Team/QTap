@@ -27,20 +27,14 @@
 
             <Button
                 android:id="@+id/prev"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
-                android:text="@string/prev"
-                android:textColor="@color/white"/>
+                style="@style/MainButton"
+                android:text="@string/prev"/>
 
             <Button
                 android:id="@+id/next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/MainButton"
                 android:layout_alignParentEnd="true"
-                android:background="@color/colorAccent"
-                android:text="@string/next"
-                android:textColor="@color/white"/>
+                android:text="@string/next"/>
         </RelativeLayout>
 
         <TextView
