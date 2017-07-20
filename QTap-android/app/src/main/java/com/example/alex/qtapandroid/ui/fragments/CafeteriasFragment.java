@@ -17,8 +17,6 @@ import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
 import com.example.alex.qtapandroid.common.database.cafeterias.Cafeteria;
 import com.example.alex.qtapandroid.common.database.cafeterias.CafeteriaManager;
-import com.example.alex.qtapandroid.common.database.food.Food;
-import com.example.alex.qtapandroid.common.database.food.FoodManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,18 +30,14 @@ public class CafeteriasFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_food, container, false);
+        View v = inflater.inflate(R.layout.fragment_cafeterias, container, false);
         ArrayList<HashMap<String, String>> cafList = new ArrayList<>();
         ArrayList<Cafeteria> cafs = (new CafeteriaManager(getActivity().getApplicationContext())).getTable();
-        BuildingManager buildingManager = new BuildingManager(getContext());
         for (Cafeteria caf : cafs) {
             HashMap<String, String> map = new HashMap<>();
 
             map.put(Cafeteria.COLUMN_NAME, caf.getName());
-            //key is buildingID but that's just to avoid hardcoding - actually building name
-            //ID+1 because cloud DB starts at ID 0, phone starts at 1
-            map.put(Cafeteria.COLUMN_BUILDING_ID, buildingManager.getRow(caf.getBuildingID()).getName());
-
+            //don't put building ID - name makes it obvious
             //use start for key for hours
             map.put(Cafeteria.COLUMN_WEEK_BREAKFAST_START, getHours(caf.getWeekBreakfastStart(), caf.getWeekBreakfastStop()));
             map.put(Cafeteria.COLUMN_FRI_BREAKFAST_START, getHours(caf.getFriBreakfastStart(), caf.getFriBreakfastStop()));
@@ -61,12 +55,12 @@ public class CafeteriasFragment extends ListFragment {
             cafList.add(map);
         }
         ListAdapter adapter = new SimpleAdapter(getActivity().getApplicationContext(), cafList,
-                R.layout.cafeteria_list_item, new String[]{Cafeteria.COLUMN_NAME, Cafeteria.COLUMN_BUILDING_ID,
+                R.layout.cafeteria_list_item, new String[]{Cafeteria.COLUMN_NAME,
                 Cafeteria.COLUMN_WEEK_BREAKFAST_START, Cafeteria.COLUMN_FRI_BREAKFAST_START, Cafeteria.COLUMN_SAT_BREAKFAST_START,
                 Cafeteria.COLUMN_SUN_BREAKFAST_START, Cafeteria.COLUMN_WEEK_LUNCH_START, Cafeteria.COLUMN_FRI_LUNCH_START,
                 Cafeteria.COLUMN_SAT_LUNCH_START, Cafeteria.COLUMN_SUN_LUNCH_START, Cafeteria.COLUMN_WEEK_DINNER_START,
                 Cafeteria.COLUMN_FRI_DINNER_START, Cafeteria.COLUMN_SAT_DINNER_START, Cafeteria.COLUMN_SUN_DINNER_START},
-                new int[]{R.id.name, R.id.building, R.id.week_breakfast, R.id.fri_breakfast, R.id.sat_breakfast, R.id.sun_breakfast,
+                new int[]{R.id.name, R.id.week_breakfast, R.id.fri_breakfast, R.id.sat_breakfast, R.id.sun_breakfast,
                         R.id.week_lunch, R.id.fri_lunch, R.id.sat_lunch, R.id.sun_lunch, R.id.week_dinner, R.id.fri_dinner, R.id.sat_dinner,
                         R.id.sun_dinner});
         setListAdapter(adapter);
@@ -79,29 +73,31 @@ public class CafeteriasFragment extends ListFragment {
             return "Closed";
         }
 
-        String start = "";
-        if (startHour < 1 || startHour >= 13) { //24 hour time
-            start += String.valueOf(startHour - 12);
-        } else {
-            start += String.valueOf(startHour);
-        }
-        if (startHour < 12) {
-            start += " am";
-        } else {
-            start += " pm";
-        }
-        String end = "";
-        if (endHour < 1 || endHour >= 13) { //24 hour time
-            end += String.valueOf(endHour - 12);
-        } else {
-            end += String.valueOf(endHour);
-        }
-        if (endHour < 12) {
-            end += " am";
-        } else {
-            end += " pm";
-        }
+        String start = getOneTimeBoundary(startHour);
+        String end = getOneTimeBoundary(endHour);
         return start + " to " + end;
+    }
+
+    private String getOneTimeBoundary(double hour){
+        String sHour="";
+        if (hour < 1 || hour >= 13) { //24 hour time
+            sHour += String.valueOf((int)hour - 12);
+        } else {
+            sHour += String.valueOf((int)hour);
+        }
+
+        double min=(hour-(int)hour)*60; //convert 0.5, 0.75 to 30, 45 min
+        sHour+=":"+String.valueOf((int)min);
+        if (min==0){
+            sHour+="0";
+        }
+
+        if (hour < 12) {
+            sHour += " am";
+        } else {
+            sHour += " pm";
+        }
+        return sHour;
     }
 
     @Override
