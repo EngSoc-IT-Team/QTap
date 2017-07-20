@@ -72,6 +72,13 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        UserManager mUserManager = new UserManager(getBaseContext());
+
+        if (!mUserManager.getTable().isEmpty()) {   // is the user logged in?  If so, skip the browser initialization process and just log in the user.  This will still perform the database init tasks if needed
+            attemptLogin();
+        }
+
         final WebView browser = (WebView) findViewById(R.id.webView);
         browser.getSettings().setSaveFormData(false); //disable autocomplete - more secure, keyboard popup blocks fields
         browser.getSettings().setJavaScriptEnabled(true); // needed to properly display page / scroll to chosen location
@@ -95,6 +102,7 @@ public class LoginActivity extends AppCompatActivity {
 
         });
         browser.loadUrl("http://my.queensu.ca/software-centre");
+
     }
 
     /**
