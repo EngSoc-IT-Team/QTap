@@ -74,35 +74,33 @@ public class LoginActivity extends AppCompatActivity {
         mProgressView = findViewById(R.id.login_progress);
 
         UserManager mUserManager = new UserManager(getBaseContext());
+        if (mUserManager.getTable().isEmpty()) {
+            final WebView browser = (WebView) findViewById(R.id.webView);
+            browser.getSettings().setSaveFormData(false); //disable autocomplete - more secure, keyboard popup blocks fields
+            browser.getSettings().setJavaScriptEnabled(true); // needed to properly display page / scroll to chosen location
 
-        if (!mUserManager.getTable().isEmpty()) {   // is the user logged in?  If so, skip the browser initialization process and just log in the user.  This will still perform the database init tasks if needed
+            browser.setWebViewClient(new WebViewClient() {
+
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    if (browser.getUrl().contains("login.queensu.ca"))
+                        browser.loadUrl("javascript:document.getElementById('queensbody').scrollIntoView();");
+
+                    browser.evaluateJavascript("(function() { return ('<html>'+document." +
+                                    "getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
+                            new ValueCallback<String>() {
+                                @Override
+                                public void onReceiveValue(String html) {
+                                    tryProcessHtml(html);
+                                }
+                            });
+                }
+
+            });
+            browser.loadUrl("http://my.queensu.ca/software-centre");
+        } else {
             attemptLogin();
         }
-
-        final WebView browser = (WebView) findViewById(R.id.webView);
-        browser.getSettings().setSaveFormData(false); //disable autocomplete - more secure, keyboard popup blocks fields
-        browser.getSettings().setJavaScriptEnabled(true); // needed to properly display page / scroll to chosen location
-
-        browser.setWebViewClient(new WebViewClient() {
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                if (browser.getUrl().contains("login.queensu.ca"))
-                    browser.loadUrl("javascript:document.getElementById('queensbody').scrollIntoView();");
-
-                browser.evaluateJavascript("(function() { return ('<html>'+document." +
-                                "getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
-                        new ValueCallback<String>() {
-                            @Override
-                            public void onReceiveValue(String html) {
-                                tryProcessHtml(html);
-                            }
-                        });
-            }
-
-        });
-        browser.loadUrl("http://my.queensu.ca/software-centre");
-
     }
 
     /**
@@ -173,10 +171,6 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa", Locale.CANADA);
-            String formattedDate = df.format(Calendar.getInstance().getTime());
-            User newUser = new User(netid, "", "", formattedDate, mIcsUrl);
-            mUserManager.insertRow(newUser);
             return true;
         }
 
@@ -188,7 +182,12 @@ public class LoginActivity extends AppCompatActivity {
             // Get the default SharedPreferences context
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-            if (success) {
+            if (new UserManager(LoginActivity.this).getTable().isEmpty()) {
+                SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa", Locale.CANADA);
+                String formattedDate = df.format(Calendar.getInstance().getTime());
+                User newUser = new User(netid, "", "", formattedDate, mIcsUrl);
+                mUserManager=new UserManager(LoginActivity.this);
+                mUserManager.insertRow(newUser);
                 (new GetCloudDb(LoginActivity.this)).execute();
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("UserEmail", netid + "@queensu.ca");
