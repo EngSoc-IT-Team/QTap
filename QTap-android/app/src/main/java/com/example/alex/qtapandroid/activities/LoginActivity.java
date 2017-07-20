@@ -5,7 +5,6 @@ import android.animation.AnimatorListenerAdapter;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -36,7 +35,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 /**
- * A login screen that offers login to my.queensu.ca via netid/password SSO.
+ * A login screen that offers login to my.queensu.ca via mNetid/password SSO.
  */
 public class LoginActivity extends AppCompatActivity {
 
@@ -115,7 +114,7 @@ public class LoginActivity extends AppCompatActivity {
 
         // Show a progress spinner, and kick off a background task to perform the user login attempt.
         showProgress(true);
-        mAuthTask = new UserLoginTask(mUserEmail, this);
+        mAuthTask = new UserLoginTask(mUserEmail);
         mAuthTask.execute((Void) null);
     }
 
@@ -157,16 +156,12 @@ public class LoginActivity extends AppCompatActivity {
      */
     private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String netid;
-        private UserManager mUserManager;
+        private final String mNetid;
 
-        UserLoginTask(String netid, Context context) {
-            this.mUserManager = new UserManager(context);
-            //TODO get netid to actually be the netid
-            //netid right now is a url with netid inside, parsing for the netid
-            String[] strings = netid.split("/");
-            this.netid = strings[strings.length - 1].split("@")[0];
-            Log.d("NETID", "" + this.netid);
+        UserLoginTask(String email) {
+            //email right now is a url with netid inside, parsing for the netid
+            String[] strings = email.split("/");
+            this.mNetid = strings[strings.length - 1].split("@")[0];
         }
 
         @Override
@@ -182,15 +177,18 @@ public class LoginActivity extends AppCompatActivity {
             // Get the default SharedPreferences context
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-            if (new UserManager(LoginActivity.this).getTable().isEmpty()) {
+            UserManager userManager = new UserManager(getApplicationContext());
+            if (userManager.getTable().isEmpty()) {
+                //add user to database
                 SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa", Locale.CANADA);
                 String formattedDate = df.format(Calendar.getInstance().getTime());
-                User newUser = new User(netid, "", "", formattedDate, mIcsUrl);
-                mUserManager=new UserManager(LoginActivity.this);
-                mUserManager.insertRow(newUser);
+                User newUser = new User(mNetid, "", "", formattedDate, mIcsUrl);
+                userManager = new UserManager(LoginActivity.this);
+                userManager.insertRow(newUser);
+
                 (new GetCloudDb(LoginActivity.this)).execute();
                 SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("UserEmail", netid + "@queensu.ca");
+                editor.putString("UserEmail", mNetid + "@queensu.ca");
                 editor.apply();
 
                 // DO LOGIC FOR GENERATING ICS FILE HERE....
@@ -210,39 +208,8 @@ public class LoginActivity extends AppCompatActivity {
                     downloadICS.execute(url);
                     parser.parseICSData();
                 }
-                startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
-
-            } else {
-                UserManager mUserManager = new UserManager(getApplicationContext());
-                ArrayList<User> user = mUserManager.getTable();
-
-
-                if (!user.get(0).getDateInit().equals("")) { // if the database is up to date
-                    Calendar cal = Calendar.getInstance();
-                    Calendar lastWeek = Calendar.getInstance();
-                    lastWeek.add(Calendar.DAY_OF_YEAR, -7);
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
-
-                    try {
-                        cal.setTime(sdf.parse(user.get(0).getDateInit()));// all done
-                        if (cal.after(lastWeek)) {
-                            startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
-                        } else {    // if the user IS logged in, but the database is more than a week old
-                            final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
-                            final ParseICS parser = new ParseICS(LoginActivity.this);
-                            String url = preferences.getString("mIcsUrl", "noURL");
-                            if (!url.equals("noURL")) {
-                                url = "http://enterpriseair.tk/temp/testCal.ics"; // Add this line for debugging purposes - TODO: Remove this bypass
-                                downloadICS.execute(url); // Not sure why this was removed, it's kinda important :/
-                                parser.parseICSData();
-                            }
-                        }
-                    } catch (ParseException e) {
-                        Log.e("LoginActivity", "ERROR: " + e);
-                    }
-                }
-                startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
             }
+            startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
         }
     }
 }
