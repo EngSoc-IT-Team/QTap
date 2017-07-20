@@ -30,7 +30,7 @@ public class BuildingsFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_buildings, container, false);
+        View v = inflater.inflate(R.layout.fragment_list, container, false);
         ArrayList<HashMap<String, String>> buildingsList = new ArrayList<>();
         ArrayList<Building> buildings = (new BuildingManager(getActivity().getApplicationContext())).getTable();
         for (Building building : buildings) {

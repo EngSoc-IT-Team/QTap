@@ -31,7 +31,7 @@ public class FoodFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_food, container, false);
+        View v = inflater.inflate(R.layout.fragment_list, container, false);
         ArrayList<HashMap<String, String>> foodList = new ArrayList<>();
         ArrayList<Food> food = (new FoodManager(getActivity().getApplicationContext())).getTable();
         BuildingManager buildingManager = new BuildingManager(getContext());

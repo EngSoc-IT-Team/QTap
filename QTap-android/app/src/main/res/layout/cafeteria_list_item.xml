@@ -30,7 +30,7 @@
                 <TextView
                     style="@style/TableTextView"
                     android:text="@string/breakfast"
-                    android:textSize="15dp"
+                    android:textSize="15sp"
                     android:textStyle="bold"/>
 
                 <TableRow
@@ -101,7 +101,7 @@
                 <TextView
                     style="@style/TableTextView"
                     android:text="@string/lunch"
-                    android:textSize="15dp"
+                    android:textSize="15sp"
                     android:textStyle="bold"/>
 
                 <TableRow

@@ -102,23 +102,10 @@ public class DayFragment extends Fragment {
                 String cardName = card.getTransitionName();
                 EventInfoFragment nextFrag = new EventInfoFragment();
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    setSharedElementReturnTransition(TransitionInflater.from(
-                            getActivity()).inflateTransition(R.transition.card_transistion));
-                    setExitTransition(TransitionInflater.from(
-                            getActivity()).inflateTransition(android.R.transition.explode));
-
-                    nextFrag.setSharedElementEnterTransition(TransitionInflater.from(
-                            getActivity()).inflateTransition(R.transition.card_transistion));
-                    nextFrag.setEnterTransition(TransitionInflater.from(
-                            getActivity()).inflateTransition(android.R.transition.explode));
-                }
-
                 Bundle bundle = new Bundle();
                 bundle.putString(TAG_TITLE, data.getmText1());
                 bundle.putString(TAG_LOC, data.getmText2());
                 bundle.putString(TAG_DATE, mDateString);
-                bundle.putString("TRANS_TEXT", cardName);
                 nextFrag.setArguments(bundle);
 
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();

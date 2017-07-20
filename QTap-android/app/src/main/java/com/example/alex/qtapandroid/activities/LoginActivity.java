@@ -72,29 +72,35 @@ public class LoginActivity extends AppCompatActivity {
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-        final WebView browser = (WebView) findViewById(R.id.webView);
-        browser.getSettings().setSaveFormData(false); //disable autocomplete - more secure, keyboard popup blocks fields
-        browser.getSettings().setJavaScriptEnabled(true); // needed to properly display page / scroll to chosen location
 
-        browser.setWebViewClient(new WebViewClient() {
+        UserManager mUserManager = new UserManager(getBaseContext());
+        if (mUserManager.getTable().isEmpty()) {
+            final WebView browser = (WebView) findViewById(R.id.webView);
+            browser.getSettings().setSaveFormData(false); //disable autocomplete - more secure, keyboard popup blocks fields
+            browser.getSettings().setJavaScriptEnabled(true); // needed to properly display page / scroll to chosen location
 
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                if (browser.getUrl().contains("login.queensu.ca"))
-                    browser.loadUrl("javascript:document.getElementById('queensbody').scrollIntoView();");
+            browser.setWebViewClient(new WebViewClient() {
 
-                browser.evaluateJavascript("(function() { return ('<html>'+document." +
-                                "getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
-                        new ValueCallback<String>() {
-                            @Override
-                            public void onReceiveValue(String html) {
-                                tryProcessHtml(html);
-                            }
-                        });
-            }
+                @Override
+                public void onPageFinished(WebView view, String url) {
+                    if (browser.getUrl().contains("login.queensu.ca"))
+                        browser.loadUrl("javascript:document.getElementById('queensbody').scrollIntoView();");
 
-        });
-        browser.loadUrl("http://my.queensu.ca/software-centre");
+                    browser.evaluateJavascript("(function() { return ('<html>'+document." +
+                                    "getElementsByTagName('html')[0].innerHTML+'</html>'); })();",
+                            new ValueCallback<String>() {
+                                @Override
+                                public void onReceiveValue(String html) {
+                                    tryProcessHtml(html);
+                                }
+                            });
+                }
+
+            });
+            browser.loadUrl("http://my.queensu.ca/software-centre");
+        } else {
+            attemptLogin();
+        }
     }
 
     /**
@@ -165,10 +171,6 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa", Locale.CANADA);
-            String formattedDate = df.format(Calendar.getInstance().getTime());
-            User newUser = new User(netid, "", "", formattedDate, mIcsUrl);
-            mUserManager.insertRow(newUser);
             return true;
         }
 
@@ -180,7 +182,12 @@ public class LoginActivity extends AppCompatActivity {
             // Get the default SharedPreferences context
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-            if (success) {
+            if (new UserManager(LoginActivity.this).getTable().isEmpty()) {
+                SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa", Locale.CANADA);
+                String formattedDate = df.format(Calendar.getInstance().getTime());
+                User newUser = new User(netid, "", "", formattedDate, mIcsUrl);
+                mUserManager=new UserManager(LoginActivity.this);
+                mUserManager.insertRow(newUser);
                 (new GetCloudDb(LoginActivity.this)).execute();
                 SharedPreferences.Editor editor = preferences.edit();
                 editor.putString("UserEmail", netid + "@queensu.ca");

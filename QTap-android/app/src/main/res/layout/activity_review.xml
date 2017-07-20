@@ -8,13 +8,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:ellipsize="middle"
         android:paddingBottom="7.5dp"
         android:paddingEnd="7.5dp"
         android:paddingStart="7.5dp"
         android:paddingTop="20dp"
         android:text="@string/ask_suggestions"
         android:textAlignment="center"
-        android:ellipsize="middle"
         android:textSize="20sp"/>
 
     <LinearLayout
@@ -23,40 +23,18 @@
         android:orientation="horizontal">
 
         <Button
+            style="@style/MainButton"
             android:layout_width="150dp"
-            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/button_space"
-            android:layout_marginLeft="@dimen/button_space"
-            android:layout_marginRight="@dimen/button_space"
-            android:layout_marginTop="@dimen/button_space"
-            android:background="@color/colorAccent"
             android:gravity="start|center_vertical"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp"
-            android:shadowColor="@android:color/background_light"
             android:text="@string/review_app"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
             android:textSize="18sp"/>
 
         <Button
             android:id="@+id/suggestions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/MainButton"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/button_space"
-            android:layout_marginLeft="@dimen/button_space"
-            android:layout_marginRight="@dimen/button_space"
-            android:layout_marginTop="@dimen/button_space"
-            android:background="@color/colorAccent"
             android:gravity="start|center_vertical"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp"
-            android:shadowColor="@android:color/background_light"
-            android:text="@string/suggestions"
-            android:textAlignment="center"
-            android:textColor="@android:color/white"
-            android:textSize="18sp"/>
+            android:text="@string/suggestions"/>
     </LinearLayout>
 </LinearLayout>
