@@ -51,6 +51,7 @@ public class FoodFragment extends ListFragment {
                 R.layout.food_list_item, new String[]{Food.COLUMN_NAME, Food.COLUMN_BUILDING_ID, Food.COLUMN_MEAL_PLAN, Food.COLUMN_CARD},
                 new int[]{R.id.name, R.id.building, R.id.meal_plan, R.id.card});
         setListAdapter(adapter);
+
         return v;
     }
 
