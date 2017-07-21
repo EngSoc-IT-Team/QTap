@@ -143,19 +143,20 @@ fieldset {
 
 :-ms-input-placeholder {
   color: #888;
-}</style>
+}
+</style>
 <title>Form submission</title>
 </head>
 <body>
 <div class="container">  
-  <form id="contact" action="sql_insert.php" method="post">
+  <form id="contact" action="submit_improvement.php" method="post">
     <h3>QLife Suggestions</h3>
     <h4>Let us know what you'd like to see changed</h4>
     <fieldset>
       <input name="name" placeholder="Your name" type="text" tabindex="1" required autofocus>
     </fieldset>
     <fieldset>
-      <input name="email" placeholder="Your Email Address" type="email" tabindex="2" required>
+      <input name="email" placeholder="Your Queen's email address (with netID)" type="email" tabindex="2" pattern="[A-z0-9.]{6}@queensu.ca" required>
     </fieldset>
     <fieldset>
       <textarea placeholder="Tell us your suggestions here...." tabindex="3" required></textarea>
