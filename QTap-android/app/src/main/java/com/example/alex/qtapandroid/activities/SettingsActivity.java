@@ -60,13 +60,9 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        UserManager mUserManager = new UserManager(this.getApplicationContext());
-        ArrayList<User> users = mUserManager.getTable();
-        User user = users.get(0); //only ever one user in database
-        TextView netID = (TextView) findViewById(R.id.netID);
-        TextView date = (TextView) findViewById(R.id.login_date);
-        date.setText(user.getDateInit());
-        netID.setText(user.getNetid());
+        setBackButton();
+
+        setTextViews();
     }
 
     @Override
@@ -85,6 +81,9 @@ public class SettingsActivity extends AppCompatActivity {
             case R.id.review:
                 startActivity(new Intent(SettingsActivity.this, ReviewActivity.class));
                 break;
+            case android.R.id.home:
+                finish();
+                return true;
         }
         return false;
     }
@@ -93,5 +92,21 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         DatabaseAccessor.getDatabase().close(); //ensure only one database connection is ever open
+    }
+
+    private void setTextViews() {
+        UserManager mUserManager = new UserManager(this.getApplicationContext());
+        ArrayList<User> users = mUserManager.getTable();
+        User user = users.get(0); //only ever one user in database
+        TextView netID = (TextView) findViewById(R.id.netID);
+        TextView date = (TextView) findViewById(R.id.login_date);
+        date.setText(user.getDateInit());
+        netID.setText(user.getNetid());
+    }
+
+    private void setBackButton() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 }

@@ -19,6 +19,7 @@ public class AboutActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
+        setBackButton();
     }
 
     @Override
@@ -38,7 +39,16 @@ public class AboutActivity extends AppCompatActivity {
             case R.id.review:
                 startActivity(new Intent(AboutActivity.this, ReviewActivity.class));
                 break;
+            case android.R.id.home:
+                finish();
+                return true;
         }
         return false;
+    }
+
+    private void setBackButton() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 }

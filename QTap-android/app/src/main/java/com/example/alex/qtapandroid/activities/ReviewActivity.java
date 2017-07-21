@@ -23,6 +23,8 @@ public class ReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_review);
 
+        setBackButton();
+
         findViewById(R.id.suggestions).setOnClickListener(new View.OnClickListener() {
             @Override
             @SuppressLint("SetJavaScriptEnabled")
@@ -73,7 +75,16 @@ public class ReviewActivity extends AppCompatActivity {
             case R.id.about:
                 startActivity(new Intent(ReviewActivity.this, AboutActivity.class));
                 break;
+            case android.R.id.home:
+                finish();
+                return true;
         }
         return false;
+    }
+
+    private void setBackButton() {
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 }
