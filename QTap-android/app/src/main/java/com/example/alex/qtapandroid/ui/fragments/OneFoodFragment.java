@@ -12,9 +12,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
@@ -76,7 +79,8 @@ public class OneFoodFragment extends Fragment {
         ((TextView) mView.findViewById(R.id.takes_card_short)).setText(mArgs.getBoolean(Food.COLUMN_CARD) ? "Yes" : "No");
         ((TextView) mView.findViewById(R.id.takes_meal_short)).setText(mArgs.getBoolean(Food.COLUMN_MEAL_PLAN) ? "Yes" : "No");
 
-        if (mArgs.getString(Food.COLUMN_INFORMATION) != null) {
+        if (mArgs.getString(Food.COLUMN_INFORMATION) != null && !mArgs.getString(Food.COLUMN_INFORMATION).equals("")) {
+            mView.findViewById(R.id.info_title).setVisibility(View.VISIBLE);
             mView.findViewById(R.id.info).setVisibility(View.VISIBLE);
             ((TextView) mView.findViewById(R.id.info)).setText(mArgs.getString(Food.COLUMN_INFORMATION));
         }

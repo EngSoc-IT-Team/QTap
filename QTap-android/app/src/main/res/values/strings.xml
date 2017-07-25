@@ -29,6 +29,7 @@
     <string name="no_events">No events today</string>
     <string name="resources">Resources</string>
     <string name="links">Links</string>
+    <string name="information_title">Information:</string>
 
     <!--Table row labels-->
     <string name="week_hours">Mon - Thurs</string>
