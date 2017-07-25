@@ -31,7 +31,9 @@ import java.util.HashMap;
  */
 public class FoodFragment extends ListFragment {
 
-    private static final String TAG_DB_ID = "DB_ID";
+    public static final String TAG_DB_ID = "DB_ID";
+    public static final String TAG_BUILDING_NAME = "BUILDING_NAME";
+
     private FoodManager mFoodManager;
     private NavigationView mNavView;
 
@@ -47,9 +49,7 @@ public class FoodFragment extends ListFragment {
         for (Food oneFood : food) {
             HashMap<String, String> map = new HashMap<>();
             map.put(Food.COLUMN_NAME, oneFood.getName());
-            //key is buildingID but that's just to avoid hardcoding - actually building name
-            //ID+1 because cloud DB starts at ID 0, phone starts at 1
-            map.put(Food.COLUMN_BUILDING_ID, buildingManager.getRow(oneFood.getBuildingID()).getName());
+            map.put(TAG_BUILDING_NAME, buildingManager.getRow(oneFood.getBuildingID()).getName());
             String takesMeal = oneFood.isMealPlan() ? "Yes" : "No";
             map.put(Food.COLUMN_MEAL_PLAN, takesMeal);
             String takesCard = oneFood.isCard() ? "Yes" : "No";
@@ -59,7 +59,7 @@ public class FoodFragment extends ListFragment {
         }
 
         ListAdapter adapter = new SimpleAdapter(getActivity().getApplicationContext(), foodList,
-                R.layout.food_list_item, new String[]{Food.COLUMN_NAME, Food.COLUMN_BUILDING_ID, Food.COLUMN_MEAL_PLAN, Food.COLUMN_CARD, TAG_DB_ID},
+                R.layout.food_list_item, new String[]{Food.COLUMN_NAME, TAG_BUILDING_NAME, Food.COLUMN_MEAL_PLAN, Food.COLUMN_CARD, TAG_DB_ID},
                 new int[]{R.id.name, R.id.building, R.id.meal_plan, R.id.card, R.id.db_id});
         setListAdapter(adapter);
         return v;
@@ -68,16 +68,40 @@ public class FoodFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        String sId = ((TextView) v.findViewById(R.id.db_id)).getText().toString();
-        Food food = mFoodManager.getRow(Integer.parseInt(sId));
-        //pack info for detailed fragment
-        Bundle args = new Bundle();
-        args.putString(Food.COLUMN_NAME, food.getName());
+        Bundle args = packFoodInfo(v);
 
         OneFoodFragment oneFoodFragment = new OneFoodFragment();
         oneFoodFragment.setArguments(args);
         FragmentManager fm = getActivity().getSupportFragmentManager();
         fm.beginTransaction().addToBackStack(null).replace(R.id.content_frame, oneFoodFragment).commit();
+    }
+
+    private Bundle packFoodInfo(View v) {
+        Bundle args = new Bundle();
+        String sId = ((TextView) v.findViewById(R.id.db_id)).getText().toString();
+        Food food = mFoodManager.getRow(Integer.parseInt(sId));
+        String buildingName = ((TextView) v.findViewById(R.id.building)).getText().toString();
+
+        args.putString(Food.COLUMN_NAME, food.getName());
+        args.putBoolean(Food.COLUMN_MEAL_PLAN, food.isMealPlan());
+        args.putBoolean(Food.COLUMN_CARD, food.isCard());
+        args.putString(Food.COLUMN_INFORMATION, food.getInformation());
+        args.putString(TAG_BUILDING_NAME, buildingName); //not building ID - don't access DB in new fragment
+        args.putDouble(Food.COLUMN_MON_START_HOURS, food.getMonStartHours());
+        args.putDouble(Food.COLUMN_MON_STOP_HOURS, food.getMonStopHours());
+        args.putDouble(Food.COLUMN_TUE_START_HOURS, food.getTueStartHours());
+        args.putDouble(Food.COLUMN_TUE_STOP_HOURS, food.getTueStopHours());
+        args.putDouble(Food.COLUMN_WED_START_HOURS, food.getWedStartHours());
+        args.putDouble(Food.COLUMN_WED_STOP_HOURS, food.getWedStopHours());
+        args.putDouble(Food.COLUMN_THUR_START_HOURS, food.getThurStartHours());
+        args.putDouble(Food.COLUMN_THUR_STOP_HOURS, food.getThurStopHours());
+        args.putDouble(Food.COLUMN_FRI_START_HOURS, food.getFriStartHours());
+        args.putDouble(Food.COLUMN_FRI_STOP_HOURS, food.getFriStopHours());
+        args.putDouble(Food.COLUMN_SAT_START_HOURS, food.getSatStartHours());
+        args.putDouble(Food.COLUMN_SAT_STOP_HOURS, food.getSatStopHours());
+        args.putDouble(Food.COLUMN_SUN_START_HOURS, food.getSunStartHours());
+        args.putDouble(Food.COLUMN_SUN_STOP_HOURS, food.getSunStopHours());
+        return args;
     }
 
     @Override

@@ -6,12 +6,14 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.ConvertHourSpan;
 import com.example.alex.qtapandroid.common.database.food.Food;
 
 /**
@@ -19,14 +21,36 @@ import com.example.alex.qtapandroid.common.database.food.Food;
  * Fragment that holds information for one food establishment.
  */
 public class OneFoodFragment extends Fragment {
+
+    private Bundle mArgs;
     private NavigationView mNavView;
+    private View mView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_one_food, container, false);
-        ((TextView) v.findViewById(R.id.name)).setText(getArguments().getString(Food.COLUMN_NAME));
-        return v;
+        mView = inflater.inflate(R.layout.fragment_one_food, container, false);
+        mArgs = getArguments();
+        populateViews();
+        return mView;
+    }
+
+    private void populateViews() {
+        ((TextView) mView.findViewById(R.id.name)).setText(mArgs.getString(Food.COLUMN_NAME));
+        ((TextView) mView.findViewById(R.id.mon_hours)).setText(
+                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_MON_START_HOURS), mArgs.getDouble(Food.COLUMN_MON_STOP_HOURS)));
+        ((TextView) mView.findViewById(R.id.tue_hours)).setText(
+                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_TUE_START_HOURS), mArgs.getDouble(Food.COLUMN_TUE_STOP_HOURS)));
+        ((TextView) mView.findViewById(R.id.wed_hours)).setText(
+                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_WED_START_HOURS), mArgs.getDouble(Food.COLUMN_WED_STOP_HOURS)));
+        ((TextView) mView.findViewById(R.id.thur_hours)).setText(
+                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_THUR_START_HOURS), mArgs.getDouble(Food.COLUMN_THUR_STOP_HOURS)));
+        ((TextView) mView.findViewById(R.id.fri_hours)).setText(
+                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_FRI_START_HOURS), mArgs.getDouble(Food.COLUMN_FRI_STOP_HOURS)));
+        ((TextView) mView.findViewById(R.id.sat_hours)).setText(
+                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_SAT_START_HOURS), mArgs.getDouble(Food.COLUMN_SAT_STOP_HOURS)));
+        ((TextView) mView.findViewById(R.id.sun_hours)).setText(
+                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_SUN_START_HOURS), mArgs.getDouble(Food.COLUMN_SUN_STOP_HOURS)));
     }
 
     @Override
@@ -34,7 +58,7 @@ public class OneFoodFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         if (actionbar != null) {
-            actionbar.setTitle(getArguments().getString(Food.COLUMN_NAME));
+            actionbar.setTitle(mArgs.getString(Food.COLUMN_NAME));
         }
     }
 

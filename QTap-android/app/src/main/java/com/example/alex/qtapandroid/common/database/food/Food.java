@@ -29,8 +29,8 @@ public class Food implements BaseColumns {
     public static final String COLUMN_FRI_STOP_HOURS = "FriStopHours";
     public static final String COLUMN_SAT_START_HOURS = "SatStartHours";
     public static final String COLUMN_SAT_STOP_HOURS = "SatStopHours";
-    public static final String COLUMN_SUN_STOP_HOURS = "SunStartHours";
-    public static final String COLUMN_SUN_START_HOURS = "SunStopHours";
+    public static final String COLUMN_SUN_START_HOURS = "SunStartHours";
+    public static final String COLUMN_SUN_STOP_HOURS = "SunStopHours";
 
     public static final int POS_ID = 0;
     public static final int POS_NAME = 1;
