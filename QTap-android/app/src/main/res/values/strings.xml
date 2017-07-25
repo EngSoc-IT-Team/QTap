@@ -45,6 +45,8 @@
     <string name="friday">Friday</string>
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
+    <string name="takes_meal_plan_short">Meal plan </string>
+    <string name="takes_card_short">Debit/credit </string>
 
     <!--Button text-->
     <string name="play_again">Play Again</string>

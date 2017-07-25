@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
+import com.example.alex.qtapandroid.common.database.buildings.Building;
 import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
 import com.example.alex.qtapandroid.common.database.food.Food;
 import com.example.alex.qtapandroid.common.database.food.FoodManager;
@@ -35,6 +36,7 @@ public class FoodFragment extends ListFragment {
     public static final String TAG_BUILDING_NAME = "BUILDING_NAME";
 
     private FoodManager mFoodManager;
+    private BuildingManager mBuildingManager;
     private NavigationView mNavView;
 
     @Override
@@ -44,12 +46,13 @@ public class FoodFragment extends ListFragment {
 
         ArrayList<HashMap<String, String>> foodList = new ArrayList<>();
         ArrayList<Food> food = mFoodManager.getTable();
-        BuildingManager buildingManager = new BuildingManager(getContext());
+        mBuildingManager = new BuildingManager(getContext());
 
         for (Food oneFood : food) {
             HashMap<String, String> map = new HashMap<>();
             map.put(Food.COLUMN_NAME, oneFood.getName());
-            map.put(TAG_BUILDING_NAME, buildingManager.getRow(oneFood.getBuildingID()).getName());
+            map.put(Food.COLUMN_BUILDING_ID, String.valueOf(oneFood.getBuildingID()));
+            map.put(TAG_BUILDING_NAME, mBuildingManager.getRow(oneFood.getBuildingID()).getName()); //Building.COLUMN_NAME is the same as Food's
             String takesMeal = oneFood.isMealPlan() ? "Yes" : "No";
             map.put(Food.COLUMN_MEAL_PLAN, takesMeal);
             String takesCard = oneFood.isCard() ? "Yes" : "No";
@@ -59,8 +62,8 @@ public class FoodFragment extends ListFragment {
         }
 
         ListAdapter adapter = new SimpleAdapter(getActivity().getApplicationContext(), foodList,
-                R.layout.food_list_item, new String[]{Food.COLUMN_NAME, TAG_BUILDING_NAME, Food.COLUMN_MEAL_PLAN, Food.COLUMN_CARD, TAG_DB_ID},
-                new int[]{R.id.name, R.id.building, R.id.meal_plan, R.id.card, R.id.db_id});
+                R.layout.food_list_item, new String[]{Food.COLUMN_NAME, TAG_BUILDING_NAME, Food.COLUMN_MEAL_PLAN, Food.COLUMN_CARD, TAG_DB_ID, Food.COLUMN_BUILDING_ID},
+                new int[]{R.id.name, R.id.building, R.id.meal_plan, R.id.card, R.id.db_id, R.id.building_db_id});
         setListAdapter(adapter);
         return v;
     }
@@ -78,15 +81,22 @@ public class FoodFragment extends ListFragment {
 
     private Bundle packFoodInfo(View v) {
         Bundle args = new Bundle();
-        String sId = ((TextView) v.findViewById(R.id.db_id)).getText().toString();
-        Food food = mFoodManager.getRow(Integer.parseInt(sId));
+        String foodId = ((TextView) v.findViewById(R.id.db_id)).getText().toString();
+        Food food = mFoodManager.getRow(Integer.parseInt(foodId));
+        String buildingId = ((TextView) v.findViewById(R.id.building_db_id)).getText().toString();
+        Building building = mBuildingManager.getRow(Integer.parseInt(buildingId));
         String buildingName = ((TextView) v.findViewById(R.id.building)).getText().toString();
 
         args.putString(Food.COLUMN_NAME, food.getName());
         args.putBoolean(Food.COLUMN_MEAL_PLAN, food.isMealPlan());
         args.putBoolean(Food.COLUMN_CARD, food.isCard());
         args.putString(Food.COLUMN_INFORMATION, food.getInformation());
-        args.putString(TAG_BUILDING_NAME, buildingName); //not building ID - don't access DB in new fragment
+
+        //no building ID so no DB access in details fragment
+        args.putString(TAG_BUILDING_NAME, buildingName);
+        args.putDouble(Building.COLUMN_LAT, building.getLat());
+        args.putDouble(Building.COLUMN_LON, building.getLon());
+
         args.putDouble(Food.COLUMN_MON_START_HOURS, food.getMonStartHours());
         args.putDouble(Food.COLUMN_MON_STOP_HOURS, food.getMonStopHours());
         args.putDouble(Food.COLUMN_TUE_START_HOURS, food.getTueStartHours());
