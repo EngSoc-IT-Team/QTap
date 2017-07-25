@@ -36,7 +36,6 @@ public class OneFoodFragment extends Fragment {
     }
 
     private void populateViews() {
-        ((TextView) mView.findViewById(R.id.name)).setText(mArgs.getString(Food.COLUMN_NAME));
         ((TextView) mView.findViewById(R.id.mon_hours)).setText(
                 ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_MON_START_HOURS), mArgs.getDouble(Food.COLUMN_MON_STOP_HOURS)));
         ((TextView) mView.findViewById(R.id.tue_hours)).setText(
@@ -51,6 +50,14 @@ public class OneFoodFragment extends Fragment {
                 ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_SAT_START_HOURS), mArgs.getDouble(Food.COLUMN_SAT_STOP_HOURS)));
         ((TextView) mView.findViewById(R.id.sun_hours)).setText(
                 ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_SUN_START_HOURS), mArgs.getDouble(Food.COLUMN_SUN_STOP_HOURS)));
+
+        ((TextView) mView.findViewById(R.id.takes_card)).setText(mArgs.getBoolean(Food.COLUMN_CARD) ? "Yes" : "No");
+        ((TextView) mView.findViewById(R.id.takes_meal)).setText(mArgs.getBoolean(Food.COLUMN_MEAL_PLAN) ? "Yes" : "No");
+
+        if (mArgs.getString(Food.COLUMN_INFORMATION) != null) {
+            mView.findViewById(R.id.info).setVisibility(View.VISIBLE);
+            ((TextView) mView.findViewById(R.id.info)).setText(mArgs.getString(Food.COLUMN_INFORMATION));
+        }
     }
 
     @Override

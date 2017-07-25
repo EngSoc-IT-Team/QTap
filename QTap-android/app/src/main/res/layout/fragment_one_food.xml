@@ -1,118 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/name"
-            style="@style/TitleTextView"/>
+    <TableLayout
+        style="@style/TableLayout"
+        android:layout_gravity="center"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
 
-        <TableLayout
-            style="@style/TableLayout">
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            <TextView
+                style="@style/TableTextView"
+                android:layout_column="1"
+                android:text="@string/takes_meal_plan"/>
 
-                <TextView
-                    style="@style/TableTextView"
-                    android:layout_column="1"
-                    android:text="@string/monday"/>
+            <TextView
+                android:id="@+id/takes_meal"
+                style="@style/TableTextView"
+                android:layout_column="2"/>
+        </TableRow>
 
-                <TextView
-                    android:id="@+id/mon_hours"
-                    style="@style/TableTextView"
-                    android:layout_column="2"/>
-            </TableRow>
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            <TextView
+                style="@style/TableTextView"
+                android:layout_column="1"
+                android:text="@string/takes_card"/>
 
-                <TextView
-                    style="@style/TableTextView"
-                    android:layout_column="1"
-                    android:text="@string/tuesday"/>
+            <TextView
+                android:id="@+id/takes_card"
+                style="@style/TableTextView"
+                android:layout_column="2"/>
+        </TableRow>
+    </TableLayout>
 
-                <TextView
-                    android:id="@+id/tue_hours"
-                    style="@style/TableTextView"
-                    android:layout_column="2"/>
-            </TableRow>
+    <TableLayout
+        style="@style/TableLayout"
+        android:layout_gravity="center"
+        android:paddingEnd="10dp"
+        android:paddingStart="10dp">
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/TableTextView"
-                    android:layout_column="1"
-                    android:text="@string/wednesday"/>
+            <TextView
+                style="@style/TableTextView"
+                android:layout_column="1"
+                android:text="@string/monday"/>
 
-                <TextView
-                    android:id="@+id/wed_hours"
-                    style="@style/TableTextView"
-                    android:layout_column="2"/>
-            </TableRow>
+            <TextView
+                android:id="@+id/mon_hours"
+                style="@style/TableTextView"
+                android:layout_column="2"/>
+        </TableRow>
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/TableTextView"
-                    android:layout_column="1"
-                    android:text="@string/thursday"/>
+            <TextView
+                style="@style/TableTextView"
+                android:layout_column="1"
+                android:text="@string/tuesday"/>
 
-                <TextView
-                    android:id="@+id/thur_hours"
-                    style="@style/TableTextView"
-                    android:layout_column="2"/>
-            </TableRow>
+            <TextView
+                android:id="@+id/tue_hours"
+                style="@style/TableTextView"
+                android:layout_column="2"/>
+        </TableRow>
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/TableTextView"
-                    android:layout_column="1"
-                    android:text="@string/friday"/>
+            <TextView
+                style="@style/TableTextView"
+                android:layout_column="1"
+                android:text="@string/wednesday"/>
 
-                <TextView
-                    android:id="@+id/fri_hours"
-                    style="@style/TableTextView"
-                    android:layout_column="2"/>
-            </TableRow>
+            <TextView
+                android:id="@+id/wed_hours"
+                style="@style/TableTextView"
+                android:layout_column="2"/>
+        </TableRow>
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/TableTextView"
-                    android:layout_column="1"
-                    android:text="@string/saturday"/>
+            <TextView
+                style="@style/TableTextView"
+                android:layout_column="1"
+                android:text="@string/thursday"/>
 
-                <TextView
-                    android:id="@+id/sat_hours"
-                    style="@style/TableTextView"
-                    android:layout_column="2"/>
-            </TableRow>
+            <TextView
+                android:id="@+id/thur_hours"
+                style="@style/TableTextView"
+                android:layout_column="2"/>
+        </TableRow>
 
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-                <TextView
-                    style="@style/TableTextView"
-                    android:layout_column="1"
-                    android:text="@string/sunday"/>
+            <TextView
+                style="@style/TableTextView"
+                android:layout_column="1"
+                android:text="@string/friday"/>
 
-                <TextView
-                    android:id="@+id/sun_hours"
-                    style="@style/TableTextView"
-                    android:layout_column="2"/>
-            </TableRow>
-        </TableLayout>
-</RelativeLayout>
+            <TextView
+                android:id="@+id/fri_hours"
+                style="@style/TableTextView"
+                android:layout_column="2"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/TableTextView"
+                android:layout_column="1"
+                android:text="@string/saturday"/>
+
+            <TextView
+                android:id="@+id/sat_hours"
+                style="@style/TableTextView"
+                android:layout_column="2"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                style="@style/TableTextView"
+                android:layout_column="1"
+                android:text="@string/sunday"/>
+
+            <TextView
+                android:id="@+id/sun_hours"
+                style="@style/TableTextView"
+                android:layout_column="2"/>
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:id="@+id/info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textAlignment="center"
+        android:visibility="gone"/>
+</LinearLayout>
