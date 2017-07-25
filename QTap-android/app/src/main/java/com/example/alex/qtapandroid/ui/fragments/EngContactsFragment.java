@@ -70,6 +70,5 @@ public class EngContactsFragment extends ListFragment {
         super.onResume();
         mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
         mNavView.getMenu().findItem(R.id.nav_tools).setChecked(true);
-        DatabaseAccessor.getDatabase().close();
     }
 }

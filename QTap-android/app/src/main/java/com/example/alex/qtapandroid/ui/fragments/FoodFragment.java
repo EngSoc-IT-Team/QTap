@@ -93,7 +93,6 @@ public class FoodFragment extends ListFragment {
     public void onPause() {
         super.onPause();
         mNavView.getMenu().findItem(R.id.nav_food).setChecked(false);
-        DatabaseAccessor.getDatabase().close();
     }
 
     @Override
