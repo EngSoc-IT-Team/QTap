@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +61,7 @@ public class OneBuildingFragment extends Fragment {
             for (String oneFood : foodNames) {
                 foods += oneFood + "\n";
             }
+            foods = foods.trim();//remove last \n
         } else {
             mView.findViewById(R.id.food_title).setVisibility(View.GONE);
             mView.findViewById(R.id.food).setVisibility(View.GONE);
