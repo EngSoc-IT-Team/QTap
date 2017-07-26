@@ -157,13 +157,12 @@ public class FoodManager extends DatabaseAccessor {
     /**
      * Gets a single known Food from the Food table.
      *
-     * @param sBuildingID building ID of the Food to get from the table. String to differentiate from long ID getRow
+     * @param buildingID building ID of the Food to get from the table. String to differentiate from long ID getRow
      *                    string converted to int inside method.
      * @return Food class obtained from the table. Contains all information
      * held in row.
      */
-    public Food getRow(String sBuildingID) {
-        int buildingID = Integer.parseInt(sBuildingID);
+    public ArrayList<Food> getFoodForBuilding(int buildingID) {
         String[] projection = {
                 Food._ID,
                 Food.COLUMN_NAME,
@@ -186,23 +185,18 @@ public class FoodManager extends DatabaseAccessor {
                 Food.COLUMN_SUN_START_HOURS,
                 Food.COLUMN_SUN_STOP_HOURS
         };
-        Food food;
         String selection = Food.COLUMN_BUILDING_ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(buildingID)};
-        try (Cursor cursor = getDatabase().query(Food.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
-            cursor.moveToNext();
-            //getInt()>0 because SQLite doesn't have boolean types - 1 is true, 0 is false
-            food = new Food(cursor.getString(Food.POS_NAME), cursor.getInt(Food.POS_BUILDING_ID),
-                    cursor.getString(Food.POS_INFORMATION), cursor.getInt(Food.POS_MEAL_PLAN) > 0, cursor.getInt(Food.POS_CARD) > 0,
-                    cursor.getDouble(Food.POS_MON_START_HOURS), cursor.getDouble(Food.POS_MON_STOP_HOURS), cursor.getDouble(Food.POS_TUE_START_HOURS),
-                    cursor.getDouble(Food.POS_TUE_STOP_HOURS), cursor.getDouble(Food.POS_WED_START_HOURS), cursor.getDouble(Food.POS_WED_STOP_HOURS),
-                    cursor.getDouble(Food.POS_THUR_START_HOURS), cursor.getDouble(Food.POS_THUR_STOP_HOURS), cursor.getDouble(Food.POS_FRI_START_HOURS),
-                    cursor.getDouble(Food.POS_FRI_STOP_HOURS), cursor.getDouble(Food.POS_SAT_START_HOURS),
-                    cursor.getDouble(Food.POS_SAT_STOP_HOURS), cursor.getDouble(Food.POS_SUN_START_HOURS), cursor.getDouble(Food.POS_SUN_STOP_HOURS));
-            food.setID(cursor.getInt(Food.POS_ID));
+        ArrayList<Food> food = new ArrayList<>();
+        //try with resources - automatically closes cursor whether or not its completed normally
+        //order table by name, ascending
+        try (Cursor cursor = getDatabase().query(Food.TABLE_NAME, projection, selection, selectionArgs, null, null, Food.COLUMN_NAME + " ASC")) {
+            while (cursor.moveToNext()) {
+                Food oneFood = getRow(cursor.getInt(Food.POS_ID));
+                food.add(oneFood);
+            }
             cursor.close();
-            return food; //return only when the cursor has been closed.
-            //Return statement never missed, try block always finishes this.
+            return food; //return only when the cursor has been closed
         }
     }
 
