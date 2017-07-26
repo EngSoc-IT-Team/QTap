@@ -27,13 +27,9 @@
 
             <TextView
                 android:id="@+id/description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:paddingEnd="3dp"
-                android:paddingStart="3dp"
-                android:paddingTop="6dp"
-                android:textSize="13sp"/>
+                style="@style/ListItemH2"
+                android:paddingEnd="7dp"
+                android:paddingStart="7dp"/>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>
