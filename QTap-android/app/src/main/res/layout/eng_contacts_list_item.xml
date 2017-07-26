@@ -23,12 +23,7 @@
 
             <TextView
                 android:id="@+id/email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="3dp"
-                android:paddingStart="3dp"
-                android:paddingTop="6dp"
-                android:textSize="15sp"/>
+                style="@style/ListItemH1"/>
 
             <TextView
                 android:id="@+id/description"

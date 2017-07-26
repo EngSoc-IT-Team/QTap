@@ -31,13 +31,8 @@
 
                 <TextView
                     android:id="@+id/has_food"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:paddingEnd="7dp"
-                    android:paddingStart="7dp"
-                    android:text="@string/has_food"
-                    android:textSize="15sp"/>
+                    style="@style/ListItemH1"
+                    android:text="@string/has_food"/>
 
                 <TextView
                     android:id="@+id/food"
