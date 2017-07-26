@@ -81,7 +81,13 @@ public class BuildingsFragment extends ListFragment {
             foodNames.add(oneFood.getName());
         }
 
-        args.putString(Building.COLUMN_NAME, building.getName());
+        if (building.getName().equals("Athletics and Recreation Centre (ARC)")) {
+            args.putString(Building.COLUMN_NAME, "ARC"); //name too long for activity bar, ARC is common
+        } else if (building.getName().equals("John Deutsch Centre (JDUC)")) {
+            args.putString(Building.COLUMN_NAME, "JDUC"); //too long again, JDUC common
+        } else {
+            args.putString(Building.COLUMN_NAME, building.getName());
+        }
         args.putString(Building.COLUMN_PURPOSE, building.getPurpose());
         args.putBoolean(Building.COLUMN_BOOK_ROOMS, building.getBookRooms());
         args.putBoolean(Building.COLUMN_ATM, building.getAtm());
