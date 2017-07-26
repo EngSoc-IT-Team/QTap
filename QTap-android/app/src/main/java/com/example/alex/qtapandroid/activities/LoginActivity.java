@@ -203,9 +203,9 @@ public class LoginActivity extends AppCompatActivity {
                 final ParseICS parser = new ParseICS(LoginActivity.this);
                 String url = preferences.getString("mIcsUrl", "noURL");
                 if (!url.equals("noURL")) {
-                    //ADD BACK downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
-                    url = "http://enterpriseair.tk/temp/testCal.ics"; // Add this line for debugging purposes - TODO: Remove this bypass
-                    downloadICS.execute(url);
+                     downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
+                   // url = "http://my.queensu.ca/software-centre";//enterpriseair.tk/temp/testCal.ics"; // Add this line for debugging purposes - TODO: Remove this bypass
+                   // downloadICS.execute(url);
                     parser.parseICSData();
                 }
             }
