@@ -1,10 +1,10 @@
-package com.example.alex.qtapandroid.common.database.contacts.engineering;
+package com.example.alex.qtapandroid.common.database.local.contacts.engineering;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
+import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
 
 import java.util.ArrayList;
 

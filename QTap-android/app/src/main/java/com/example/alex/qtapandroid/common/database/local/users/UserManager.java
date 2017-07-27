@@ -1,12 +1,10 @@
-package com.example.alex.qtapandroid.common.database.users;
+package com.example.alex.qtapandroid.common.database.local.users;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.util.Log;
 
-import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
-import com.example.alex.qtapandroid.common.database.courses.Course;
+import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
 
 import java.util.ArrayList;
 

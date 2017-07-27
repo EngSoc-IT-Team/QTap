@@ -11,7 +11,6 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateFormat;
-import android.transition.TransitionInflater;
 import android.util.SparseIntArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,8 +23,8 @@ import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.activities.MainTabActivity;
 import com.example.alex.qtapandroid.common.card.elements.DataObject;
 import com.example.alex.qtapandroid.common.card.elements.RecyclerViewAdapter;
-import com.example.alex.qtapandroid.common.database.courses.OneClass;
-import com.example.alex.qtapandroid.common.database.courses.OneClassManager;
+import com.example.alex.qtapandroid.common.database.local.courses.OneClass;
+import com.example.alex.qtapandroid.common.database.local.courses.OneClassManager;
 
 import java.util.ArrayList;
 import java.util.Calendar;

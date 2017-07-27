@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.common.database.food;
+package com.example.alex.qtapandroid.common.database.local.food;
 
 import android.provider.BaseColumns;
 import android.util.Log;

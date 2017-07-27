@@ -16,10 +16,10 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.common.database.buildings.Building;
-import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
-import com.example.alex.qtapandroid.common.database.food.Food;
-import com.example.alex.qtapandroid.common.database.food.FoodManager;
+import com.example.alex.qtapandroid.common.database.local.buildings.Building;
+import com.example.alex.qtapandroid.common.database.local.buildings.BuildingManager;
+import com.example.alex.qtapandroid.common.database.local.food.Food;
+import com.example.alex.qtapandroid.common.database.local.food.FoodManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

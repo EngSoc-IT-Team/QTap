@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.common;
+package com.example.alex.qtapandroid.common.database;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -6,16 +6,16 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.common.database.buildings.Building;
-import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
-import com.example.alex.qtapandroid.common.database.cafeterias.Cafeteria;
-import com.example.alex.qtapandroid.common.database.cafeterias.CafeteriaManager;
-import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContact;
-import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContactsManager;
-import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContact;
-import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContactsManager;
-import com.example.alex.qtapandroid.common.database.food.Food;
-import com.example.alex.qtapandroid.common.database.food.FoodManager;
+import com.example.alex.qtapandroid.common.database.local.buildings.Building;
+import com.example.alex.qtapandroid.common.database.local.buildings.BuildingManager;
+import com.example.alex.qtapandroid.common.database.local.cafeterias.Cafeteria;
+import com.example.alex.qtapandroid.common.database.local.cafeterias.CafeteriaManager;
+import com.example.alex.qtapandroid.common.database.local.contacts.emergency.EmergencyContact;
+import com.example.alex.qtapandroid.common.database.local.contacts.emergency.EmergencyContactsManager;
+import com.example.alex.qtapandroid.common.database.local.contacts.engineering.EngineeringContact;
+import com.example.alex.qtapandroid.common.database.local.contacts.engineering.EngineeringContactsManager;
+import com.example.alex.qtapandroid.common.database.local.food.Food;
+import com.example.alex.qtapandroid.common.database.local.food.FoodManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;

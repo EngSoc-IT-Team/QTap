@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.common.database.buildings;
+package com.example.alex.qtapandroid.common.database.local.buildings;
 
 import android.provider.BaseColumns;
 import android.util.Log;

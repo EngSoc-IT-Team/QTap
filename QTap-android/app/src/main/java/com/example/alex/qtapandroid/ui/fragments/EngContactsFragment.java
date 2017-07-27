@@ -14,9 +14,9 @@ import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
-import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContact;
-import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContactsManager;
+import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
+import com.example.alex.qtapandroid.common.database.local.contacts.engineering.EngineeringContact;
+import com.example.alex.qtapandroid.common.database.local.contacts.engineering.EngineeringContactsManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

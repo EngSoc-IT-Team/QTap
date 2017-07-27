@@ -1,10 +1,10 @@
-package com.example.alex.qtapandroid.common.database.courses;
+package com.example.alex.qtapandroid.common.database.local.courses;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
+import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
 
 import java.util.ArrayList;
 

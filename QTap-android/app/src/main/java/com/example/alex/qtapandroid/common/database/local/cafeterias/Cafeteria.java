@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.common.database.cafeterias;
+package com.example.alex.qtapandroid.common.database.local.cafeterias;
 
 import android.provider.BaseColumns;
 import android.util.Log;

@@ -1,10 +1,9 @@
-package com.example.alex.qtapandroid.common.database.users;
+package com.example.alex.qtapandroid.common.database.local.users;
 
 import android.provider.BaseColumns;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Created by Carson on 29/01/2017.

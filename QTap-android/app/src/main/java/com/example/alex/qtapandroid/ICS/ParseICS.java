@@ -2,16 +2,15 @@ package com.example.alex.qtapandroid.ICS;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.widget.DatePicker;
 
-import com.example.alex.qtapandroid.common.database.courses.Course;
-import com.example.alex.qtapandroid.common.database.courses.CourseManager;
-import com.example.alex.qtapandroid.common.database.courses.OneClass;
-import com.example.alex.qtapandroid.common.database.courses.OneClassManager;
-import com.example.alex.qtapandroid.common.database.users.User;
-import com.example.alex.qtapandroid.common.database.users.UserManager;
+import com.example.alex.qtapandroid.common.database.local.courses.Course;
+import com.example.alex.qtapandroid.common.database.local.courses.CourseManager;
+import com.example.alex.qtapandroid.common.database.local.courses.OneClass;
+import com.example.alex.qtapandroid.common.database.local.courses.OneClassManager;
+import com.example.alex.qtapandroid.common.database.local.users.User;
+import com.example.alex.qtapandroid.common.database.local.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 
 import java.io.BufferedReader;

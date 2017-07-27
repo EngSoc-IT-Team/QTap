@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.common.database;
+package com.example.alex.qtapandroid.common.database.local;
 
 import android.content.Context;
 import android.database.SQLException;
@@ -17,7 +17,7 @@ public class DatabaseAccessor {
 
     public DatabaseAccessor(Context context) {
         this.mContext = context;
-        mDBHelper = com.example.alex.qtapandroid.common.database.DbHelper.getInstance(mContext);
+        mDBHelper = DbHelper.getInstance(mContext);
         open();
     }
 
@@ -29,7 +29,7 @@ public class DatabaseAccessor {
      */
     public void open() throws SQLException {
         if (mDBHelper == null) {
-            mDBHelper = com.example.alex.qtapandroid.common.database.DbHelper.getInstance(mContext);
+            mDBHelper = DbHelper.getInstance(mContext);
         }
         mDatabase = mDBHelper.getWritableDatabase();
     }

@@ -13,7 +13,6 @@ import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.webkit.ValueCallback;
 import android.webkit.WebView;
@@ -21,16 +20,14 @@ import android.webkit.WebViewClient;
 
 import com.example.alex.qtapandroid.ICS.ParseICS;
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.common.GetCloudDb;
-import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
-import com.example.alex.qtapandroid.common.database.users.User;
-import com.example.alex.qtapandroid.common.database.users.UserManager;
+import com.example.alex.qtapandroid.common.database.GetCloudDb;
+import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
+import com.example.alex.qtapandroid.common.database.local.users.User;
+import com.example.alex.qtapandroid.common.database.local.users.UserManager;
 
 import com.example.alex.qtapandroid.ICS.DownloadICSFile;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 

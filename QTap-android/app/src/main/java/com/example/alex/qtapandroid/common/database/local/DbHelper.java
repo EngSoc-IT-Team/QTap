@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.common.database;
+package com.example.alex.qtapandroid.common.database.local;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

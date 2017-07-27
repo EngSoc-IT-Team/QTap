@@ -1,11 +1,10 @@
-package com.example.alex.qtapandroid.common.database.food;
+package com.example.alex.qtapandroid.common.database.local.food;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.database.Cursor;
 
-import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
+import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
 
 import java.util.ArrayList;
 

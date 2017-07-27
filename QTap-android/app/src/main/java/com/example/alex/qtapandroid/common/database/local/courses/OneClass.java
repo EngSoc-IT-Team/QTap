@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.common.database.courses;
+package com.example.alex.qtapandroid.common.database.local.courses;
 
 import android.provider.BaseColumns;
 import android.util.Log;

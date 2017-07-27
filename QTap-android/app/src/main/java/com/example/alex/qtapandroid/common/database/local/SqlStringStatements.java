@@ -1,13 +1,13 @@
-package com.example.alex.qtapandroid.common.database;
+package com.example.alex.qtapandroid.common.database.local;
 
-import com.example.alex.qtapandroid.common.database.buildings.Building;
-import com.example.alex.qtapandroid.common.database.cafeterias.Cafeteria;
-import com.example.alex.qtapandroid.common.database.contacts.emergency.EmergencyContact;
-import com.example.alex.qtapandroid.common.database.contacts.engineering.EngineeringContact;
-import com.example.alex.qtapandroid.common.database.courses.Course;
-import com.example.alex.qtapandroid.common.database.courses.OneClass;
-import com.example.alex.qtapandroid.common.database.food.Food;
-import com.example.alex.qtapandroid.common.database.users.User;
+import com.example.alex.qtapandroid.common.database.local.buildings.Building;
+import com.example.alex.qtapandroid.common.database.local.cafeterias.Cafeteria;
+import com.example.alex.qtapandroid.common.database.local.contacts.emergency.EmergencyContact;
+import com.example.alex.qtapandroid.common.database.local.contacts.engineering.EngineeringContact;
+import com.example.alex.qtapandroid.common.database.local.courses.Course;
+import com.example.alex.qtapandroid.common.database.local.courses.OneClass;
+import com.example.alex.qtapandroid.common.database.local.food.Food;
+import com.example.alex.qtapandroid.common.database.local.users.User;
 
 /**
  * Created by Carson on 18/02/2017.

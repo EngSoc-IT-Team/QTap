@@ -14,9 +14,9 @@ import android.widget.SimpleAdapter;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.ConvertHourSpan;
-import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
-import com.example.alex.qtapandroid.common.database.cafeterias.Cafeteria;
-import com.example.alex.qtapandroid.common.database.cafeterias.CafeteriaManager;
+import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
+import com.example.alex.qtapandroid.common.database.local.cafeterias.Cafeteria;
+import com.example.alex.qtapandroid.common.database.local.cafeterias.CafeteriaManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;

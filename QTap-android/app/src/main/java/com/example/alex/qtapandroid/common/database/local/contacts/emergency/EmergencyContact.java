@@ -1,4 +1,4 @@
-package com.example.alex.qtapandroid.common.database.contacts.emergency;
+package com.example.alex.qtapandroid.common.database.local.contacts.emergency;
 
 import android.provider.BaseColumns;
 import android.util.Log;

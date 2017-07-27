@@ -9,8 +9,8 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 
-import com.example.alex.qtapandroid.common.database.buildings.Building;
-import com.example.alex.qtapandroid.common.database.buildings.BuildingManager;
+import com.example.alex.qtapandroid.common.database.local.buildings.Building;
+import com.example.alex.qtapandroid.common.database.local.buildings.BuildingManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;

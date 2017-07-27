@@ -4,7 +4,6 @@ package com.example.alex.qtapandroid.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,16 +14,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alex.qtapandroid.common.PrefManager;
-import com.example.alex.qtapandroid.common.database.DatabaseAccessor;
-import com.example.alex.qtapandroid.common.database.users.User;
-import com.example.alex.qtapandroid.common.database.SqlStringStatements;
+import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
+import com.example.alex.qtapandroid.common.database.local.users.User;
+import com.example.alex.qtapandroid.common.database.local.SqlStringStatements;
 
 import com.example.alex.qtapandroid.R;
-import com.example.alex.qtapandroid.common.database.users.UserManager;
+import com.example.alex.qtapandroid.common.database.local.users.UserManager;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Activity for the settings. Can see NetID, time since calendar was last synced and can logout here
