@@ -28,6 +28,7 @@ public class FoodManager extends DatabaseAccessor {
      */
     public long insertRow(Food food) {
         ContentValues values = new ContentValues();
+        values.put(Food._ID, food.getID());
         values.put(Food.COLUMN_NAME, food.getName());
         values.put(Food.COLUMN_MEAL_PLAN, food.isMealPlan());
         values.put(Food.COLUMN_CARD, food.isCard());
@@ -140,14 +141,13 @@ public class FoodManager extends DatabaseAccessor {
         try (Cursor cursor = getDatabase().query(Food.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             cursor.moveToNext();
             //getInt()>0 because SQLite doesn't have boolean types - 1 is true, 0 is false
-            food = new Food(cursor.getString(Food.POS_NAME), cursor.getInt(Food.POS_BUILDING_ID),
+            food = new Food(cursor.getInt(Food.POS_ID), cursor.getString(Food.POS_NAME), cursor.getInt(Food.POS_BUILDING_ID),
                     cursor.getString(Food.POS_INFORMATION), cursor.getInt(Food.POS_MEAL_PLAN) > 0, cursor.getInt(Food.POS_CARD) > 0,
                     cursor.getDouble(Food.POS_MON_START_HOURS), cursor.getDouble(Food.POS_MON_STOP_HOURS), cursor.getDouble(Food.POS_TUE_START_HOURS),
                     cursor.getDouble(Food.POS_TUE_STOP_HOURS), cursor.getDouble(Food.POS_WED_START_HOURS), cursor.getDouble(Food.POS_WED_STOP_HOURS),
                     cursor.getDouble(Food.POS_THUR_START_HOURS), cursor.getDouble(Food.POS_THUR_STOP_HOURS), cursor.getDouble(Food.POS_FRI_START_HOURS),
                     cursor.getDouble(Food.POS_FRI_STOP_HOURS), cursor.getDouble(Food.POS_SAT_START_HOURS),
                     cursor.getDouble(Food.POS_SAT_STOP_HOURS), cursor.getDouble(Food.POS_SUN_START_HOURS), cursor.getDouble(Food.POS_SUN_STOP_HOURS));
-            food.setID(cursor.getInt(Food.POS_ID));
             cursor.close();
             return food; //return only when the cursor has been closed.
             //Return statement never missed, try block always finishes this.
@@ -158,7 +158,7 @@ public class FoodManager extends DatabaseAccessor {
      * Gets a single known Food from the Food table.
      *
      * @param buildingID building ID of the Food to get from the table. String to differentiate from long ID getRow
-     *                    string converted to int inside method.
+     *                   string converted to int inside method.
      * @return Food class obtained from the table. Contains all information
      * held in row.
      */
@@ -216,6 +216,7 @@ public class FoodManager extends DatabaseAccessor {
      */
     public Food updateRow(Food oldFood, Food newFood) {
         ContentValues values = new ContentValues();
+        values.put(Food._ID, oldFood.getID());
         values.put(Food.COLUMN_NAME, oldFood.getName());
         values.put(Food.COLUMN_MEAL_PLAN, oldFood.isMealPlan());
         values.put(Food.COLUMN_CARD, oldFood.isCard());
@@ -239,7 +240,6 @@ public class FoodManager extends DatabaseAccessor {
         String selection = Food._ID + " LIKE ?";
         String selectionArgs[] = {String.valueOf(oldFood.getID())};
         getDatabase().update(Food.TABLE_NAME, values, selection, selectionArgs);
-        newFood.setID(oldFood.getID());
         return newFood;
     }
 }

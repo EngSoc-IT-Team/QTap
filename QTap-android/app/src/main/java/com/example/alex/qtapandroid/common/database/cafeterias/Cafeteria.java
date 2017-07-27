@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Cafeteria implements BaseColumns {
     public static final String TABLE_NAME = "Cafeterias";
 
+    public static final String ID = "ID";
     public static final String COLUMN_NAME = "Name";
     public static final String COLUMN_BUILDING_ID = "BuildingID";
     public static final String COLUMN_WEEK_BREAKFAST_START = "WeekBreakfastStart";
@@ -75,11 +76,12 @@ public class Cafeteria implements BaseColumns {
             satLunchStart, satLunchStop, sunLunchStart, sunLunchStop, weekDinnerStart, weekDinnerStop,
             friDinnerStart, friDinnerStop, satDinnerStart, satDinnerStop, sunDinnerStart, sunDinnerStop;
 
-    public Cafeteria(String name, int buildingID, double weekBreakfastStart, double weekBreakfastStop, double friBreakfastStart, double friBreakfastStop,
+    public Cafeteria(long id, String name, int buildingID, double weekBreakfastStart, double weekBreakfastStop, double friBreakfastStart, double friBreakfastStop,
                      double satBreakfastStart, double satBreakfastStop, double sunBreakfastStart, double sunBreakfastStop, double weekLunchStart,
                      double weekLunchStop, double friLunchStart, double friLunchStop, double satLunchStart, double satLunchStop, double sunLunchStart, double sunLunchStop,
                      double weekDinnerStart, double weekDinnerStop, double friDinnerStart, double friDinnerStop,
                      double satDinnerStart, double satDinnerStop, double sunDinnerStart, double sunDinnerStop) {
+        this.id = id;
         this.buildingID = buildingID;
         this.name = name;
         this.weekBreakfastStart = weekBreakfastStart;

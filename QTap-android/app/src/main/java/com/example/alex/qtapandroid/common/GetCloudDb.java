@@ -133,7 +133,7 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
             EmergencyContactsManager tableManager = new EmergencyContactsManager(mContext);
             for (int i = 0; i < contacts.length(); i++) {
                 JSONObject contact = contacts.getJSONObject(i);
-                tableManager.insertRow(new EmergencyContact(contact.getString(EmergencyContact.COLUMN_NAME),
+                tableManager.insertRow(new EmergencyContact(contact.getInt(EmergencyContact.ID), contact.getString(EmergencyContact.COLUMN_NAME),
                         contact.getString(EmergencyContact.COLUMN_PHONE_NUMBER), contact.getString(EmergencyContact.COLUMN_DESCRIPTION)));
             }
         } catch (JSONException e) {
@@ -147,7 +147,7 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
             EngineeringContactsManager tableManager = new EngineeringContactsManager(mContext);
             for (int i = 0; i < contacts.length(); i++) {
                 JSONObject contact = contacts.getJSONObject(i);
-                tableManager.insertRow(new EngineeringContact(contact.getString(EngineeringContact.COLUMN_NAME), contact.getString(EngineeringContact.COLUMN_EMAIL),
+                tableManager.insertRow(new EngineeringContact(contact.getInt(EngineeringContact.ID), contact.getString(EngineeringContact.COLUMN_NAME), contact.getString(EngineeringContact.COLUMN_EMAIL),
                         contact.getString(EngineeringContact.COLUMN_POSITION), contact.getString(EngineeringContact.COLUMN_DESCRIPTION)));
             }
         } catch (JSONException e) {
@@ -178,7 +178,7 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
             for (int i = 0; i < food.length(); i++) {
                 JSONObject oneFood = food.getJSONObject(i);
                 //getInt()>0 because SQL has 0/1 there, not real boolean
-                manager.insertRow(new Food(oneFood.getString(Food.COLUMN_NAME), oneFood.getInt(Food.COLUMN_BUILDING_ID),
+                manager.insertRow(new Food(oneFood.getInt(Food.ID), oneFood.getString(Food.COLUMN_NAME), oneFood.getInt(Food.COLUMN_BUILDING_ID),
                         oneFood.getString(Food.COLUMN_INFORMATION), oneFood.getInt(Food.COLUMN_MEAL_PLAN) > 0, oneFood.getInt(Food.COLUMN_CARD) > 0,
                         oneFood.getDouble(Food.COLUMN_MON_START_HOURS), oneFood.getDouble(Food.COLUMN_MON_STOP_HOURS), oneFood.getDouble(Food.COLUMN_TUE_START_HOURS),
                         oneFood.getDouble(Food.COLUMN_TUE_STOP_HOURS), oneFood.getDouble(Food.COLUMN_WED_START_HOURS), oneFood.getDouble(Food.COLUMN_WED_STOP_HOURS),
@@ -197,7 +197,7 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
             CafeteriaManager manager = new CafeteriaManager(mContext);
             for (int i = 0; i < cafs.length(); i++) {
                 JSONObject caf = cafs.getJSONObject(i);
-                manager.insertRow(new Cafeteria(caf.getString(Cafeteria.COLUMN_NAME), caf.getInt(Cafeteria.COLUMN_BUILDING_ID),
+                manager.insertRow(new Cafeteria(caf.getInt(Cafeteria.ID), caf.getString(Cafeteria.COLUMN_NAME), caf.getInt(Cafeteria.COLUMN_BUILDING_ID),
                         caf.getDouble(Cafeteria.COLUMN_WEEK_BREAKFAST_START), caf.getDouble(Cafeteria.COLUMN_WEEK_BREAKFAST_STOP),
                         caf.getDouble(Cafeteria.COLUMN_FRI_BREAKFAST_START), caf.getDouble(Cafeteria.COLUMN_FRI_BREAKFAST_STOP),
                         caf.getDouble(Cafeteria.COLUMN_SAT_BREAKFAST_START), caf.getDouble(Cafeteria.COLUMN_SAT_BREAKFAST_STOP),

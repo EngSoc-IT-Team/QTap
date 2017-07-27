@@ -130,6 +130,7 @@ public class BuildingManager extends DatabaseAccessor {
      */
     public Building updateRow(Building oldBuilding, Building newBuilding) {
         ContentValues values = new ContentValues();
+        values.put(Building._ID, newBuilding.getID());
         values.put(Building.COLUMN_NAME, newBuilding.getName());
         values.put(Building.COLUMN_PURPOSE, newBuilding.getPurpose());
         values.put(Building.COLUMN_BOOK_ROOMS, newBuilding.getBookRooms());
@@ -141,7 +142,6 @@ public class BuildingManager extends DatabaseAccessor {
         String selection = Building._ID + " LIKE ?";
         String selectionArgs[] = {String.valueOf(oldBuilding.getID())};
         getDatabase().update(Building.TABLE_NAME, values, selection, selectionArgs);
-        newBuilding.setID(oldBuilding.getID());
         return newBuilding;
     }
 }

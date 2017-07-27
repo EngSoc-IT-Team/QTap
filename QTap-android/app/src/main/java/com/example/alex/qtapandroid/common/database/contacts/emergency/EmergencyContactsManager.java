@@ -28,6 +28,7 @@ public class EmergencyContactsManager extends DatabaseAccessor {
      */
     public long insertRow(EmergencyContact contact) {
         ContentValues values = new ContentValues();
+        values.put(EmergencyContact._ID, contact.getID());
         values.put(EmergencyContact.COLUMN_NAME, contact.getName());
         values.put(EmergencyContact.COLUMN_PHONE_NUMBER, contact.getPhoneNumber());
         values.put(EmergencyContact.COLUMN_DESCRIPTION, contact.getDescription());
@@ -90,9 +91,8 @@ public class EmergencyContactsManager extends DatabaseAccessor {
         String[] selectionArgs = {String.valueOf(id)};
         try (Cursor cursor = getDatabase().query(EmergencyContact.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             cursor.moveToNext();
-            contact = new EmergencyContact(cursor.getString(EmergencyContact.NAME_POS), cursor.getString(EmergencyContact.PHONE_NUMBER_POS),
+            contact = new EmergencyContact(cursor.getInt(EmergencyContact.ID_POS), cursor.getString(EmergencyContact.NAME_POS), cursor.getString(EmergencyContact.PHONE_NUMBER_POS),
                     cursor.getString(EmergencyContact.DESCRIPTION_POS));
-            contact.setID(cursor.getInt(EmergencyContact.ID_POS));
             cursor.close();
             return contact; //return only when the cursor has been closed.
             //Return statement never missed, try block always finishes this.
@@ -116,6 +116,7 @@ public class EmergencyContactsManager extends DatabaseAccessor {
      */
     public EmergencyContact updateRow(EmergencyContact oldContact, EmergencyContact newContact) {
         ContentValues values = new ContentValues();
+        values.put(EmergencyContact._ID, newContact.getID());
         values.put(EmergencyContact.COLUMN_NAME, newContact.getName());
         values.put(EmergencyContact.COLUMN_PHONE_NUMBER, newContact.getPhoneNumber());
         values.put(EmergencyContact.COLUMN_DESCRIPTION, newContact.getDescription());
@@ -123,7 +124,6 @@ public class EmergencyContactsManager extends DatabaseAccessor {
         String selection = EmergencyContact._ID + " LIKE ?";
         String selectionArgs[] = {String.valueOf(oldContact.getID())};
         getDatabase().update(EmergencyContact.TABLE_NAME, values, selection, selectionArgs);
-        newContact.setID(oldContact.getID());
         return newContact;
     }
 }

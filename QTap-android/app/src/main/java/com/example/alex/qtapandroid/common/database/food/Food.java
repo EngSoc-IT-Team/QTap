@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Food implements BaseColumns {
     public static final String TABLE_NAME = "Food";
 
+    public static final String ID = "ID";
     public static final String COLUMN_NAME = "Name";
     public static final String COLUMN_MEAL_PLAN = "MealPlan";
     public static final String COLUMN_CARD = "Card";
@@ -60,9 +61,10 @@ public class Food implements BaseColumns {
     private double monStartHours, monStopHours, tueStartHours, tueStopHours, wedStartHours, wedStopHours, thurStartHours,
             thurStopHours, friStartHours, friStopHours, satStartHours, satStopHours, sunStartHours, sunStopHours;
 
-    public Food(String name, int buildingID, String information, boolean mealPlan, boolean card, double monStartHours, double monStopHours, double tueStartHours,
+    public Food(long id, String name, int buildingID, String information, boolean mealPlan, boolean card, double monStartHours, double monStopHours, double tueStartHours,
                 double tueStopHours, double wedStartHours, double wedStopHours, double thurStartHours, double thurStopHours, double friStartHours,
                 double friStopHours, double satStartHours, double satStopHours, double sunStartHours, double sunStopHours) {
+        this.id = id;
         this.name = name;
         this.buildingID = buildingID;
         this.information = information;

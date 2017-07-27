@@ -27,6 +27,7 @@ public class EngineeringContactsManager extends DatabaseAccessor {
      */
     public long insertRow(EngineeringContact contacts) {
         ContentValues values = new ContentValues();
+        values.put(EngineeringContact._ID, contacts.getID());
         values.put(EngineeringContact.COLUMN_NAME, contacts.getName());
         values.put(EngineeringContact.COLUMN_EMAIL, contacts.getEmail());
         values.put(EngineeringContact.COLUMN_POSITION, contacts.getPosition());
@@ -91,9 +92,8 @@ public class EngineeringContactsManager extends DatabaseAccessor {
         String[] selectionArgs = {String.valueOf(id)};
         try (Cursor cursor = getDatabase().query(EngineeringContact.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             cursor.moveToNext();
-            contact = new EngineeringContact(cursor.getString(EngineeringContact.NAME_POS), cursor.getString(EngineeringContact.EMAIL_POS),
+            contact = new EngineeringContact(cursor.getInt(EngineeringContact.ID_POS), cursor.getString(EngineeringContact.NAME_POS), cursor.getString(EngineeringContact.EMAIL_POS),
                     cursor.getString(EngineeringContact.POSITION_POS), cursor.getString(EngineeringContact.DESCRIPTION_POS));
-            contact.setID(cursor.getInt(EngineeringContact.ID_POS));
             cursor.close();
             return contact; //return only when the cursor has been closed.
             //Return statement never missed, try block always finishes this.
@@ -117,6 +117,7 @@ public class EngineeringContactsManager extends DatabaseAccessor {
      */
     public EngineeringContact updateRow(EngineeringContact oldContact, EngineeringContact newContact) {
         ContentValues values = new ContentValues();
+        values.put(EngineeringContact._ID, newContact.getID());
         values.put(EngineeringContact.COLUMN_NAME, newContact.getName());
         values.put(EngineeringContact.COLUMN_EMAIL, newContact.getEmail());
         values.put(EngineeringContact.COLUMN_POSITION, newContact.getPosition());
@@ -125,7 +126,6 @@ public class EngineeringContactsManager extends DatabaseAccessor {
         String selection = EngineeringContact._ID + " LIKE ?";
         String selectionArgs[] = {String.valueOf(oldContact.getID())};
         getDatabase().update(EngineeringContact.TABLE_NAME, values, selection, selectionArgs);
-        newContact.setID(oldContact.getID());
         return newContact;
     }
 }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class EmergencyContact implements BaseColumns {
     public static final String TABLE_NAME = "EmergencyContacts";
     //columns
+    public static final String ID = "ID";
     public static final String COLUMN_NAME = "Name";
     public static final String COLUMN_PHONE_NUMBER = "PhoneNumber";
     public static final String COLUMN_DESCRIPTION = "Description";
@@ -26,7 +27,8 @@ public class EmergencyContact implements BaseColumns {
     //fields in database
     private String name, phoneNumber, description;
 
-    public EmergencyContact(String name, String phoneNumber, String description) {
+    public EmergencyContact(long id, String name, String phoneNumber, String description) {
+        this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.description = description;

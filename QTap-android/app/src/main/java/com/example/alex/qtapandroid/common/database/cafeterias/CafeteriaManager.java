@@ -27,6 +27,7 @@ public class CafeteriaManager extends DatabaseAccessor {
      */
     public long insertRow(Cafeteria caf) {
         ContentValues values = new ContentValues();
+        values.put(Cafeteria._ID, caf.getID());
         values.put(Cafeteria.COLUMN_NAME, caf.getName());
         values.put(Cafeteria.COLUMN_BUILDING_ID, caf.getBuildingID());
         values.put(Cafeteria.COLUMN_WEEK_BREAKFAST_START, caf.getWeekBreakfastStart());
@@ -159,7 +160,7 @@ public class CafeteriaManager extends DatabaseAccessor {
         String[] selectionArgs = {String.valueOf(id)};
         try (Cursor cursor = getDatabase().query(Cafeteria.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             cursor.moveToNext();
-            caf = new Cafeteria(cursor.getString(Cafeteria.POS_NAME), cursor.getInt(Cafeteria.POS_BUILDING_ID),
+            caf = new Cafeteria(cursor.getInt(Cafeteria.POS_ID), cursor.getString(Cafeteria.POS_NAME), cursor.getInt(Cafeteria.POS_BUILDING_ID),
                     cursor.getDouble(Cafeteria.POS_WEEK_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_WEEK_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_FRI_BREAKFAST_START),
                     cursor.getDouble(Cafeteria.POS_FRI_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_SAT_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_SAT_BREAKFAST_STOP),
                     cursor.getDouble(Cafeteria.POS_SUN_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_SUN_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_WEEK_LUNCH_START),
@@ -168,7 +169,6 @@ public class CafeteriaManager extends DatabaseAccessor {
                     cursor.getDouble(Cafeteria.POS_SUN_LUNCH_STOP), cursor.getDouble(Cafeteria.POS_WEEK_DINNER_START), cursor.getDouble(Cafeteria.POS_WEEK_DINNER_STOP),
                     cursor.getDouble(Cafeteria.POS_FRI_DINNER_START), cursor.getDouble(Cafeteria.POS_FRI_DINNER_STOP), cursor.getDouble(Cafeteria.POS_SAT_DINNER_START),
                     cursor.getDouble(Cafeteria.POS_SAT_DINNER_STOP), cursor.getDouble(Cafeteria.POS_SUN_DINNER_START), cursor.getDouble(Cafeteria.POS_SUN_DINNER_STOP));
-            caf.setID(cursor.getInt(Cafeteria.POS_ID));
             cursor.close();
             return caf; //return only when the cursor has been closed.
             //Return statement never missed, try block always finishes this.
@@ -219,7 +219,7 @@ public class CafeteriaManager extends DatabaseAccessor {
         String[] selectionArgs = {String.valueOf(buildingID)};
         try (Cursor cursor = getDatabase().query(Cafeteria.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             cursor.moveToNext();
-            caf = new Cafeteria(cursor.getString(Cafeteria.POS_NAME), cursor.getInt(Cafeteria.POS_BUILDING_ID),
+            caf = new Cafeteria(cursor.getInt(Cafeteria.POS_ID), cursor.getString(Cafeteria.POS_NAME), cursor.getInt(Cafeteria.POS_BUILDING_ID),
                     cursor.getDouble(Cafeteria.POS_WEEK_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_WEEK_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_FRI_BREAKFAST_START),
                     cursor.getDouble(Cafeteria.POS_FRI_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_SAT_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_SAT_BREAKFAST_STOP),
                     cursor.getDouble(Cafeteria.POS_SUN_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_SUN_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_WEEK_LUNCH_START),
@@ -251,6 +251,7 @@ public class CafeteriaManager extends DatabaseAccessor {
      */
     public Cafeteria updateRow(Cafeteria oldCaf, Cafeteria newCaf) {
         ContentValues values = new ContentValues();
+        values.put(Cafeteria._ID, oldCaf.getID());
         values.put(Cafeteria.COLUMN_NAME, oldCaf.getName());
         values.put(Cafeteria.COLUMN_BUILDING_ID, oldCaf.getBuildingID());
         values.put(Cafeteria.COLUMN_WEEK_BREAKFAST_START, oldCaf.getWeekBreakfastStart());
@@ -281,7 +282,6 @@ public class CafeteriaManager extends DatabaseAccessor {
         String selection = Cafeteria._ID + " LIKE ?";
         String selectionArgs[] = {String.valueOf(oldCaf.getID())};
         getDatabase().update(Cafeteria.TABLE_NAME, values, selection, selectionArgs);
-        newCaf.setID(oldCaf.getID());
         return newCaf;
     }
 }
