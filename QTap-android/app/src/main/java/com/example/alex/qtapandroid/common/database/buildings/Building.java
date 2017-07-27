@@ -51,7 +51,7 @@ public class Building implements BaseColumns {
         for (int i = 0; i < buildings.size(); i++) {
             output += "ID: " + buildings.get(i).getID() + " NAME: " + buildings.get(i).getName() + " PURPOSE: "
                     + buildings.get(i).getPurpose() + " ROOMS: " + buildings.get(i).getBookRooms() + " FOOD: " + buildings.get(i).getFood()
-                    + " ATM: " + buildings.get(i).getAtm() + " LAT: " + buildings.get(i).getLat() + " LON: " + buildings.get(i).getLon()+" ";
+                    + " ATM: " + buildings.get(i).getAtm() + " LAT: " + buildings.get(i).getLat() + " LON: " + buildings.get(i).getLon()+"\n";
         }
         Log.d("SQLITEBUILDING", output);
     }

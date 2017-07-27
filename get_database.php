@@ -12,6 +12,7 @@ if (mysql_num_rows($result) > 0) {
     while ($row = mysql_fetch_array($result)) {
         // temp user array
         $product = array();
+        $product["ID"] = $row["ID"];
         $product["Name"] = $row["Name"];
         $product["Email"] = $row["Email"];
         $product["Position"] = $row["Position"];
@@ -28,6 +29,7 @@ if (mysql_num_rows($result) > 0) {
     while ($row = mysql_fetch_array($result)) {
         // temp user array
         $product = array();
+        $product["ID"] = $row["ID"];
         $product["Name"] = $row["Name"];
         $product["PhoneNumber"] = $row["PhoneNumber"];;
         $product["Description"] = $row["Description"];
@@ -43,6 +45,7 @@ if (mysql_num_rows($result) > 0) {
     while ($row = mysql_fetch_array($result)) {
         // temp user array
         $product = array();
+        $product["ID"] = $row["ID"];
         $product["Name"] = $row["Name"];
         $product["Purpose"] = $row["Purpose"];
         $product["BookRooms"] = $row["BookRooms"];
@@ -62,6 +65,7 @@ if (mysql_num_rows($result) > 0) {
     while ($row = mysql_fetch_array($result)) {
         // temp user array
         $product = array();
+        $product["ID"] = $row["ID"];
         $product["Name"] = $row["Name"];
         $product["MealPlan"] = $row["MealPlan"];
         $product["Card"] = $row["Card"];
@@ -93,6 +97,7 @@ if (mysql_num_rows($result) > 0) {
     while ($row = mysql_fetch_array($result)) {
         // temp user array
         $product = array();
+        $product["ID"] = $row["ID"];
         $product["Name"] = $row["Name"];
         $product["BuildingID"] = $orw["BuildingID"];
         $product["WeekBreakfastStart"] = $row["WeekBreakfastStart"];
