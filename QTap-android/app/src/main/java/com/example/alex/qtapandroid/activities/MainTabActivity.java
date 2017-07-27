@@ -66,8 +66,6 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
         View header = navigationView.getHeaderView(0);// get the existing headerView
         TextView name = (TextView) header.findViewById(R.id.navHeaderAccountName);
         name.setText(u.getNetid());
-        Building.printBuildings(new BuildingManager(this).getTable());
-        Food.printFood(new FoodManager(this).getTable());
     }
 
     @Override

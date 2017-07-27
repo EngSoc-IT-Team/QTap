@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public class Building implements BaseColumns {
     public static final String TABLE_NAME = "Buildings";
     //columns
+    public static final String ID="ID";
     public static final String COLUMN_NAME = "Name";
     public static final String COLUMN_PURPOSE = "Purpose";
     public static final String COLUMN_BOOK_ROOMS = "BookRooms";
@@ -36,7 +37,8 @@ public class Building implements BaseColumns {
     private double lat, lon;
     private long id;
 
-    public Building(String name, String purpose, boolean bookRooms, boolean food, boolean atm, double lat, double lon) {
+    public Building(long id, String name, String purpose, boolean bookRooms, boolean food, boolean atm, double lat, double lon) {
+        this.id = id;
         this.name = name;
         this.purpose = purpose;
         this.bookRooms = bookRooms;
@@ -51,7 +53,7 @@ public class Building implements BaseColumns {
         for (int i = 0; i < buildings.size(); i++) {
             output += "ID: " + buildings.get(i).getID() + " NAME: " + buildings.get(i).getName() + " PURPOSE: "
                     + buildings.get(i).getPurpose() + " ROOMS: " + buildings.get(i).getBookRooms() + " FOOD: " + buildings.get(i).getFood()
-                    + " ATM: " + buildings.get(i).getAtm() + " LAT: " + buildings.get(i).getLat() + " LON: " + buildings.get(i).getLon()+"\n";
+                    + " ATM: " + buildings.get(i).getAtm() + " LAT: " + buildings.get(i).getLat() + " LON: " + buildings.get(i).getLon() + "\n";
         }
         Log.d("SQLITEBUILDING", output);
     }

@@ -162,7 +162,7 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
             for (int i = 0; i < buildings.length(); i++) {
                 JSONObject building = buildings.getJSONObject(i);
                 //getInt()>0 because SQL has 0/1 there, not real boolean
-                manager.insertRow(new Building(building.getString(Building.COLUMN_NAME), building.getString(Building.COLUMN_PURPOSE),
+                manager.insertRow(new Building(building.getInt(Building.ID), building.getString(Building.COLUMN_NAME), building.getString(Building.COLUMN_PURPOSE),
                         building.getInt(Building.COLUMN_BOOK_ROOMS) > 0, building.getInt(Building.COLUMN_FOOD) > 0, building.getInt(Building.COLUMN_ATM) > 0,
                         building.getDouble(Building.COLUMN_LAT), building.getDouble(Building.COLUMN_LON)));
             }
