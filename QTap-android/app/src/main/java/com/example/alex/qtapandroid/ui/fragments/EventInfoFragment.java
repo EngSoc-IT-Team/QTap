@@ -9,6 +9,8 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,6 +106,12 @@ public class EventInfoFragment extends Fragment {
         eventLoc.setText(mEventLoc);
         TextView eventName = (TextView) view.findViewById(R.id.EventName);
         eventName.setText(mEventTitle);
+
+
+        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        if (actionbar != null) {
+            actionbar.setTitle(getString(R.string.fragment_event_info));
+        }
     }
 
     @Override
