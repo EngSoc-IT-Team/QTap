@@ -137,7 +137,7 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
                         contact.getString(EmergencyContact.COLUMN_PHONE_NUMBER), contact.getString(EmergencyContact.COLUMN_DESCRIPTION)));
             }
         } catch (JSONException e) {
-            Log.d("HELLOTHERE", "BAD: " + e);
+            Log.d("HELLOTHERE", "EMERG: " + e);
         }
     }
 
@@ -151,7 +151,7 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
                         contact.getString(EngineeringContact.COLUMN_POSITION), contact.getString(EngineeringContact.COLUMN_DESCRIPTION)));
             }
         } catch (JSONException e) {
-            Log.d("HELLOTHERE", "BAD: " + e);
+            Log.d("HELLOTHERE", "ENG: " + e);
         }
     }
 
@@ -167,7 +167,7 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
                         building.getDouble(Building.COLUMN_LAT), building.getDouble(Building.COLUMN_LON)));
             }
         } catch (JSONException e) {
-            Log.d("HELLOTHERE", "BAD: " + e);
+            Log.d("HELLOTHERE", "BUILDING: " + e);
         }
     }
 
@@ -187,7 +187,7 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
                         oneFood.getDouble(Food.COLUMN_SAT_STOP_HOURS), oneFood.getDouble(Food.COLUMN_SUN_START_HOURS), oneFood.getDouble(Food.COLUMN_SUN_STOP_HOURS)));
             }
         } catch (JSONException e) {
-            Log.d("HELLOTHERE", "BAD: " + e);
+            Log.d("HELLOTHERE", "FOOD: " + e);
         }
     }
 
@@ -212,7 +212,7 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
                         caf.getDouble(Cafeteria.COLUMN_SUN_DINNER_START), caf.getDouble(Cafeteria.COLUMN_SUN_DINNER_STOP)));
             }
         } catch (JSONException e) {
-            Log.d("HELLOTHERE", "BAD: " + e);
+            Log.d("HELLOTHERE", "CAF: " + e);
         }
     }
 }

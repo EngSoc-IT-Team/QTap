@@ -99,7 +99,7 @@ if (mysql_num_rows($result) > 0) {
         $product = array();
         $product["ID"] = $row["ID"];
         $product["Name"] = $row["Name"];
-        $product["BuildingID"] = $orw["BuildingID"];
+        $product["BuildingID"] = $row["BuildingID"];
         $product["WeekBreakfastStart"] = $row["WeekBreakfastStart"];
         $product["WeekBreakfastStop"] = $row["WeekBreakfastStop"];
         $product["FriBreakfastStart"] = $row["FriBreakfastStart"];
