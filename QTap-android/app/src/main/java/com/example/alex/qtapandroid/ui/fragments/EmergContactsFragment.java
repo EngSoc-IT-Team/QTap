@@ -14,6 +14,7 @@ import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.database.local.DatabaseRow;
 import com.example.alex.qtapandroid.common.database.local.contacts.emergency.EmergencyContact;
 import com.example.alex.qtapandroid.common.database.local.contacts.emergency.EmergencyContactsManager;
 
@@ -32,8 +33,9 @@ public class EmergContactsFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         ArrayList<HashMap<String, String>> emergContactsList = new ArrayList<>();
-        ArrayList<EmergencyContact> contacts = (new EmergencyContactsManager(getActivity().getApplicationContext())).getTable();
-        for (EmergencyContact contact : contacts) {
+        ArrayList<DatabaseRow> contacts = (new EmergencyContactsManager(getActivity().getApplicationContext())).getTable();
+        for (DatabaseRow row : contacts) {
+            EmergencyContact contact = (EmergencyContact) row;
             HashMap<String, String> map = new HashMap<>();
             map.put(EmergencyContact.COLUMN_NAME, contact.getName());
             map.put(EmergencyContact.COLUMN_PHONE_NUMBER, contact.getPhoneNumber());

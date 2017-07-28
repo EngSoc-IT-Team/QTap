@@ -1,10 +1,10 @@
 package com.example.alex.qtapandroid.ui.fragments;
 
 
-import android.support.v4.app.ListFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ListFragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import android.widget.SimpleAdapter;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
+import com.example.alex.qtapandroid.common.database.local.DatabaseRow;
 import com.example.alex.qtapandroid.common.database.local.contacts.engineering.EngineeringContact;
 import com.example.alex.qtapandroid.common.database.local.contacts.engineering.EngineeringContactsManager;
 
@@ -33,8 +34,9 @@ public class EngContactsFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         ArrayList<HashMap<String, String>> engContactsList = new ArrayList<>();
-        ArrayList<EngineeringContact> contacts = (new EngineeringContactsManager(getActivity().getApplicationContext())).getTable();
-        for (EngineeringContact contact : contacts) {
+        ArrayList<DatabaseRow> contacts = (new EngineeringContactsManager(getActivity().getApplicationContext())).getTable();
+        for (DatabaseRow row : contacts) {
+            EngineeringContact contact = (EngineeringContact) row;
             HashMap<String, String> map = new HashMap<>();
             map.put(EngineeringContact.COLUMN_NAME, contact.getName());
             map.put(EngineeringContact.COLUMN_EMAIL, contact.getEmail());
