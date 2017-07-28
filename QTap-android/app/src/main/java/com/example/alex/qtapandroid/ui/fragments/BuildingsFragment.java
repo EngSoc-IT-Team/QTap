@@ -48,7 +48,7 @@ public class BuildingsFragment extends ListFragment {
             map.put(Building.COLUMN_PURPOSE, building.getPurpose());
             String food = building.getFood() ? "Yes" : "No";
             map.put(Building.COLUMN_FOOD, food);
-            map.put(FoodFragment.TAG_DB_ID, String.valueOf(building.getID()));
+            map.put(FoodFragment.TAG_DB_ID, String.valueOf(building.getId()));
             buildingsList.add(map);
         }
         ListAdapter adapter = new SimpleAdapter(getActivity().getApplicationContext(), buildingsList,

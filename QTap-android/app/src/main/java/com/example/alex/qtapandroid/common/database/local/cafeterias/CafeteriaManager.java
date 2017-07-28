@@ -228,7 +228,6 @@ public class CafeteriaManager extends DatabaseAccessor {
                     cursor.getDouble(Cafeteria.POS_SUN_LUNCH_STOP), cursor.getDouble(Cafeteria.POS_WEEK_DINNER_START), cursor.getDouble(Cafeteria.POS_WEEK_DINNER_STOP),
                     cursor.getDouble(Cafeteria.POS_FRI_DINNER_START), cursor.getDouble(Cafeteria.POS_FRI_DINNER_STOP), cursor.getDouble(Cafeteria.POS_SAT_DINNER_START),
                     cursor.getDouble(Cafeteria.POS_SAT_DINNER_STOP), cursor.getDouble(Cafeteria.POS_SUN_DINNER_START), cursor.getDouble(Cafeteria.POS_SUN_DINNER_STOP));
-            caf.setID(cursor.getInt(Cafeteria.POS_ID));
             cursor.close();
             return caf; //return only when the cursor has been closed.
             //Return statement never missed, try block always finishes this.

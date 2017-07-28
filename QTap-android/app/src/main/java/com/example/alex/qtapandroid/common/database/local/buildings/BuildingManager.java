@@ -27,7 +27,7 @@ public class BuildingManager extends DatabaseAccessor {
      */
     public long insertRow(Building building) {
         ContentValues values = new ContentValues();
-        values.put(Building._ID, building.getID());
+        values.put(Building.ID, building.getId());
         values.put(Building.COLUMN_NAME, building.getName());
         values.put(Building.COLUMN_PURPOSE, building.getPurpose());
         values.put(Building.COLUMN_BOOK_ROOMS, building.getBookRooms());
@@ -46,8 +46,8 @@ public class BuildingManager extends DatabaseAccessor {
      *                 using the ID of this parameter.
      */
     public void deleteRow(Building building) {
-        String selection = Building._ID + " LIKE ?";
-        String[] selectionArgs = {String.valueOf(building.getID())};
+        String selection = Building.ID + " LIKE ?";
+        String[] selectionArgs = {String.valueOf(building.getId())};
         getDatabase().delete(Building.TABLE_NAME, selection, selectionArgs);
     }
 
@@ -58,7 +58,7 @@ public class BuildingManager extends DatabaseAccessor {
      */
     public ArrayList<Building> getTable() {
         String[] projection = {
-                Building._ID,
+                Building.ID,
                 Building.COLUMN_NAME,
                 Building.COLUMN_PURPOSE,
                 Building.COLUMN_BOOK_ROOMS,
@@ -89,7 +89,7 @@ public class BuildingManager extends DatabaseAccessor {
      */
     public Building getRow(long id) {
         String[] projection = {
-                Building._ID,
+                Building.ID,
                 Building.COLUMN_NAME,
                 Building.COLUMN_PURPOSE,
                 Building.COLUMN_BOOK_ROOMS,
@@ -99,7 +99,7 @@ public class BuildingManager extends DatabaseAccessor {
                 Building.COLUMN_LON
         };
         Building building;
-        String selection = Building._ID + " LIKE ?";
+        String selection = Building.ID + " LIKE ?";
         String[] selectionArgs = {String.valueOf(id)};
         try (Cursor cursor = getDatabase().query(Building.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             cursor.moveToNext();
@@ -130,7 +130,7 @@ public class BuildingManager extends DatabaseAccessor {
      */
     public Building updateRow(Building oldBuilding, Building newBuilding) {
         ContentValues values = new ContentValues();
-        values.put(Building._ID, newBuilding.getID());
+        values.put(Building.ID, newBuilding.getId());
         values.put(Building.COLUMN_NAME, newBuilding.getName());
         values.put(Building.COLUMN_PURPOSE, newBuilding.getPurpose());
         values.put(Building.COLUMN_BOOK_ROOMS, newBuilding.getBookRooms());
@@ -139,8 +139,8 @@ public class BuildingManager extends DatabaseAccessor {
         values.put(Building.COLUMN_LAT, newBuilding.getLat());
         values.put(Building.COLUMN_LON, newBuilding.getLon());
 
-        String selection = Building._ID + " LIKE ?";
-        String selectionArgs[] = {String.valueOf(oldBuilding.getID())};
+        String selection = Building.ID + " LIKE ?";
+        String selectionArgs[] = {String.valueOf(oldBuilding.getId())};
         getDatabase().update(Building.TABLE_NAME, values, selection, selectionArgs);
         return newBuilding;
     }

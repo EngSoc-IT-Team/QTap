@@ -42,7 +42,7 @@ public class SqlStringStatements {
             " INTEGER PRIMARY KEY," + EngineeringContact.COLUMN_NAME + " TEXT," + EmergencyContact.COLUMN_PHONE_NUMBER + " TEXT,"
             + EmergencyContact.COLUMN_DESCRIPTION + " TEXT);";
 
-    public static final String CREATE_BUILDINGS = "CREATE TABLE " + Building.TABLE_NAME + "(" + Building._ID + " INTEGER PRIMARY KEY," +
+    public static final String CREATE_BUILDINGS = "CREATE TABLE " + Building.TABLE_NAME + "(" + Building.ID + " INTEGER PRIMARY KEY," +
             Building.COLUMN_NAME + " TEXT," + Building.COLUMN_PURPOSE + " TEXT," + Building.COLUMN_BOOK_ROOMS + " INTEGER," + Building.COLUMN_FOOD
             + " INTEGER," + Building.COLUMN_ATM + " INTEGER," + Building.COLUMN_LAT + " REAL," + Building.COLUMN_LON + " REAL);";
 
