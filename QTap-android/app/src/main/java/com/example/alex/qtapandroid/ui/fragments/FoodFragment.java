@@ -16,6 +16,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.database.local.DatabaseRow;
 import com.example.alex.qtapandroid.common.database.local.buildings.Building;
 import com.example.alex.qtapandroid.common.database.local.buildings.BuildingManager;
 import com.example.alex.qtapandroid.common.database.local.food.Food;
@@ -43,10 +44,11 @@ public class FoodFragment extends ListFragment {
         mFoodManager = new FoodManager(getActivity().getApplicationContext());
 
         ArrayList<HashMap<String, String>> foodList = new ArrayList<>();
-        ArrayList<Food> food = mFoodManager.getTable();
+        ArrayList<DatabaseRow> food = mFoodManager.getTable();
         mBuildingManager = new BuildingManager(getContext());
 
-        for (Food oneFood : food) {
+        for (DatabaseRow row : food) {
+            Food oneFood = (Food) row;
             HashMap<String, String> map = new HashMap<>();
             map.put(Food.COLUMN_NAME, oneFood.getName());
             map.put(Food.COLUMN_BUILDING_ID, String.valueOf(oneFood.getBuildingID()));
@@ -55,7 +57,7 @@ public class FoodFragment extends ListFragment {
             map.put(Food.COLUMN_MEAL_PLAN, takesMeal);
             String takesCard = oneFood.isCard() ? "Yes" : "No";
             map.put(Food.COLUMN_CARD, takesCard);
-            map.put(TAG_DB_ID, String.valueOf(oneFood.getID()));
+            map.put(TAG_DB_ID, String.valueOf(oneFood.getId()));
             foodList.add(map);
         }
 

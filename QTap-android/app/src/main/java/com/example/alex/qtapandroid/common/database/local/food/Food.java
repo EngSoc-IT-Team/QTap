@@ -1,18 +1,14 @@
 package com.example.alex.qtapandroid.common.database.local.food;
 
-import android.provider.BaseColumns;
-import android.util.Log;
-
-import java.util.ArrayList;
+import com.example.alex.qtapandroid.common.database.local.DatabaseRow;
 
 /**
  * Created by Carson on 04/07/2017.
  * Class that defines schema for Food table in phone database.
  */
-public class Food implements BaseColumns {
+public class Food extends DatabaseRow {
     public static final String TABLE_NAME = "Food";
 
-    public static final String ID = "ID";
     public static final String COLUMN_NAME = "Name";
     public static final String COLUMN_MEAL_PLAN = "MealPlan";
     public static final String COLUMN_CARD = "Card";
@@ -33,7 +29,6 @@ public class Food implements BaseColumns {
     public static final String COLUMN_SUN_START_HOURS = "SunStartHours";
     public static final String COLUMN_SUN_STOP_HOURS = "SunStopHours";
 
-    public static final int POS_ID = 0;
     public static final int POS_NAME = 1;
     public static final int POS_MEAL_PLAN = 2;
     public static final int POS_CARD = 3;
@@ -54,7 +49,6 @@ public class Food implements BaseColumns {
     public static final int POS_SUN_START_HOURS = 18;
     public static final int POS_SUN_STOP_HOURS = 19;
 
-    private long id;
     private int buildingID;
     private String name, information;
     private boolean mealPlan, card;
@@ -64,7 +58,7 @@ public class Food implements BaseColumns {
     public Food(long id, String name, int buildingID, String information, boolean mealPlan, boolean card, double monStartHours, double monStopHours, double tueStartHours,
                 double tueStopHours, double wedStartHours, double wedStopHours, double thurStartHours, double thurStopHours, double friStartHours,
                 double friStopHours, double satStartHours, double satStopHours, double sunStartHours, double sunStopHours) {
-        this.id = id;
+        super(id);
         this.name = name;
         this.buildingID = buildingID;
         this.information = information;
@@ -84,23 +78,6 @@ public class Food implements BaseColumns {
         this.satStopHours = satStopHours;
         this.sunStartHours = sunStartHours;
         this.sunStopHours = sunStopHours;
-    }
-
-    public static void printFood(ArrayList<Food> food) {
-        String output = "FOOD:\n";
-        for (Food oneFood : food) {
-            output += "ID: " + oneFood.getID() + " NAME: " + oneFood.getName() + " MEAL PLAN: " + oneFood.isMealPlan() + " CARD: " + oneFood.isCard() +
-                    " INFORMATION: " + oneFood.getInformation() + " BUILDING ID: " + oneFood.getBuildingID() + " NOT PRINTING HOURS CURRENTLY\n";
-        }
-        Log.d("SQLITEFOOD", output);
-    }
-
-    public long getID() {
-        return id;
-    }
-
-    public void setID(long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -115,143 +92,71 @@ public class Food implements BaseColumns {
         return buildingID;
     }
 
-    public void setBuildingID(int buildingID) {
-        this.buildingID = buildingID;
-    }
-
     public String getInformation() {
         return information;
-    }
-
-    public void setInformation(String information) {
-        this.information = information;
     }
 
     public boolean isMealPlan() {
         return mealPlan;
     }
 
-    public void setMealPlan(boolean mealPlan) {
-        this.mealPlan = mealPlan;
-    }
-
     public boolean isCard() {
         return card;
-    }
-
-    public void setCard(boolean card) {
-        this.card = card;
     }
 
     public double getMonStartHours() {
         return monStartHours;
     }
 
-    public void setMonStartHours(double monStartHours) {
-        this.monStartHours = monStartHours;
-    }
-
     public double getMonStopHours() {
         return monStopHours;
-    }
-
-    public void setMonStopHours(double monStopHours) {
-        this.monStopHours = monStopHours;
     }
 
     public double getTueStartHours() {
         return tueStartHours;
     }
 
-    public void setTueStartHours(double tueStartHours) {
-        this.tueStartHours = tueStartHours;
-    }
-
     public double getTueStopHours() {
         return tueStopHours;
-    }
-
-    public void setTueStopHours(double tueStopHours) {
-        this.tueStopHours = tueStopHours;
     }
 
     public double getWedStartHours() {
         return wedStartHours;
     }
 
-    public void setWedStartHours(double wedStartHours) {
-        this.wedStartHours = wedStartHours;
-    }
-
     public double getWedStopHours() {
         return wedStopHours;
-    }
-
-    public void setWedStopHours(double wedStopHours) {
-        this.wedStopHours = wedStopHours;
     }
 
     public double getThurStartHours() {
         return thurStartHours;
     }
 
-    public void setThurStartHours(double thurStartHours) {
-        this.thurStartHours = thurStartHours;
-    }
-
     public double getThurStopHours() {
         return thurStopHours;
-    }
-
-    public void setThurStopHours(double thurStopHours) {
-        this.thurStopHours = thurStopHours;
     }
 
     public double getFriStartHours() {
         return friStartHours;
     }
 
-    public void setFriStartHours(double friStartHours) {
-        this.friStartHours = friStartHours;
-    }
-
     public double getFriStopHours() {
         return friStopHours;
-    }
-
-    public void setFriStopHours(double friStopHours) {
-        this.friStopHours = friStopHours;
     }
 
     public double getSatStartHours() {
         return satStartHours;
     }
 
-    public void setSatStartHours(double satStartHours) {
-        this.satStartHours = satStartHours;
-    }
-
     public double getSatStopHours() {
         return satStopHours;
-    }
-
-    public void setSatStopHours(double satStopHours) {
-        this.satStopHours = satStopHours;
     }
 
     public double getSunStartHours() {
         return sunStartHours;
     }
 
-    public void setSunStartHours(double sunStartHours) {
-        this.sunStartHours = sunStartHours;
-    }
-
     public double getSunStopHours() {
         return sunStopHours;
-    }
-
-    public void setSunStopHours(double sunStopHours) {
-        this.sunStopHours = sunStopHours;
     }
 }

@@ -40,7 +40,6 @@ public class Cafeteria extends DatabaseRow {
     public static final String COLUMN_SUN_DINNER_START = "SunDinnerStart";
     public static final String COLUMN_SUN_DINNER_STOP = "SunDinnerStop";
 
-    public static final int POS_ID = 0;
     public static final int POS_NAME = 1;
     public static final int POS_BUILDING_ID = 2;
     public static final int POS_WEEK_BREAKFAST_START = 3;

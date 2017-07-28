@@ -46,7 +46,7 @@ public class SqlStringStatements {
             Building.COLUMN_NAME + " TEXT," + Building.COLUMN_PURPOSE + " TEXT," + Building.COLUMN_BOOK_ROOMS + " INTEGER," + Building.COLUMN_FOOD
             + " INTEGER," + Building.COLUMN_ATM + " INTEGER," + Building.COLUMN_LAT + " REAL," + Building.COLUMN_LON + " REAL);";
 
-    public static final String CREATE_FOOD = "CREATE TABLE " + Food.TABLE_NAME + "(" + Food._ID + " INTEGER PRIMARY KEY," + Food.COLUMN_NAME + " TEXT," + Food.COLUMN_MEAL_PLAN +
+    public static final String CREATE_FOOD = "CREATE TABLE " + Food.TABLE_NAME + "(" + Food.ID + " INTEGER PRIMARY KEY," + Food.COLUMN_NAME + " TEXT," + Food.COLUMN_MEAL_PLAN +
             " INTEGER," + Food.COLUMN_CARD + " INTEGER," + Food.COLUMN_INFORMATION + " TEXT," + Food.COLUMN_BUILDING_ID + " INTEGER," + Food.COLUMN_MON_START_HOURS + " REAL," +
             Food.COLUMN_MON_STOP_HOURS + " REAL," + Food.COLUMN_TUE_START_HOURS + " REAL," + Food.COLUMN_TUE_STOP_HOURS + " REAL," + Food.COLUMN_WED_START_HOURS + " REAL," +
             Food.COLUMN_WED_STOP_HOURS + " REAL," + Food.COLUMN_THUR_START_HOURS + " REAL," + Food.COLUMN_THUR_STOP_HOURS + " REAL," + Food.COLUMN_FRI_START_HOURS + " REAL," +

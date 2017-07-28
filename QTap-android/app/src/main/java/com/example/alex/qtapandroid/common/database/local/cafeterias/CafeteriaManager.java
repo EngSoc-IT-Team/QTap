@@ -92,7 +92,7 @@ public class CafeteriaManager extends DatabaseManager {
         //order table by name, ascending
         try (Cursor cursor = getDatabase().query(Cafeteria.TABLE_NAME, projection, null, null, null, null, Cafeteria.COLUMN_NAME + " ASC")) {
             while (cursor.moveToNext()) {
-                Cafeteria caf = getRow(cursor.getInt(Cafeteria.POS_ID));
+                Cafeteria caf = getRow(cursor.getInt(Cafeteria.ID_POS));
                 cafs.add(caf);
             }
             cursor.close();
@@ -136,7 +136,7 @@ public class CafeteriaManager extends DatabaseManager {
         String[] selectionArgs = {String.valueOf(id)};
         try (Cursor cursor = getDatabase().query(Cafeteria.TABLE_NAME, projection, selection, selectionArgs, null, null, null)) {
             cursor.moveToNext();
-            caf = new Cafeteria(cursor.getInt(Cafeteria.POS_ID), cursor.getString(Cafeteria.POS_NAME), cursor.getInt(Cafeteria.POS_BUILDING_ID),
+            caf = new Cafeteria(cursor.getInt(Cafeteria.ID_POS), cursor.getString(Cafeteria.POS_NAME), cursor.getInt(Cafeteria.POS_BUILDING_ID),
                     cursor.getDouble(Cafeteria.POS_WEEK_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_WEEK_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_FRI_BREAKFAST_START),
                     cursor.getDouble(Cafeteria.POS_FRI_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_SAT_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_SAT_BREAKFAST_STOP),
                     cursor.getDouble(Cafeteria.POS_SUN_BREAKFAST_START), cursor.getDouble(Cafeteria.POS_SUN_BREAKFAST_STOP), cursor.getDouble(Cafeteria.POS_WEEK_LUNCH_START),
