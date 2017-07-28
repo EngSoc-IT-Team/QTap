@@ -24,11 +24,11 @@ public abstract class DatabaseManager extends DatabaseAccessor {
         getDatabase().delete(tableName, null, null);
     }
 
-    public abstract long insertRow(DatabaseRow row);
+    public abstract void insertRow(DatabaseRow row);
 
     public abstract ArrayList<DatabaseRow> getTable();
 
     public abstract DatabaseRow getRow(long id);
 
-    public abstract DatabaseRow updateRow(DatabaseRow oldRow, DatabaseRow newRow);
+    public abstract void updateRow(DatabaseRow oldRow, DatabaseRow newRow);
 }

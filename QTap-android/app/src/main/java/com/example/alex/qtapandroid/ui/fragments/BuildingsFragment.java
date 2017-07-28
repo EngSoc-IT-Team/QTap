@@ -16,6 +16,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.database.local.DatabaseRow;
 import com.example.alex.qtapandroid.common.database.local.buildings.Building;
 import com.example.alex.qtapandroid.common.database.local.buildings.BuildingManager;
 import com.example.alex.qtapandroid.common.database.local.food.Food;
@@ -41,8 +42,9 @@ public class BuildingsFragment extends ListFragment {
         mBuildingManager = new BuildingManager(getActivity().getApplicationContext());
         ArrayList<HashMap<String, String>> buildingsList = new ArrayList<>();
 
-        ArrayList<Building> buildings = mBuildingManager.getTable();
-        for (Building building : buildings) {
+        ArrayList<DatabaseRow> buildings = mBuildingManager.getTable();
+        for (DatabaseRow row : buildings) {
+            Building building = (Building) row;
             HashMap<String, String> map = new HashMap<>();
             map.put(Building.COLUMN_NAME, building.getName());
             map.put(Building.COLUMN_PURPOSE, building.getPurpose());

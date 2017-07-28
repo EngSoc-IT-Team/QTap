@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 
+import com.example.alex.qtapandroid.common.database.local.DatabaseRow;
 import com.example.alex.qtapandroid.common.database.local.buildings.Building;
 import com.example.alex.qtapandroid.common.database.local.buildings.BuildingManager;
 import com.google.android.gms.common.ConnectionResult;
@@ -65,9 +66,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode==REQUEST_LOCATION_PERMISSIONS &&
+        if (requestCode == REQUEST_LOCATION_PERMISSIONS &&
                 ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         }
     }
@@ -89,9 +90,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void createMarkers() {
-        ArrayList<Building> buildings = new BuildingManager(this).getTable();
-        for(Building building : buildings){
-            MarkerOptions marker = new MarkerOptions().position(new LatLng(building.getLat(),building.getLon())).title(building.getName());
+        ArrayList<DatabaseRow> buildings = new BuildingManager(this).getTable();
+        for (DatabaseRow row : buildings) {
+            Building building = (Building) row;
+            MarkerOptions marker = new MarkerOptions().position(new LatLng(building.getLat(), building.getLon())).title(building.getName());
             mMap.addMarker(marker);
         }
     }
