@@ -53,7 +53,7 @@ public class SqlStringStatements {
             Food.COLUMN_FRI_STOP_HOURS + " REAL," + Food.COLUMN_SAT_START_HOURS + " REAL," + Food.COLUMN_SAT_STOP_HOURS + " REAL," + Food.COLUMN_SUN_START_HOURS + " REAL," +
             Food.COLUMN_SUN_STOP_HOURS + " REAL);";
 
-    public static final String CREATE_CAFETERIAS = "CREATE TABLE " + Cafeteria.TABLE_NAME + "(" + Cafeteria._ID + " INTEGER PRIMARY KEY," + Cafeteria.COLUMN_NAME + " TEXT," +
+    public static final String CREATE_CAFETERIAS = "CREATE TABLE " + Cafeteria.TABLE_NAME + "(" + Cafeteria.ID + " INTEGER PRIMARY KEY," + Cafeteria.COLUMN_NAME + " TEXT," +
             Cafeteria.COLUMN_BUILDING_ID + " INTEGER," + Cafeteria.COLUMN_WEEK_BREAKFAST_START + " REAL," +
             Cafeteria.COLUMN_WEEK_BREAKFAST_STOP + " REAL," + Cafeteria.COLUMN_FRI_BREAKFAST_START + " REAL," + Cafeteria.COLUMN_FRI_BREAKFAST_STOP + " REAL," + Cafeteria.COLUMN_SAT_BREAKFAST_START + " REAL," +
             Cafeteria.COLUMN_SAT_BREAKFAST_STOP + " REAL," + Cafeteria.COLUMN_SUN_BREAKFAST_START + " REAL," + Cafeteria.COLUMN_SUN_BREAKFAST_STOP + " REAL," + Cafeteria.COLUMN_WEEK_LUNCH_START + " REAL," +

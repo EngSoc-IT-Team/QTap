@@ -15,6 +15,7 @@ import android.widget.SimpleAdapter;
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.ConvertHourSpan;
 import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
+import com.example.alex.qtapandroid.common.database.local.DatabaseRow;
 import com.example.alex.qtapandroid.common.database.local.cafeterias.Cafeteria;
 import com.example.alex.qtapandroid.common.database.local.cafeterias.CafeteriaManager;
 
@@ -32,8 +33,9 @@ public class CafeteriasFragment extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         ArrayList<HashMap<String, String>> cafList = new ArrayList<>();
-        ArrayList<Cafeteria> cafs = (new CafeteriaManager(getActivity().getApplicationContext())).getTable();
-        for (Cafeteria caf : cafs) {
+        ArrayList<DatabaseRow> cafs = (new CafeteriaManager(getActivity().getApplicationContext())).getTable();
+        for (DatabaseRow row : cafs) {
+            Cafeteria caf = (Cafeteria) row;
             HashMap<String, String> map = new HashMap<>();
 
             map.put(Cafeteria.COLUMN_NAME, caf.getName());

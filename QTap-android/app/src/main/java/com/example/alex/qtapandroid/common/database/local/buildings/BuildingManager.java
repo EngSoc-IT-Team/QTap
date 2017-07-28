@@ -36,12 +36,7 @@ public class BuildingManager extends DatabaseManager {
         }
     }
 
-    public void deleteRow(DatabaseRow building) {
-        String selection = Building.ID + " LIKE ?";
-        String[] selectionArgs = {String.valueOf(building.getId())};
-        getDatabase().delete(Building.TABLE_NAME, selection, selectionArgs);
-    }
-
+    @Override
     public ArrayList<DatabaseRow> getTable() {
         String[] projection = {
                 Building.ID,
@@ -58,7 +53,7 @@ public class BuildingManager extends DatabaseManager {
         //order by building name
         try (Cursor cursor = getDatabase().query(Building.TABLE_NAME, projection, null, null, null, null, Building.COLUMN_NAME + " ASC")) {
             while (cursor.moveToNext()) {
-                Building building = (Building) getRow(cursor.getInt(Building.ID_POS));
+                Building building = getRow(cursor.getInt(Building.ID_POS));
                 buildings.add(building);
             }
             cursor.close();
@@ -66,6 +61,7 @@ public class BuildingManager extends DatabaseManager {
         }
     }
 
+    @Override
     public Building getRow(long id) {
         String[] projection = {
                 Building.ID,
@@ -92,10 +88,7 @@ public class BuildingManager extends DatabaseManager {
 
     }
 
-    public void deleteTable() {
-        getDatabase().delete(Building.TABLE_NAME, null, null);
-    }
-
+    @Override
     public void updateRow(DatabaseRow oldRow, DatabaseRow newRow) {
         if (oldRow instanceof Building && newRow instanceof Building) {
             Building oldBuilding = (Building) oldRow;

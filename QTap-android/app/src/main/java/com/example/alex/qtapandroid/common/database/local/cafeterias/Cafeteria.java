@@ -1,7 +1,8 @@
 package com.example.alex.qtapandroid.common.database.local.cafeterias;
 
-import android.provider.BaseColumns;
 import android.util.Log;
+
+import com.example.alex.qtapandroid.common.database.local.DatabaseRow;
 
 import java.util.ArrayList;
 
@@ -9,10 +10,9 @@ import java.util.ArrayList;
  * Created by Carson on 18/07/2017.
  * Class that defines the SQLite database table for Cafeterias
  */
-public class Cafeteria implements BaseColumns {
+public class Cafeteria extends DatabaseRow {
     public static final String TABLE_NAME = "Cafeterias";
 
-    public static final String ID = "ID";
     public static final String COLUMN_NAME = "Name";
     public static final String COLUMN_BUILDING_ID = "BuildingID";
     public static final String COLUMN_WEEK_BREAKFAST_START = "WeekBreakfastStart";
@@ -68,7 +68,6 @@ public class Cafeteria implements BaseColumns {
     public static final int POS_SUN_DINNER_START = 25;
     public static final int POS_SUN_DINNER_STOP = 26;
 
-    private long id;
     private int buildingID;
     private String name;
     private double weekBreakfastStart, weekBreakfastStop, friBreakfastStart, friBreakfastStop, satBreakfastStart, satBreakfastStop,
@@ -81,7 +80,7 @@ public class Cafeteria implements BaseColumns {
                      double weekLunchStop, double friLunchStart, double friLunchStop, double satLunchStart, double satLunchStop, double sunLunchStart, double sunLunchStop,
                      double weekDinnerStart, double weekDinnerStop, double friDinnerStart, double friDinnerStop,
                      double satDinnerStart, double satDinnerStop, double sunDinnerStart, double sunDinnerStop) {
-        this.id = id;
+        super(id);
         this.buildingID = buildingID;
         this.name = name;
         this.weekBreakfastStart = weekBreakfastStart;
@@ -110,29 +109,8 @@ public class Cafeteria implements BaseColumns {
         this.sunDinnerStop = sunDinnerStop;
     }
 
-    public static void printCafeterias(ArrayList<Cafeteria> cafs) {
-        String output = "CAFETERIAS:\n";
-        for (Cafeteria caf : cafs) {
-            output += "NAME: " + caf.getName() + " BUILDINGID: " + caf.getBuildingID() + " THATS IT FOR NOW\n";
-        }
-        Log.d("SQLITECAFETERIAS", output);
-    }
-
-
-    public long getID() {
-        return id;
-    }
-
-    public void setID(long id) {
-        this.id = id;
-    }
-
     public int getBuildingID() {
         return buildingID;
-    }
-
-    public void setBuildingID(int buildingID) {
-        this.buildingID = buildingID;
     }
 
     public String getName() {
@@ -147,191 +125,95 @@ public class Cafeteria implements BaseColumns {
         return weekBreakfastStart;
     }
 
-    public void setWeekBreakfastStart(double weekBreakfastStart) {
-        this.weekBreakfastStart = weekBreakfastStart;
-    }
-
     public double getWeekBreakfastStop() {
         return weekBreakfastStop;
-    }
-
-    public void setWeekBreakfastStop(double weekBreakfastStop) {
-        this.weekBreakfastStop = weekBreakfastStop;
     }
 
     public double getFriBreakfastStart() {
         return friBreakfastStart;
     }
 
-    public void setFriBreakfastStart(double friBreakfastStart) {
-        this.friBreakfastStart = friBreakfastStart;
-    }
-
     public double getFriBreakfastStop() {
         return friBreakfastStop;
-    }
-
-    public void setFriBreakfastStop(double friBreakfastStop) {
-        this.friBreakfastStop = friBreakfastStop;
     }
 
     public double getSatBreakfastStart() {
         return satBreakfastStart;
     }
 
-    public void setSatBreakfastStart(double satBreakfastStart) {
-        this.satBreakfastStart = satBreakfastStart;
-    }
-
     public double getSatBreakfastStop() {
         return satBreakfastStop;
-    }
-
-    public void setSatBreakfastStop(double satBreakfastStop) {
-        this.satBreakfastStop = satBreakfastStop;
     }
 
     public double getSunBreakfastStart() {
         return sunBreakfastStart;
     }
 
-    public void setSunBreakfastStart(double sunBreakfastStart) {
-        this.sunBreakfastStart = sunBreakfastStart;
-    }
-
     public double getSunBreakfastStop() {
         return sunBreakfastStop;
-    }
-
-    public void setSunBreakfastStop(double sunBreakfastStop) {
-        this.sunBreakfastStop = sunBreakfastStop;
     }
 
     public double getWeekLunchStart() {
         return weekLunchStart;
     }
 
-    public void setWeekLunchStart(double weekLunchStart) {
-        this.weekLunchStart = weekLunchStart;
-    }
-
     public double getWeekLunchStop() {
         return weekLunchStop;
-    }
-
-    public void setWeekLunchStop(double weekLunchStop) {
-        this.weekLunchStop = weekLunchStop;
     }
 
     public double getFriLunchStart() {
         return friLunchStart;
     }
 
-    public void setFriLunchStart(double friLunchStart) {
-        this.friLunchStart = friLunchStart;
-    }
-
     public double getFriLunchStop() {
         return friLunchStop;
-    }
-
-    public void setFriLunchStop(double friLunchStop) {
-        this.friLunchStop = friLunchStop;
     }
 
     public double getSatLunchStart() {
         return satLunchStart;
     }
 
-    public void setSatLunchStart(double satLunchStart) {
-        this.satLunchStart = satLunchStart;
-    }
-
     public double getSatLunchStop() {
         return satLunchStop;
-    }
-
-    public void setSatLunchStop(double satLunchStop) {
-        this.satLunchStop = satLunchStop;
     }
 
     public double getSunLunchStart() {
         return sunLunchStart;
     }
 
-    public void setSunLunchStart(double sunLunchStart) {
-        this.sunLunchStart = sunLunchStart;
-    }
-
     public double getSunLunchStop() {
         return sunLunchStop;
-    }
-
-    public void setSunLunchStop(double sunLunchStop) {
-        this.sunLunchStop = sunLunchStop;
     }
 
     public double getWeekDinnerStart() {
         return weekDinnerStart;
     }
 
-    public void setWeekDinnerStart(double weekDinnerStart) {
-        this.weekDinnerStart = weekDinnerStart;
-    }
-
     public double getWeekDinnerStop() {
         return weekDinnerStop;
-    }
-
-    public void setWeekDinnerStop(double weekDinnerStop) {
-        this.weekDinnerStop = weekDinnerStop;
     }
 
     public double getFriDinnerStart() {
         return friDinnerStart;
     }
 
-    public void setFriDinnerStart(double friDinnerStart) {
-        this.friDinnerStart = friDinnerStart;
-    }
-
     public double getFriDinnerStop() {
         return friDinnerStop;
-    }
-
-    public void setFriDinnerStop(double friDinnerStop) {
-        this.friDinnerStop = friDinnerStop;
     }
 
     public double getSatDinnerStart() {
         return satDinnerStart;
     }
 
-    public void setSatDinnerStart(double satDinnerStart) {
-        this.satDinnerStart = satDinnerStart;
-    }
-
     public double getSatDinnerStop() {
         return satDinnerStop;
-    }
-
-    public void setSatDinnerStop(double satDinnerStop) {
-        this.satDinnerStop = satDinnerStop;
     }
 
     public double getSunDinnerStart() {
         return sunDinnerStart;
     }
 
-    public void setSunDinnerStart(double sunDinnerStart) {
-        this.sunDinnerStart = sunDinnerStart;
-    }
-
     public double getSunDinnerStop() {
         return sunDinnerStop;
-    }
-
-    public void setSunDinnerStop(double sunDinnerStop) {
-        this.sunDinnerStop = sunDinnerStop;
     }
 }
