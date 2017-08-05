@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,10 +13,12 @@ import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.Util;
 import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.local.DatabaseRow;
 import com.example.alex.qtapandroid.common.database.local.contacts.engineering.EngineeringContact;
 import com.example.alex.qtapandroid.common.database.local.contacts.engineering.EngineeringContactsManager;
+import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +27,7 @@ import java.util.HashMap;
  * Created by Carson on 12/06/2017.
  * Activity that displays engineering contact information held in cloud database
  */
-public class EngContactsFragment extends ListFragment {
+public class EngContactsFragment extends ListFragment implements IQLActionbarFragment {
 
     private NavigationView mNavView;
 
@@ -54,10 +55,7 @@ public class EngContactsFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.fragment_eng_contacts));
-        }
+        setActionbarTitle((AppCompatActivity) getActivity());
     }
 
     @Override
@@ -72,5 +70,10 @@ public class EngContactsFragment extends ListFragment {
         super.onResume();
         mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
         mNavView.getMenu().findItem(R.id.nav_tools).setChecked(true);
+    }
+
+    @Override
+    public void setActionbarTitle(AppCompatActivity activity) {
+        Util.setActionbarTitle(R.string.fragment_eng_contacts, activity);
     }
 }

@@ -21,16 +21,18 @@ import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.activities.MainTabActivity;
+import com.example.alex.qtapandroid.common.Util;
 import com.example.alex.qtapandroid.common.card.elements.DataObject;
 import com.example.alex.qtapandroid.common.card.elements.RecyclerViewAdapter;
 import com.example.alex.qtapandroid.common.database.local.courses.OneClass;
 import com.example.alex.qtapandroid.common.database.local.courses.OneClassManager;
+import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class DayFragment extends Fragment {
+public class DayFragment extends Fragment implements IQLActionbarFragment {
 
     public static final String TAG_TITLE = "event_title";
     public static final String TAG_DATE = "date";
@@ -119,10 +121,8 @@ public class DayFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.fragment_day));
-        }
+        super.onViewCreated(view, savedInstanceState);
+        setActionbarTitle((AppCompatActivity) getActivity());
     }
 
     @Override
@@ -155,6 +155,11 @@ public class DayFragment extends Fragment {
         mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
         changeDate(mArray.get(mInstances, 0)); //account for day changed before moved fragments
         mNavView.getMenu().findItem(R.id.nav_day).setChecked(true);
+    }
+
+    @Override
+    public void setActionbarTitle(AppCompatActivity activity) {
+        Util.setActionbarTitle(R.string.fragment_day, activity);
     }
 
     public void changeDate(int numChange) {

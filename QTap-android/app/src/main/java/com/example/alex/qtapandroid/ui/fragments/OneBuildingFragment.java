@@ -9,7 +9,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,9 @@ import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.activities.MapsActivity;
+import com.example.alex.qtapandroid.common.Util;
 import com.example.alex.qtapandroid.common.database.local.buildings.Building;
+import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -35,7 +36,7 @@ import java.util.List;
  * Created by Carson on 25/07/2017.
  * Fragment that shows details of one building from the list view
  */
-public class OneBuildingFragment extends Fragment {
+public class OneBuildingFragment extends Fragment implements IQLActionbarFragment {
 
     private Bundle mArgs;
     private NavigationView mNavView;
@@ -49,11 +50,11 @@ public class OneBuildingFragment extends Fragment {
         mArgs = getArguments();
 
         setMapView(savedInstanceState);
-        populateViews();
+        populateData();
         return mView;
     }
 
-    private void populateViews() {
+    private void populateData() {
         ArrayList<String> foodNames = mArgs.getStringArrayList(BuildingsFragment.TAG_FOOD_NAMES);
         String foods = "";
         if (foodNames != null && !foodNames.isEmpty()) {
@@ -107,10 +108,7 @@ public class OneBuildingFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setTitle(mArgs.getString(Building.COLUMN_NAME));
-        }
+        setActionbarTitle((AppCompatActivity) getActivity());
     }
 
     @Override
@@ -150,5 +148,10 @@ public class OneBuildingFragment extends Fragment {
                 ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mGoogleMap.setMyLocationEnabled(true);
         }
+    }
+
+    @Override
+    public void setActionbarTitle(AppCompatActivity activity) {
+        Util.setActionbarTitle(R.string.fragment_buildings, activity);
     }
 }

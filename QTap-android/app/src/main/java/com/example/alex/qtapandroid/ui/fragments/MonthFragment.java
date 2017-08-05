@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.Util;
+import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
 
 import java.util.Calendar;
 
@@ -22,7 +23,7 @@ import java.util.Calendar;
  * This is the first screen user sees upon logging in (unless first time login).
  * Attached to MainTabActivity only.
  */
-public class MonthFragment extends Fragment {
+public class MonthFragment extends Fragment implements IQLActionbarFragment {
 
     public static final String TAG_DAY = "day";
     public static final String TAG_MONTH = "month";
@@ -55,10 +56,9 @@ public class MonthFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.fragment_month));
-        }
+        super.onViewCreated(view, savedInstanceState);
+        setActionbarTitle((AppCompatActivity) getActivity());
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         mDatePicker.init(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
@@ -82,5 +82,10 @@ public class MonthFragment extends Fragment {
         this.getFragmentManager().beginTransaction().addToBackStack(null)
                 .replace(R.id.content_frame, nextFrag)
                 .commit();
+    }
+
+    @Override
+    public void setActionbarTitle(AppCompatActivity activity) {
+        Util.setActionbarTitle(R.string.fragment_month, activity);
     }
 }

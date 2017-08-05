@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
@@ -15,13 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.Util;
+import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
 
 
 /**
  * Created by Carson on 02/12/2016.
  * Holds information pertinent to students
  */
-public class StudentToolsFragment extends Fragment {
+public class StudentToolsFragment extends Fragment implements IQLActionbarFragment {
 
     private NavigationView mNavView;
 
@@ -85,10 +86,7 @@ public class StudentToolsFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.fragment_student_tools));
-        }
+        setActionbarTitle((AppCompatActivity) getActivity());
     }
 
     @Override
@@ -110,5 +108,10 @@ public class StudentToolsFragment extends Fragment {
         intent.addCategory(Intent.CATEGORY_BROWSABLE);
         intent.setData(Uri.parse(url));
         startActivity(intent);
+    }
+
+    @Override
+    public void setActionbarTitle(AppCompatActivity activity) {
+        Util.setActionbarTitle(R.string.fragment_student_tools, activity);
     }
 }

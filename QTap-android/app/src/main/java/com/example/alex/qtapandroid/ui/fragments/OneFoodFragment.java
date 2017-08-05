@@ -9,7 +9,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +18,10 @@ import android.widget.TextView;
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.activities.MapsActivity;
 import com.example.alex.qtapandroid.common.ConvertHourSpan;
+import com.example.alex.qtapandroid.common.Util;
 import com.example.alex.qtapandroid.common.database.local.buildings.Building;
 import com.example.alex.qtapandroid.common.database.local.food.Food;
+import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -37,7 +38,7 @@ import java.util.List;
  * Created by Carson on 23/07/2017.
  * Fragment that holds information for one food establishment.
  */
-public class OneFoodFragment extends Fragment {
+public class OneFoodFragment extends Fragment implements IQLActionbarFragment {
 
     private Bundle mArgs;
     private NavigationView mNavView;
@@ -117,10 +118,7 @@ public class OneFoodFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setTitle(mArgs.getString(Food.COLUMN_NAME));
-        }
+        setActionbarTitle((AppCompatActivity) getActivity());
     }
 
     @Override
@@ -160,5 +158,10 @@ public class OneFoodFragment extends Fragment {
                 ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mGoogleMap.setMyLocationEnabled(true);
         }
+    }
+
+    @Override
+    public void setActionbarTitle(AppCompatActivity activity) {
+        Util.setActionbarTitle(R.string.fragment_food, activity);
     }
 }

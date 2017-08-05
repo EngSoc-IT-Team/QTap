@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +15,13 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.Util;
 import com.example.alex.qtapandroid.common.database.local.DatabaseRow;
 import com.example.alex.qtapandroid.common.database.local.buildings.Building;
 import com.example.alex.qtapandroid.common.database.local.buildings.BuildingManager;
 import com.example.alex.qtapandroid.common.database.local.food.Food;
 import com.example.alex.qtapandroid.common.database.local.food.FoodManager;
+import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,7 +30,7 @@ import java.util.HashMap;
  * Created by Carson on 05/07/2017.
  * Fragment displaying data in phone database regarding food establishments.
  */
-public class FoodFragment extends ListFragment {
+public class FoodFragment extends ListFragment implements IQLActionbarFragment {
 
     public static final String TAG_DB_ID = "DB_ID";
     public static final String TAG_BUILDING_NAME = "BUILDING_NAME";
@@ -117,10 +118,7 @@ public class FoodFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.fragment_food));
-        }
+        setActionbarTitle((AppCompatActivity) getActivity());
     }
 
     @Override
@@ -134,5 +132,10 @@ public class FoodFragment extends ListFragment {
         super.onResume();
         mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
         mNavView.getMenu().findItem(R.id.nav_food).setChecked(true);
+    }
+
+    @Override
+    public void setActionbarTitle(AppCompatActivity activity) {
+        Util.setActionbarTitle(R.string.fragment_food, activity);
     }
 }

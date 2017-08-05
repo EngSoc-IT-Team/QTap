@@ -9,7 +9,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,9 @@ import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.activities.MapsActivity;
+import com.example.alex.qtapandroid.common.Util;
+import com.example.alex.qtapandroid.common.maps.icsToBuilding;
+import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -26,12 +28,11 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.example.alex.qtapandroid.common.maps.icsToBuilding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventInfoFragment extends Fragment {
+public class EventInfoFragment extends Fragment implements IQLActionbarFragment {
 
     private String mEventTitle, mEventLoc, mDate;
     private View myView;
@@ -107,11 +108,7 @@ public class EventInfoFragment extends Fragment {
         TextView eventName = (TextView) view.findViewById(R.id.EventName);
         eventName.setText(mEventTitle);
 
-
-        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.fragment_event_info));
-        }
+        setActionbarTitle((AppCompatActivity) getActivity());
     }
 
     @Override
@@ -150,5 +147,10 @@ public class EventInfoFragment extends Fragment {
                 ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mGoogleMap.setMyLocationEnabled(true);
         }
+    }
+
+    @Override
+    public void setActionbarTitle(AppCompatActivity activity) {
+        Util.setActionbarTitle(R.string.fragment_event_info, activity);
     }
 }

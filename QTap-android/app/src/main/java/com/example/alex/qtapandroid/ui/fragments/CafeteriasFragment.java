@@ -14,10 +14,12 @@ import android.widget.SimpleAdapter;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.ConvertHourSpan;
+import com.example.alex.qtapandroid.common.Util;
 import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.local.DatabaseRow;
 import com.example.alex.qtapandroid.common.database.local.cafeterias.Cafeteria;
 import com.example.alex.qtapandroid.common.database.local.cafeterias.CafeteriaManager;
+import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,7 +28,7 @@ import java.util.HashMap;
  * Created by Carson on 18/07/2017.
  * Fragment that displays the cafeterias in the phone database.
  */
-public class CafeteriasFragment extends ListFragment {
+public class CafeteriasFragment extends ListFragment implements IQLActionbarFragment{
     private NavigationView mNavView;
 
     @Override
@@ -72,10 +74,7 @@ public class CafeteriasFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.fragment_cafeterias));
-        }
+        setActionbarTitle((AppCompatActivity)getActivity());
     }
 
     @Override
@@ -90,5 +89,10 @@ public class CafeteriasFragment extends ListFragment {
         mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
         mNavView.getMenu().findItem(R.id.nav_cafeterias).setChecked(true);
         DatabaseAccessor.getDatabase().close();
+    }
+
+    @Override
+    public void setActionbarTitle(AppCompatActivity activity) {
+        Util.setActionbarTitle(R.string.fragment_cafeterias, activity);
     }
 }

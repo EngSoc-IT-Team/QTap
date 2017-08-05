@@ -1,11 +1,10 @@
 package com.example.alex.qtapandroid.ui.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +15,14 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.Util;
 import com.example.alex.qtapandroid.common.database.local.DatabaseRow;
 import com.example.alex.qtapandroid.common.database.local.buildings.Building;
 import com.example.alex.qtapandroid.common.database.local.buildings.BuildingManager;
 import com.example.alex.qtapandroid.common.database.local.food.Food;
 import com.example.alex.qtapandroid.common.database.local.food.FoodManager;
+import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
+import com.example.alex.qtapandroid.interfaces.IQLDrawerFragmentLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,12 +31,11 @@ import java.util.HashMap;
  * Created by Carson on 26/06/2017.
  * Fragment that displays the buildings in the phone/cloud database.
  */
-public class BuildingsFragment extends ListFragment {
+public class BuildingsFragment extends ListFragment implements IQLActionbarFragment, IQLDrawerFragmentLayout {
 
     public static final String TAG_FOOD_NAMES = "FOOD_NAMES";
 
     private BuildingManager mBuildingManager;
-    private NavigationView mNavView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -102,22 +103,33 @@ public class BuildingsFragment extends ListFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ActionBar actionbar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        if (actionbar != null) {
-            actionbar.setTitle(getString(R.string.fragment_buildings));
-        }
+        setActionbarTitle((AppCompatActivity) getActivity());
+        selectDrawer(getActivity(), R.id.nav_buildings);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mNavView.getMenu().findItem(R.id.nav_buildings).setChecked(false);
+        deselectDrawer(getActivity(), R.id.nav_buildings);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
-        mNavView.getMenu().findItem(R.id.nav_buildings).setChecked(true);
+    }
+
+    @Override
+    public void setActionbarTitle(AppCompatActivity activity) {
+        Util.setActionbarTitle(R.string.fragment_buildings, activity);
+    }
+
+    @Override
+    public void deselectDrawer(Activity activity, int itemId) {
+        Util.setDrawerItemSelected(activity, itemId, false);
+    }
+
+    @Override
+    public void selectDrawer(Activity activity, int itemId) {
+        Util.setDrawerItemSelected(activity, itemId, true);
     }
 }
