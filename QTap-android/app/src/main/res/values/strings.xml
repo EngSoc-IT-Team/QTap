@@ -17,6 +17,7 @@
     <string name="fragment_food">Food Establishments</string>
     <string name="fragment_student_tools">Student Tools</string>
     <string name="fragment_emerg_contacts">Emergency Contacts</string>
+    <string name="fragment_ilc_rooms">ILC Room Info</string>
     <string name="fragment_eng_contacts">Engineering Contacts</string>
 
     <!--Short text in app-->
@@ -83,6 +84,7 @@
     <string name="career_url">http://careers.queensu.ca/students</string>
     <string name="suggestions_url">http://qtap.engsoc.queensu.ca/improvements_form.html</string>
     <string name="db_get_database">http://qtap.engsoc.queensu.ca/database/get_database.php</string>
+    <string name="dibs_get_rooms">https://queensu.evanced.info/dibsAPI/rooms</string>
     <string name="suggestions_accepted_url">http://qtap.engsoc.queensu.ca/submit_improvement.php</string>
 
     <!-- other strings -->

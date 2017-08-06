@@ -24,6 +24,7 @@ import com.example.alex.qtapandroid.common.database.local.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.BuildingsFragment;
 import com.example.alex.qtapandroid.ui.fragments.CafeteriasFragment;
 import com.example.alex.qtapandroid.ui.fragments.FoodFragment;
+import com.example.alex.qtapandroid.ui.fragments.ILCRoomInfoFragment;
 import com.example.alex.qtapandroid.ui.fragments.MonthFragment;
 import com.example.alex.qtapandroid.ui.fragments.DayFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
@@ -140,6 +141,9 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
                 break;
             case R.id.nav_food:
                 fragment = new FoodFragment();
+                break;
+            case R.id.nav_rooms:
+                fragment = new ILCRoomInfoFragment();
                 break;
         }
 
