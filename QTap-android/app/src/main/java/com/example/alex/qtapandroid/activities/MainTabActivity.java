@@ -3,11 +3,10 @@ package com.example.alex.qtapandroid.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -15,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
@@ -23,12 +23,10 @@ import com.example.alex.qtapandroid.common.database.local.users.User;
 import com.example.alex.qtapandroid.common.database.local.users.UserManager;
 import com.example.alex.qtapandroid.ui.fragments.BuildingsFragment;
 import com.example.alex.qtapandroid.ui.fragments.CafeteriasFragment;
-import com.example.alex.qtapandroid.ui.fragments.FoodFragment;
-import com.example.alex.qtapandroid.ui.fragments.ILCRoomInfoFragment;
-import com.example.alex.qtapandroid.ui.fragments.MonthFragment;
 import com.example.alex.qtapandroid.ui.fragments.DayFragment;
+import com.example.alex.qtapandroid.ui.fragments.FoodFragment;
+import com.example.alex.qtapandroid.ui.fragments.MonthFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
-
 
 /**
  * activity holding most of the app.
@@ -141,9 +139,6 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
                 break;
             case R.id.nav_food:
                 fragment = new FoodFragment();
-                break;
-            case R.id.nav_rooms:
-                fragment = new ILCRoomInfoFragment();
                 break;
         }
 

@@ -1,6 +1,5 @@
 package com.example.alex.qtapandroid.common.database.local;
 
-import com.example.alex.qtapandroid.common.database.dibs.ILCRoomObj;
 import com.example.alex.qtapandroid.common.database.local.buildings.Building;
 import com.example.alex.qtapandroid.common.database.local.cafeterias.Cafeteria;
 import com.example.alex.qtapandroid.common.database.local.contacts.emergency.EmergencyContact;
@@ -63,10 +62,6 @@ public class SqlStringStatements {
             + Cafeteria.COLUMN_WEEK_DINNER_STOP + " REAL," + Cafeteria.COLUMN_FRI_DINNER_START + " REAL," + Cafeteria.COLUMN_FRI_DINNER_STOP + " REAL," + Cafeteria.COLUMN_SAT_DINNER_START + " REAL,"
             + Cafeteria.COLUMN_SAT_DINNER_STOP + " REAL," + Cafeteria.COLUMN_SUN_DINNER_START + " REAL," + Cafeteria.COLUMN_SUN_DINNER_STOP + " REAL);";
 
-    public static final String CREATE_ILC_ROOM_INFO = "CREATE TABLE " + ILCRoomObj.TABLE_NAME + "(" + ILCRoomObj.ID + " INTEGER PRIMARY KEY," +
-            ILCRoomObj.COLUMN_BUILDING_ID + " INTEGER," + ILCRoomObj.COLUMN_DESCRIPTION + " TEXT," + ILCRoomObj.COLUMN_MAP_URL + " TEXT," + ILCRoomObj.COLUMN_NAME + " TEXT," + ILCRoomObj.COLUMN_PIC_URL
-            + " TEXT," + ILCRoomObj.COLUMN_ROOM_ID + " INTEGER);";
-
     //Delete table statements
     public static final String DELETE_COURSES = "DROP TABLE IF EXISTS " + Course.TABLE_NAME;
     public static final String DELETE_USERS = "DROP TABLE IF EXISTS " + User.TABLE_NAME;
@@ -76,6 +71,4 @@ public class SqlStringStatements {
     public static final String DELETE_BUILDINGS = "DROP TABLE IF EXISTS " + Building.TABLE_NAME;
     public static final String DELETE_FOOD = "DROP TABLE IF EXISTS " + Food.TABLE_NAME;
     public static final String DELETE_CAFETERIAS = "DROP TABLE IF EXISTS " + Cafeteria.TABLE_NAME;
-    public static final String DELETE_ILC_ROOM_INFO = "DROP TABLE IF EXISTS " + ILCRoomObj.TABLE_NAME;
-
 }
