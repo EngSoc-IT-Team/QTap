@@ -43,10 +43,12 @@ import java.util.concurrent.ExecutionException;
 
 public class ILCRoomInfoFragment extends Fragment {
 
-    public static final String TAG_TITLE = "event_title";
+    public static final String TAG_TITLE = "room_title";
     public static final String TAG_PIC = "pic";
     public static final String TAG_MAP = "map";
-    public static final String TAG_LOC = "event_locat";
+    public static final String TAG_DESC = "room_description";
+    public static final String TAG_ROOM_ID = "room_id";
+    public static final String TAG_DATE = "date";
 
     private static int mInstances = 0;
     private static SparseIntArray mArray = new SparseIntArray();
@@ -124,7 +126,7 @@ public class ILCRoomInfoFragment extends Fragment {
                 if (data != null && info.size() > 0) {
                     for (DatabaseRow row : info) {
                         ILCRoomObj room = (ILCRoomObj) row;
-                        if (room.getId() == position) {
+                        if (room.getRoomId() == data.getID()) {
                             map = room.getMapUrl();
                             pic = room.getPicUrl();
                         break;
@@ -133,13 +135,16 @@ public class ILCRoomInfoFragment extends Fragment {
                 }
 
                 String cardName = card.getTransitionName();
-                EventInfoFragment nextFrag = new EventInfoFragment();
+                RoomAvaliabilityInfoFragment nextFrag = new RoomAvaliabilityInfoFragment();
 
                 Bundle bundle = new Bundle();
                 bundle.putString(TAG_TITLE, data.getmText1());
-                bundle.putString(TAG_LOC, data.getmText2()  + "\n" + map + "\n" + pic);
-//                bundle.putString(TAG_MAP, map);
-//                bundle.putString(TAG_PIC, pic);
+                bundle.putString(TAG_DESC, data.getmText2());
+                bundle.putString(TAG_MAP, map);
+                bundle.putString(TAG_PIC, pic);
+                bundle.putString(TAG_DATE, Calendar.getInstance().toString());
+                bundle.putInt(TAG_ROOM_ID, position);
+
 
                 nextFrag.setArguments(bundle);
 
@@ -212,7 +217,7 @@ public class ILCRoomInfoFragment extends Fragment {
             for (DatabaseRow row : data) {
                 ILCRoomObj room = (ILCRoomObj) row;
                 String hasTV = room.getDescription().contains("TV") || room.getDescription().contains("Projector") ? "Yes" : "No";
-                result.add(new DataObject(room.getName(), room.getDescription() + "\nHas TV: " + hasTV));
+                result.add(new DataObject(room.getName(), room.getDescription() + "\nHas TV: " + hasTV, room.getRoomId()));
             }
             return result;
         }

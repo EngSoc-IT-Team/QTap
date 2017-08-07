@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,7 +55,7 @@ public class getDibsApiInfo extends AsyncTask<Void, Void, Void> {
             String jsonStr = getJSON(mContext.getString(R.string.dibs_get_rooms), 5000);
             JSONArray json = new JSONArray(jsonStr);
 
-            if (json != null){
+            if (json != null) {
                 cloudToPhoneDB(json);
             }
         } catch (JSONException e) {
@@ -111,27 +112,28 @@ public class getDibsApiInfo extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
-    public JSONArray getJSONArr (Void... voids) {
-        try {
-            String jsonStr = getJSON(mContext.getString(R.string.dibs_get_rooms), 5000);
-            JSONArray json = new JSONArray(jsonStr);
-
-            if (json != null) {
-                return json;
-            }
-        }
-        catch(JSONException e){
-
-        }
-        return null;
-    }
-
     private void cloudToPhoneDB(JSONArray json) {
         getRoomInfo(json);
 //        engineeringContacts(json);
 //        buildings(json);
 //        food(json);
 //        cafeterias(json);
+    }
+
+    public JSONArray getRoomTimes(int roomID) {
+        try {
+            Calendar cal;
+            cal = Calendar.getInstance();
+
+
+            String jsonStr = getJSON(mContext.getString(R.string.dibs_get_rooms_times)  + cal.get(Calendar.YEAR) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.DAY_OF_MONTH) + "-" + roomID, 5000);
+            JSONArray json = new JSONArray(jsonStr);
+            return json;
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private void getRoomInfo(JSONArray rooms) {
