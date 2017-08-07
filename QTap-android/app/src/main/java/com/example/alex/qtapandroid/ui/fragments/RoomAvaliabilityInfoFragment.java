@@ -72,12 +72,19 @@ public class RoomAvaliabilityInfoFragment extends Fragment implements IQLActionb
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-          mRecyclerView = (RecyclerView) myView.findViewById(R.id.avaliabilityRecyclerView);
+        mRecyclerView = (RecyclerView) myView.findViewById(R.id.avaliabilityRecyclerView);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setNestedScrollingEnabled(false);     // this is to allow for entire card scrolling
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
         mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new RecyclerViewAdapter(getDayAvaliability(cal));
+        mAdapter = new RecyclerViewAdapter(getDayAvaliability());
+        ((RecyclerViewAdapter) mAdapter).setOnItemClickListener(new RecyclerViewAdapter
+                .MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+            }
+        });
+
         mRecyclerView.setAdapter(mAdapter);
 
         return myView;
@@ -104,7 +111,7 @@ public class RoomAvaliabilityInfoFragment extends Fragment implements IQLActionb
         }
 
         protected void onPostExecute(Bitmap result) {
-            recyclerHeight =  mRecyclerView.getHeight();
+            recyclerHeight = mRecyclerView.getHeight();
             bmImage.setImageBitmap(result);
 //            mAdapter.notifyDataSetChanged();
             mRecyclerView.getLayoutParams().height = recyclerHeight;
@@ -121,7 +128,7 @@ public class RoomAvaliabilityInfoFragment extends Fragment implements IQLActionb
         TextView roomLoc = (TextView) view.findViewById(R.id.RoomLoc);
         roomLoc.setText("ILC Room " + mRoomName);
 
-        if (mAdapter.getItemCount() > 0){
+        if (mAdapter.getItemCount() > 0) {
             TextView dateAvaliability = (TextView) view.findViewById(R.id.RoomAvaliabilityDate);
             if (Calendar.getInstance() == cal)
                 dateAvaliability.setText("Current room bookings for today");
@@ -172,14 +179,10 @@ public class RoomAvaliabilityInfoFragment extends Fragment implements IQLActionb
         Util.setActionbarTitle(R.string.fragment_event_info, activity);
     }
 
-    public ArrayList<DataObject> getDayAvaliability(Calendar calendar) {
-
-
-        ILCRoomObjManager roomInf = new ILCRoomObjManager(this.getContext());
+    public ArrayList<DataObject> getDayAvaliability() {
 
         ArrayList<DataObject> result = new ArrayList<DataObject>();
-
-//        ArrayList<DatabaseRow> data = roomInf.getTable();
+        ArrayList<DataObject> list = new ArrayList<DataObject>();
 
         if (roomAvaliabiliy != null && roomAvaliabiliy.length() > 0) {
             try {
@@ -187,9 +190,15 @@ public class RoomAvaliabilityInfoFragment extends Fragment implements IQLActionb
 
                 for (int i = 0; i < arr.length(); i++) {
                     JSONObject roomInfo = arr.getJSONObject(i);
-                    result.add(new DataObject(roomInfo.getString("StartTime"), roomInfo.getString("EndTime")));
+                    String start = roomInfo.getString("StartTime");
+                    String end = roomInfo.getString("EndTime");
+
+                    start = start.substring(start.indexOf("T") + 1);
+                    end = end.substring(end.indexOf("T") + 1);
+                    list.add(new DataObject("From: " + start, "To: " + end));
                 }
-                return result;
+
+                return list;
             } catch (JSONException e) {
 
             }
