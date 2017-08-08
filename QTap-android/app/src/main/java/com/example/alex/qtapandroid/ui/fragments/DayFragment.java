@@ -26,12 +26,13 @@ import com.example.alex.qtapandroid.common.database.local.courses.OneClass;
 import com.example.alex.qtapandroid.common.database.local.courses.OneClassManager;
 import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
 import com.example.alex.qtapandroid.interfaces.IQLDrawerItem;
+import com.example.alex.qtapandroid.interfaces.IQLListFragmentWithChild;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDrawerItem {
+public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDrawerItem, IQLListFragmentWithChild {
 
     public static final String TAG_TITLE = "event_title";
     public static final String TAG_DATE = "date";
@@ -56,66 +57,9 @@ public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDr
         selectDrawer();
 
         mDateText = (TextView) mView.findViewById(R.id.date);
-
-        Bundle bundle = getArguments();
         mCalendar = Calendar.getInstance();
-        if (bundle != null && bundle.getString(MonthFragment.TAG_FROM_MONTH, "").equals(MonthFragment.TAG_FROM_MONTH)) {
-            mCalendar.set(Calendar.DAY_OF_MONTH, bundle.getInt(MonthFragment.TAG_DAY));
-            mCalendar.set(Calendar.MONTH, bundle.getInt(MonthFragment.TAG_MONTH));
-            mCalendar.set(Calendar.YEAR, bundle.getInt(MonthFragment.TAG_YEAR));
-        }
-
-        mRecyclerView = (RecyclerView) mView.findViewById(R.id.my_recycler_view);
-        mRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
-        mRecyclerView.setLayoutManager(layoutManager);
-        mAdapter = new RecyclerViewAdapter(getDayEventData(mCalendar));
-        mRecyclerView.setAdapter(mAdapter);
-
-        Button nextButton = (Button) mView.findViewById(R.id.next);
-        nextButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeDate(1);
-                mTotalDaysChange += 1;
-            }
-        });
-        Button prevButton = (Button) mView.findViewById(R.id.prev);
-        prevButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeDate(-1);
-                mTotalDaysChange += -1;
-            }
-        });
-
-        ((RecyclerViewAdapter) mAdapter).setOnItemClickListener(new RecyclerViewAdapter
-                .MyClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-                DataObject data = ((RecyclerViewAdapter) mAdapter).getItem(position);
-
-                CardView card = (CardView) mView.findViewById(R.id.card_view);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    card.setTransitionName("transistion_event_info" + position);
-                }
-
-                String cardName = card.getTransitionName();
-                EventInfoFragment nextFrag = new EventInfoFragment();
-
-                Bundle bundle = new Bundle();
-                bundle.putString(TAG_TITLE, data.getmText1());
-                bundle.putString(TAG_LOC, data.getmText2());
-                bundle.putString(TAG_DATE, mDateString);
-                nextFrag.setArguments(bundle);
-
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().addToBackStack(null)
-                        .replace(R.id.content_frame, nextFrag)
-                        .addSharedElement(card, cardName)
-                        .commit();
-            }
-        });
+        inflateListView();
+        onListItemChosen(null); //this is special case that doesn't need view - RecyclerView not ListView here
         return mView;
     }
 
@@ -285,5 +229,74 @@ public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDr
     @Override
     public void selectDrawer() {
         Util.setDrawerItemSelected(getActivity(), R.id.nav_day, true);
+    }
+
+    @Override
+    public void inflateListView() {
+        if (getArguments() != null && getArguments().getString(MonthFragment.TAG_FROM_MONTH, "").equals(MonthFragment.TAG_FROM_MONTH)) {
+            mCalendar.set(Calendar.DAY_OF_MONTH, getArguments().getInt(MonthFragment.TAG_DAY));
+            mCalendar.set(Calendar.MONTH, getArguments().getInt(MonthFragment.TAG_MONTH));
+            mCalendar.set(Calendar.YEAR, getArguments().getInt(MonthFragment.TAG_YEAR));
+        }
+
+        mRecyclerView = (RecyclerView) mView.findViewById(R.id.my_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getContext());
+        mRecyclerView.setLayoutManager(layoutManager);
+        mAdapter = new RecyclerViewAdapter(getDayEventData(mCalendar));
+        mRecyclerView.setAdapter(mAdapter);
+
+        Button nextButton = (Button) mView.findViewById(R.id.next);
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeDate(1);
+                mTotalDaysChange += 1;
+            }
+        });
+        Button prevButton = (Button) mView.findViewById(R.id.prev);
+        prevButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeDate(-1);
+                mTotalDaysChange += -1;
+            }
+        });
+    }
+
+    @Override
+    public void onListItemChosen(View view) {
+        ((RecyclerViewAdapter) mAdapter).setOnItemClickListener(new RecyclerViewAdapter
+                .MyClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                DataObject data = ((RecyclerViewAdapter) mAdapter).getItem(position);
+
+                CardView card = (CardView) mView.findViewById(R.id.card_view);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    card.setTransitionName("transistion_event_info" + position);
+                }
+
+                String cardName = card.getTransitionName();
+                EventInfoFragment nextFrag = new EventInfoFragment();
+
+                Bundle bundle = new Bundle();
+                bundle.putString(TAG_TITLE, data.getmText1());
+                bundle.putString(TAG_LOC, data.getmText2());
+                bundle.putString(TAG_DATE, mDateString);
+                nextFrag.setArguments(bundle);
+
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().addToBackStack(null)
+                        .replace(R.id.content_frame, nextFrag)
+                        .addSharedElement(card, cardName)
+                        .commit();
+            }
+        });
+    }
+
+    @Override
+    public Bundle setDataForOneItem(View view) {
+        return null; //RecyclerView special case, others ListFragment
     }
 }

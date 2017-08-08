@@ -17,6 +17,7 @@ import com.example.alex.qtapandroid.common.database.local.cafeterias.Cafeteria;
 import com.example.alex.qtapandroid.common.database.local.cafeterias.CafeteriaManager;
 import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
 import com.example.alex.qtapandroid.interfaces.IQLDrawerItem;
+import com.example.alex.qtapandroid.interfaces.IQLListFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,13 +26,40 @@ import java.util.HashMap;
  * Created by Carson on 18/07/2017.
  * Fragment that displays the cafeterias in the phone database.
  */
-public class CafeteriasFragment extends ListFragment implements IQLActionbarFragment, IQLDrawerItem {
+public class CafeteriasFragment extends ListFragment implements IQLActionbarFragment, IQLDrawerItem, IQLListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         setActionbarTitle();
         selectDrawer();
+        inflateListView();
+        return v;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        deselectDrawer();
+    }
+
+    @Override
+    public void setActionbarTitle() {
+        Util.setActionbarTitle(getString(R.string.fragment_cafeterias), (AppCompatActivity) getActivity());
+    }
+
+    @Override
+    public void deselectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_cafeterias, false);
+    }
+
+    @Override
+    public void selectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_cafeterias, true);
+    }
+
+    @Override
+    public void inflateListView() {
 
         ArrayList<HashMap<String, String>> cafList = new ArrayList<>();
         ArrayList<DatabaseRow> cafs = (new CafeteriaManager(getActivity().getApplicationContext())).getTable();
@@ -67,27 +95,5 @@ public class CafeteriasFragment extends ListFragment implements IQLActionbarFrag
                         R.id.week_lunch, R.id.fri_lunch, R.id.sat_lunch, R.id.sun_lunch, R.id.week_dinner, R.id.fri_dinner, R.id.sat_dinner,
                         R.id.sun_dinner});
         setListAdapter(adapter);
-        return v;
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        deselectDrawer();
-    }
-
-    @Override
-    public void setActionbarTitle() {
-        Util.setActionbarTitle(getString(R.string.fragment_cafeterias), (AppCompatActivity) getActivity());
-    }
-
-    @Override
-    public void deselectDrawer() {
-        Util.setDrawerItemSelected(getActivity(), R.id.nav_cafeterias, false);
-    }
-
-    @Override
-    public void selectDrawer() {
-        Util.setDrawerItemSelected(getActivity(), R.id.nav_cafeterias, true);
     }
 }

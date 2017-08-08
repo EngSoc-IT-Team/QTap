@@ -17,6 +17,7 @@ import com.example.alex.qtapandroid.common.database.local.contacts.engineering.E
 import com.example.alex.qtapandroid.common.database.local.contacts.engineering.EngineeringContactsManager;
 import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
 import com.example.alex.qtapandroid.interfaces.IQLDrawerItem;
+import com.example.alex.qtapandroid.interfaces.IQLListFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,29 +26,14 @@ import java.util.HashMap;
  * Created by Carson on 12/06/2017.
  * Activity that displays engineering contact information held in cloud database
  */
-public class EngContactsFragment extends ListFragment implements IQLActionbarFragment, IQLDrawerItem {
+public class EngContactsFragment extends ListFragment implements IQLActionbarFragment, IQLDrawerItem, IQLListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         setActionbarTitle();
         selectDrawer();
-
-        ArrayList<HashMap<String, String>> engContactsList = new ArrayList<>();
-        ArrayList<DatabaseRow> contacts = (new EngineeringContactsManager(getActivity().getApplicationContext())).getTable();
-        for (DatabaseRow row : contacts) {
-            EngineeringContact contact = (EngineeringContact) row;
-            HashMap<String, String> map = new HashMap<>();
-            map.put(EngineeringContact.COLUMN_NAME, contact.getName());
-            map.put(EngineeringContact.COLUMN_EMAIL, contact.getEmail());
-            map.put(EngineeringContact.COLUMN_POSITION, contact.getPosition());
-            map.put(EngineeringContact.COLUMN_DESCRIPTION, contact.getDescription());
-            engContactsList.add(map);
-        }
-        ListAdapter adapter = new SimpleAdapter(getActivity().getApplicationContext(), engContactsList,
-                R.layout.eng_contacts_list_item, new String[]{EngineeringContact.COLUMN_NAME, EngineeringContact.COLUMN_EMAIL,
-                EngineeringContact.COLUMN_POSITION, EngineeringContact.COLUMN_DESCRIPTION}, new int[]{R.id.name, R.id.email, R.id.position, R.id.description});
-        setListAdapter(adapter);
+        inflateListView();
         return v;
     }
 
@@ -70,5 +56,24 @@ public class EngContactsFragment extends ListFragment implements IQLActionbarFra
     @Override
     public void selectDrawer() {
         Util.setDrawerItemSelected(getActivity(), R.id.nav_tools, true);
+    }
+
+    @Override
+    public void inflateListView() {
+        ArrayList<HashMap<String, String>> engContactsList = new ArrayList<>();
+        ArrayList<DatabaseRow> contacts = (new EngineeringContactsManager(getActivity().getApplicationContext())).getTable();
+        for (DatabaseRow row : contacts) {
+            EngineeringContact contact = (EngineeringContact) row;
+            HashMap<String, String> map = new HashMap<>();
+            map.put(EngineeringContact.COLUMN_NAME, contact.getName());
+            map.put(EngineeringContact.COLUMN_EMAIL, contact.getEmail());
+            map.put(EngineeringContact.COLUMN_POSITION, contact.getPosition());
+            map.put(EngineeringContact.COLUMN_DESCRIPTION, contact.getDescription());
+            engContactsList.add(map);
+        }
+        ListAdapter adapter = new SimpleAdapter(getActivity().getApplicationContext(), engContactsList,
+                R.layout.eng_contacts_list_item, new String[]{EngineeringContact.COLUMN_NAME, EngineeringContact.COLUMN_EMAIL,
+                EngineeringContact.COLUMN_POSITION, EngineeringContact.COLUMN_DESCRIPTION}, new int[]{R.id.name, R.id.email, R.id.position, R.id.description});
+        setListAdapter(adapter);
     }
 }
