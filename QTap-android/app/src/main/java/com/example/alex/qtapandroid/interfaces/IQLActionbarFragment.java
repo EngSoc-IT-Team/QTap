@@ -1,18 +1,15 @@
 package com.example.alex.qtapandroid.interfaces;
 
-import android.support.v7.app.AppCompatActivity;
-
 /**
  * Created by Carson on 01/08/2017.
- * Interface that enforces a method to change the Action bar title.
+ * Interface that enforces a Fragment to change the Action bar title.
  */
 public interface IQLActionbarFragment {
 
     /**
-     * Method that will set the action bar title.
-     * Called from onViewCreated(), only needed in fragments.
-     *
-     * @param activity Activity that the fragment is attached to.
+     * This method should get the Activity the implementing Fragment is attached to and
+     * call Util.setActionbarTitle().
+     * Should be called from onCreateView() after the view has been inflated.
      */
-    void setActionbarTitle(AppCompatActivity activity);
+    void setActionbarTitle();
 }

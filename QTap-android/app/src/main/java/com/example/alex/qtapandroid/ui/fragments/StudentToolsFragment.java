@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
@@ -16,20 +15,22 @@ import android.view.ViewGroup;
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.Util;
 import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
+import com.example.alex.qtapandroid.interfaces.IQLDrawerItem;
 
 
 /**
  * Created by Carson on 02/12/2016.
  * Holds information pertinent to students
  */
-public class StudentToolsFragment extends Fragment implements IQLActionbarFragment {
-
-    private NavigationView mNavView;
+public class StudentToolsFragment extends Fragment implements IQLActionbarFragment, IQLDrawerItem {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_student_tools, container, false);
+        setActionbarTitle();
+        selectDrawer();
+
         final FragmentManager fm = getActivity().getSupportFragmentManager();
 
         CardView emergContactsCard = (CardView) v.findViewById(R.id.emerg_contacts_card);
@@ -84,22 +85,9 @@ public class StudentToolsFragment extends Fragment implements IQLActionbarFragme
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setActionbarTitle((AppCompatActivity) getActivity());
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
-        mNavView.getMenu().findItem(R.id.nav_tools).setChecked(false);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
-        mNavView.getMenu().findItem(R.id.nav_tools).setChecked(true);
+        deselectDrawer();
     }
 
     private void startBrowser(String url) {
@@ -111,7 +99,17 @@ public class StudentToolsFragment extends Fragment implements IQLActionbarFragme
     }
 
     @Override
-    public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(getString(R.string.fragment_student_tools), activity);
+    public void setActionbarTitle() {
+        Util.setActionbarTitle(getString(R.string.fragment_student_tools), (AppCompatActivity) getActivity());
+    }
+
+    @Override
+    public void deselectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_tools, false);
+    }
+
+    @Override
+    public void selectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_tools, true);
     }
 }

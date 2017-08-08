@@ -2,10 +2,8 @@ package com.example.alex.qtapandroid.ui.fragments;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,12 +25,13 @@ import com.example.alex.qtapandroid.common.card.elements.RecyclerViewAdapter;
 import com.example.alex.qtapandroid.common.database.local.courses.OneClass;
 import com.example.alex.qtapandroid.common.database.local.courses.OneClassManager;
 import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
+import com.example.alex.qtapandroid.interfaces.IQLDrawerItem;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class DayFragment extends Fragment implements IQLActionbarFragment {
+public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDrawerItem {
 
     public static final String TAG_TITLE = "event_title";
     public static final String TAG_DATE = "date";
@@ -44,7 +43,6 @@ public class DayFragment extends Fragment implements IQLActionbarFragment {
 
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter mAdapter;
-    private NavigationView mNavView;
     private View mView;
     private TextView mDateText;
     private String mDateString;
@@ -53,8 +51,10 @@ public class DayFragment extends Fragment implements IQLActionbarFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         mView = inflater.inflate(R.layout.fragment_day, container, false);
+        setActionbarTitle();
+        selectDrawer();
+
         mDateText = (TextView) mView.findViewById(R.id.date);
 
         Bundle bundle = getArguments();
@@ -120,12 +120,6 @@ public class DayFragment extends Fragment implements IQLActionbarFragment {
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setActionbarTitle((AppCompatActivity) getActivity());
-    }
-
-    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mInstances++;
@@ -139,7 +133,7 @@ public class DayFragment extends Fragment implements IQLActionbarFragment {
         } else {
             mArray.put(mInstances, 0);
         }
-        mNavView.getMenu().findItem(R.id.nav_day).setChecked(false);
+        deselectDrawer();
     }
 
     @Override
@@ -152,14 +146,7 @@ public class DayFragment extends Fragment implements IQLActionbarFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
         changeDate(mArray.get(mInstances, 0)); //account for day changed before moved fragments
-        mNavView.getMenu().findItem(R.id.nav_day).setChecked(true);
-    }
-
-    @Override
-    public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(getString(R.string.fragment_day), activity);
     }
 
     public void changeDate(int numChange) {
@@ -282,8 +269,21 @@ public class DayFragment extends Fragment implements IQLActionbarFragment {
         if (list.size() > 0) {
             result.add(new DataObject(list.get(0), time.get(0) + " at: " + loc.get(0) + " description: " + des.get(0)));
         }
-
-
         return result;
+    }
+
+    @Override
+    public void setActionbarTitle() {
+        Util.setActionbarTitle(getString(R.string.fragment_day), (AppCompatActivity) getActivity());
+    }
+
+    @Override
+    public void deselectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_day, false);
+    }
+
+    @Override
+    public void selectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_day, true);
     }
 }

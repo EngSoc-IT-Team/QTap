@@ -1,10 +1,7 @@
 package com.example.alex.qtapandroid.ui.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ListFragment;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,11 +12,11 @@ import android.widget.SimpleAdapter;
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.ConvertHourSpan;
 import com.example.alex.qtapandroid.common.Util;
-import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.local.DatabaseRow;
 import com.example.alex.qtapandroid.common.database.local.cafeterias.Cafeteria;
 import com.example.alex.qtapandroid.common.database.local.cafeterias.CafeteriaManager;
 import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
+import com.example.alex.qtapandroid.interfaces.IQLDrawerItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,12 +25,14 @@ import java.util.HashMap;
  * Created by Carson on 18/07/2017.
  * Fragment that displays the cafeterias in the phone database.
  */
-public class CafeteriasFragment extends ListFragment implements IQLActionbarFragment {
-    private NavigationView mNavView;
+public class CafeteriasFragment extends ListFragment implements IQLActionbarFragment, IQLDrawerItem {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
+        setActionbarTitle();
+        selectDrawer();
+
         ArrayList<HashMap<String, String>> cafList = new ArrayList<>();
         ArrayList<DatabaseRow> cafs = (new CafeteriaManager(getActivity().getApplicationContext())).getTable();
         for (DatabaseRow row : cafs) {
@@ -72,27 +71,23 @@ public class CafeteriasFragment extends ListFragment implements IQLActionbarFrag
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setActionbarTitle((AppCompatActivity) getActivity());
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
-        mNavView.getMenu().findItem(R.id.nav_cafeterias).setChecked(false);
+        deselectDrawer();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
-        mNavView.getMenu().findItem(R.id.nav_cafeterias).setChecked(true);
-        DatabaseAccessor.getDatabase().close();
+    public void setActionbarTitle() {
+        Util.setActionbarTitle(getString(R.string.fragment_cafeterias), (AppCompatActivity) getActivity());
     }
 
     @Override
-    public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(getString(R.string.fragment_cafeterias), activity);
+    public void deselectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_cafeterias, false);
+    }
+
+    @Override
+    public void selectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_cafeterias, true);
     }
 }

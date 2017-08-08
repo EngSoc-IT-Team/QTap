@@ -3,7 +3,6 @@ package com.example.alex.qtapandroid.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -18,6 +17,7 @@ import com.example.alex.qtapandroid.common.database.local.DatabaseRow;
 import com.example.alex.qtapandroid.common.database.local.contacts.emergency.EmergencyContact;
 import com.example.alex.qtapandroid.common.database.local.contacts.emergency.EmergencyContactsManager;
 import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
+import com.example.alex.qtapandroid.interfaces.IQLDrawerItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,13 +26,14 @@ import java.util.HashMap;
  * Created by Carson on 12/06/2017.
  * Fragment that displays emergency contact information held in cloud database
  */
-public class EmergContactsFragment extends ListFragment implements IQLActionbarFragment {
-
-    private NavigationView mNavView;
+public class EmergContactsFragment extends ListFragment implements IQLActionbarFragment, IQLDrawerItem {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
+        setActionbarTitle();
+        selectDrawer();
+
         ArrayList<HashMap<String, String>> emergContactsList = new ArrayList<>();
         ArrayList<DatabaseRow> contacts = (new EmergencyContactsManager(getActivity().getApplicationContext())).getTable();
         for (DatabaseRow row : contacts) {
@@ -53,24 +54,27 @@ public class EmergContactsFragment extends ListFragment implements IQLActionbarF
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setActionbarTitle((AppCompatActivity) getActivity());
+        setActionbarTitle();
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        mNavView.getMenu().findItem(R.id.nav_tools).setChecked(false);
+        deselectDrawer();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
-        mNavView.getMenu().findItem(R.id.nav_tools).setChecked(true);
+    public void setActionbarTitle() {
+        Util.setActionbarTitle(getString(R.string.fragment_emerg_contacts), (AppCompatActivity) getActivity());
     }
 
     @Override
-    public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(getString(R.string.fragment_emerg_contacts), activity);
+    public void deselectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_tools, false);
+    }
+
+    @Override
+    public void selectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_tools, true);
     }
 }

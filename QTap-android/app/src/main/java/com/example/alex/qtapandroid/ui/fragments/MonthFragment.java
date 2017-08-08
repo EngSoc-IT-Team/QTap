@@ -2,7 +2,6 @@ package com.example.alex.qtapandroid.ui.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -13,6 +12,7 @@ import android.widget.DatePicker;
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.Util;
 import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
+import com.example.alex.qtapandroid.interfaces.IQLDrawerItem;
 
 import java.util.Calendar;
 
@@ -23,7 +23,7 @@ import java.util.Calendar;
  * This is the first screen user sees upon logging in (unless first time login).
  * Attached to MainTabActivity only.
  */
-public class MonthFragment extends Fragment implements IQLActionbarFragment {
+public class MonthFragment extends Fragment implements IQLActionbarFragment, IQLDrawerItem {
 
     public static final String TAG_DAY = "day";
     public static final String TAG_MONTH = "month";
@@ -31,12 +31,14 @@ public class MonthFragment extends Fragment implements IQLActionbarFragment {
     public static final String TAG_FROM_MONTH = "from_month";
 
     private DatePicker mDatePicker;
-    private NavigationView mNavView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_month, container, false);
+        setActionbarTitle();
+        selectDrawer();
+
         mDatePicker = (DatePicker) v.findViewById(R.id.datePicker);
         return v;
     }
@@ -44,20 +46,12 @@ public class MonthFragment extends Fragment implements IQLActionbarFragment {
     @Override
     public void onPause() {
         super.onPause();
-        mNavView.getMenu().findItem(R.id.nav_month).setChecked(false);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
-        mNavView.getMenu().findItem(R.id.nav_month).setChecked(true);
+        deselectDrawer();
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setActionbarTitle((AppCompatActivity) getActivity());
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -85,7 +79,17 @@ public class MonthFragment extends Fragment implements IQLActionbarFragment {
     }
 
     @Override
-    public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(getString(R.string.fragment_month), activity);
+    public void setActionbarTitle() {
+        Util.setActionbarTitle(getString(R.string.fragment_month), (AppCompatActivity) getActivity());
+    }
+
+    @Override
+    public void deselectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_month, false);
+    }
+
+    @Override
+    public void selectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_month, true);
     }
 }

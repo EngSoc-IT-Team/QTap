@@ -5,7 +5,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +19,7 @@ import com.example.alex.qtapandroid.activities.MapsActivity;
 import com.example.alex.qtapandroid.common.Util;
 import com.example.alex.qtapandroid.common.maps.icsToBuilding;
 import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
+import com.example.alex.qtapandroid.interfaces.IQLDrawerItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -32,23 +32,33 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventInfoFragment extends Fragment implements IQLActionbarFragment {
+public class EventInfoFragment extends Fragment implements IQLActionbarFragment, IQLDrawerItem {
 
     private String mEventTitle, mEventLoc, mDate;
     private View myView;
-    private NavigationView mNavView;
     private MapView mMapView;
     private GoogleMap mGoogleMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        myView = inflater.inflate(R.layout.fragment_event_info, container, false);
+        setActionbarTitle();
+        selectDrawer();
+
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             mEventTitle = bundle.getString(DayFragment.TAG_TITLE);
             mEventLoc = bundle.getString(DayFragment.TAG_LOC);
             mDate = bundle.getString(DayFragment.TAG_DATE);
         }
-        myView = inflater.inflate(R.layout.fragment_event_info, container, false);
+
+        TextView eventDate = (TextView) myView.findViewById(R.id.EventDate);
+        eventDate.setText(mDate);
+        TextView eventLoc = (TextView) myView.findViewById(R.id.EventLoc);
+        eventLoc.setText(mEventLoc);
+        TextView eventName = (TextView) myView.findViewById(R.id.EventName);
+        eventName.setText(mEventTitle);
+
         mMapView = (MapView) myView.findViewById(R.id.event_map);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
@@ -100,25 +110,11 @@ public class EventInfoFragment extends Fragment implements IQLActionbarFragment 
     }
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        TextView eventDate = (TextView) view.findViewById(R.id.EventDate);
-        eventDate.setText(mDate);
-        TextView eventLoc = (TextView) view.findViewById(R.id.EventLoc);
-        eventLoc.setText(mEventLoc);
-        TextView eventName = (TextView) view.findViewById(R.id.EventName);
-        eventName.setText(mEventTitle);
-
-        setActionbarTitle((AppCompatActivity) getActivity());
-    }
-
-    @Override
     public void onResume() {
         super.onResume();
         mMapView.onResume();
         myView.setFocusableInTouchMode(true);
         myView.requestFocus();
-        mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
-        mNavView.getMenu().findItem(R.id.nav_day).setChecked(true);
     }
 
     @Override
@@ -131,7 +127,7 @@ public class EventInfoFragment extends Fragment implements IQLActionbarFragment 
     public void onPause() {
         super.onPause();
         mMapView.onPause();
-        mNavView.getMenu().findItem(R.id.nav_day).setChecked(false);
+        deselectDrawer();
     }
 
     @Override
@@ -150,7 +146,17 @@ public class EventInfoFragment extends Fragment implements IQLActionbarFragment 
     }
 
     @Override
-    public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(getString(R.string.fragment_event_info), activity);
+    public void setActionbarTitle() {
+        Util.setActionbarTitle(getString(R.string.fragment_event_info), (AppCompatActivity) getActivity());
+    }
+
+    @Override
+    public void deselectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_day, false);
+    }
+
+    @Override
+    public void selectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_day, true);
     }
 }

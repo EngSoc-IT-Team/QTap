@@ -5,7 +5,6 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +19,7 @@ import com.example.alex.qtapandroid.activities.MapsActivity;
 import com.example.alex.qtapandroid.common.Util;
 import com.example.alex.qtapandroid.common.database.local.buildings.Building;
 import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
+import com.example.alex.qtapandroid.interfaces.IQLDrawerItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -36,10 +36,9 @@ import java.util.List;
  * Created by Carson on 25/07/2017.
  * Fragment that shows details of one building from the list view
  */
-public class OneBuildingFragment extends Fragment implements IQLActionbarFragment {
+public class OneBuildingFragment extends Fragment implements IQLActionbarFragment, IQLDrawerItem {
 
     private Bundle mArgs;
-    private NavigationView mNavView;
     private View mView;
     private GoogleMap mGoogleMap;
 
@@ -48,6 +47,8 @@ public class OneBuildingFragment extends Fragment implements IQLActionbarFragmen
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_one_building, container, false);
         mArgs = getArguments();
+        setActionbarTitle();
+        selectDrawer();
 
         setMapView(savedInstanceState);
         populateData();
@@ -106,22 +107,9 @@ public class OneBuildingFragment extends Fragment implements IQLActionbarFragmen
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setActionbarTitle((AppCompatActivity) getActivity());
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
-        mNavView.getMenu().findItem(R.id.nav_buildings).setChecked(false);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mNavView = (NavigationView) (getActivity()).findViewById(R.id.drawer_layout).findViewById(R.id.nav_view);
-        mNavView.getMenu().findItem(R.id.nav_buildings).setChecked(true);
+        deselectDrawer();
     }
 
     private void requestPermissions() {
@@ -151,7 +139,17 @@ public class OneBuildingFragment extends Fragment implements IQLActionbarFragmen
     }
 
     @Override
-    public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(mArgs.getString(Building.COLUMN_NAME), activity);
+    public void setActionbarTitle() {
+        Util.setActionbarTitle(mArgs.getString(Building.COLUMN_NAME), (AppCompatActivity) getActivity());
+    }
+
+    @Override
+    public void deselectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_buildings, false);
+    }
+
+    @Override
+    public void selectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_buildings, true);
     }
 }

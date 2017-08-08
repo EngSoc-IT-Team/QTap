@@ -1,8 +1,6 @@
 package com.example.alex.qtapandroid.ui.fragments;
 
-import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -22,7 +20,7 @@ import com.example.alex.qtapandroid.common.database.local.buildings.BuildingMana
 import com.example.alex.qtapandroid.common.database.local.food.Food;
 import com.example.alex.qtapandroid.common.database.local.food.FoodManager;
 import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
-import com.example.alex.qtapandroid.interfaces.IQLDrawerFragmentLayout;
+import com.example.alex.qtapandroid.interfaces.IQLDrawerItem;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +29,7 @@ import java.util.HashMap;
  * Created by Carson on 26/06/2017.
  * Fragment that displays the buildings in the phone/cloud database.
  */
-public class BuildingsFragment extends ListFragment implements IQLActionbarFragment, IQLDrawerFragmentLayout {
+public class BuildingsFragment extends ListFragment implements IQLActionbarFragment, IQLDrawerItem {
 
     public static final String TAG_FOOD_NAMES = "FOOD_NAMES";
 
@@ -40,6 +38,9 @@ public class BuildingsFragment extends ListFragment implements IQLActionbarFragm
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
+        setActionbarTitle();
+        selectDrawer();
+
         mBuildingManager = new BuildingManager(getActivity().getApplicationContext());
         ArrayList<HashMap<String, String>> buildingsList = new ArrayList<>();
 
@@ -101,35 +102,23 @@ public class BuildingsFragment extends ListFragment implements IQLActionbarFragm
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setActionbarTitle((AppCompatActivity) getActivity());
-        selectDrawer(getActivity(), R.id.nav_buildings);
-    }
-
-    @Override
     public void onPause() {
         super.onPause();
-        deselectDrawer(getActivity(), R.id.nav_buildings);
+        deselectDrawer();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void setActionbarTitle() {
+        Util.setActionbarTitle(getString(R.string.fragment_buildings), (AppCompatActivity) getActivity());
     }
 
     @Override
-    public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(getString(R.string.fragment_buildings), activity);
+    public void deselectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_buildings, false);
     }
 
     @Override
-    public void deselectDrawer(Activity activity, int itemId) {
-        Util.setDrawerItemSelected(activity, itemId, false);
-    }
-
-    @Override
-    public void selectDrawer(Activity activity, int itemId) {
-        Util.setDrawerItemSelected(activity, itemId, true);
+    public void selectDrawer() {
+        Util.setDrawerItemSelected(getActivity(), R.id.nav_buildings, true);
     }
 }
