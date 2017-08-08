@@ -120,12 +120,12 @@ public class FoodFragment extends ListFragment implements IQLActionbarFragment, 
         String buildingName = ((TextView) view.findViewById(R.id.building)).getText().toString();
 
         //deal with special case food names - common short forms for long names
-        switch (building.getName()) {
+        switch (food.getName()) {
             case "Common Ground Coffeehouse":
-                args.putString(Building.COLUMN_NAME, "CoGro");
+                args.putString(Food.COLUMN_NAME, "CoGro");
                 break;
             case "The Canadian Grilling Company":
-                args.putString(Building.COLUMN_NAME, "CGC");
+                args.putString(Food.COLUMN_NAME, "CGC");
                 break;
             default:
                 args.putString(Food.COLUMN_NAME, food.getName());
