@@ -86,6 +86,6 @@ public class MonthFragment extends Fragment implements IQLActionbarFragment {
 
     @Override
     public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(R.string.fragment_month, activity);
+        Util.setActionbarTitle(getString(R.string.fragment_month), activity);
     }
 }

@@ -162,6 +162,6 @@ public class OneFoodFragment extends Fragment implements IQLActionbarFragment {
 
     @Override
     public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(R.string.fragment_food, activity);
+        Util.setActionbarTitle(mArgs.getString(Food.COLUMN_NAME), activity);
     }
 }

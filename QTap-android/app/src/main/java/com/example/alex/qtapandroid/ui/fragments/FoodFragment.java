@@ -136,6 +136,6 @@ public class FoodFragment extends ListFragment implements IQLActionbarFragment {
 
     @Override
     public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(R.string.fragment_food, activity);
+        Util.setActionbarTitle(getString(R.string.fragment_food), activity);
     }
 }

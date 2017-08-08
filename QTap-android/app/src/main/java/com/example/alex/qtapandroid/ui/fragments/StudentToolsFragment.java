@@ -112,6 +112,6 @@ public class StudentToolsFragment extends Fragment implements IQLActionbarFragme
 
     @Override
     public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(R.string.fragment_student_tools, activity);
+        Util.setActionbarTitle(getString(R.string.fragment_student_tools), activity);
     }
 }

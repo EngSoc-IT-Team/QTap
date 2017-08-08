@@ -159,7 +159,7 @@ public class DayFragment extends Fragment implements IQLActionbarFragment {
 
     @Override
     public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(R.string.fragment_day, activity);
+        Util.setActionbarTitle(getString(R.string.fragment_day), activity);
     }
 
     public void changeDate(int numChange) {

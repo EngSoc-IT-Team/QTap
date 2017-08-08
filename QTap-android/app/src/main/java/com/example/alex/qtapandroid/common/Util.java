@@ -12,10 +12,10 @@ import com.example.alex.qtapandroid.R;
  * Class for common methods. All are short and static.
  */
 public class Util {
-    public static void setActionbarTitle(int titleId, AppCompatActivity activity) {
+    public static void setActionbarTitle(String title, AppCompatActivity activity) {
         ActionBar actionbar = activity.getSupportActionBar();
         if (actionbar != null) {
-            actionbar.setTitle(activity.getString(titleId));
+            actionbar.setTitle(title);
         }
     }
 

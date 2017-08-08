@@ -120,7 +120,7 @@ public class BuildingsFragment extends ListFragment implements IQLActionbarFragm
 
     @Override
     public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(R.string.fragment_buildings, activity);
+        Util.setActionbarTitle(getString(R.string.fragment_buildings), activity);
     }
 
     @Override

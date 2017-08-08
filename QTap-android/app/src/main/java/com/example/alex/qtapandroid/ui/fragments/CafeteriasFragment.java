@@ -28,7 +28,7 @@ import java.util.HashMap;
  * Created by Carson on 18/07/2017.
  * Fragment that displays the cafeterias in the phone database.
  */
-public class CafeteriasFragment extends ListFragment implements IQLActionbarFragment{
+public class CafeteriasFragment extends ListFragment implements IQLActionbarFragment {
     private NavigationView mNavView;
 
     @Override
@@ -74,7 +74,7 @@ public class CafeteriasFragment extends ListFragment implements IQLActionbarFrag
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setActionbarTitle((AppCompatActivity)getActivity());
+        setActionbarTitle((AppCompatActivity) getActivity());
     }
 
     @Override
@@ -93,6 +93,6 @@ public class CafeteriasFragment extends ListFragment implements IQLActionbarFrag
 
     @Override
     public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(R.string.fragment_cafeterias, activity);
+        Util.setActionbarTitle(getString(R.string.fragment_cafeterias), activity);
     }
 }

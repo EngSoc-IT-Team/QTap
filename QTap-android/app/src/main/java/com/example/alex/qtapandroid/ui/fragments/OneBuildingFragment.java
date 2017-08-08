@@ -152,6 +152,6 @@ public class OneBuildingFragment extends Fragment implements IQLActionbarFragmen
 
     @Override
     public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(R.string.fragment_buildings, activity);
+        Util.setActionbarTitle(mArgs.getString(Building.COLUMN_NAME), activity);
     }
 }

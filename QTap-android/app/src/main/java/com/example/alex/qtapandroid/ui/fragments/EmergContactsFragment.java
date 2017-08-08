@@ -71,6 +71,6 @@ public class EmergContactsFragment extends ListFragment implements IQLActionbarF
 
     @Override
     public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(R.string.fragment_emerg_contacts, activity);
+        Util.setActionbarTitle(getString(R.string.fragment_emerg_contacts), activity);
     }
 }

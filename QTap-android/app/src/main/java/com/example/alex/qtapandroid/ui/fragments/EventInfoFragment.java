@@ -151,6 +151,6 @@ public class EventInfoFragment extends Fragment implements IQLActionbarFragment 
 
     @Override
     public void setActionbarTitle(AppCompatActivity activity) {
-        Util.setActionbarTitle(R.string.fragment_event_info, activity);
+        Util.setActionbarTitle(getString(R.string.fragment_event_info), activity);
     }
 }
