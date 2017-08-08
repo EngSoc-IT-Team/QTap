@@ -154,6 +154,7 @@ public class LoginActivity extends AppCompatActivity {
     private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
         private final String mNetid;
+        private UserManager mUserManager;
 
         UserLoginTask(String email) {
             //email right now is a url with netid inside, parsing for the netid
@@ -171,42 +172,27 @@ public class LoginActivity extends AppCompatActivity {
             mAuthTask = null;
             showProgress(true);
 
-            // Get the default SharedPreferences context
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-
-            UserManager userManager = new UserManager(getApplicationContext());
-            if (userManager.getTable().isEmpty()) {
-                //add user to database
-                SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa", Locale.CANADA);
-                String formattedDate = df.format(Calendar.getInstance().getTime());
-                User newUser = new User(mNetid, "", "", formattedDate, mIcsUrl);
-                userManager = new UserManager(LoginActivity.this);
-                userManager.insertRow(newUser);
-
-                (new GetCloudDb(LoginActivity.this)).execute();
-                SharedPreferences.Editor editor = preferences.edit();
-                editor.putString("UserEmail", mNetid + "@queensu.ca");
-                editor.apply();
-
-                // DO LOGIC FOR GENERATING ICS FILE HERE....
-                if (!mIcsUrl.equals("") && mIcsUrl.contains(".ics")) {
-                    editor.putString("mIcsUrl", mIcsUrl);   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
-                    editor.apply();
-                } else {
-                    editor.putString("mIcsUrl", "Error, failed to download calendar!");   // Create a string called "mIcsUrl" to point to the ICS URL on SOLUS
-                    editor.apply();
-                }
-                final DownloadICSFile downloadICS = new DownloadICSFile(LoginActivity.this);
-                final ParseICS parser = new ParseICS(LoginActivity.this);
-                String url = preferences.getString("mIcsUrl", "noURL");
-                if (!url.equals("noURL")) {
-                     downloadICS.execute(preferences.getString("mIcsUrl", "noURL"));
-                   // url = "http://my.queensu.ca/software-centre";//enterpriseair.tk/temp/testCal.ics"; // Add this line for debugging purposes - TODO: Remove this bypass
-                   // downloadICS.execute(url);
-                    parser.parseICSData();
-                }
+            mUserManager = new UserManager(getApplicationContext());
+            if (mUserManager.getTable().isEmpty()) {
+                addUserSession();
+                (new GetCloudDb(LoginActivity.this)).execute(); //get cloud db into phone db
+                getIcsFile();
             }
             startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
+        }
+
+        private void addUserSession() {
+            SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa", Locale.CANADA);
+            String formattedDate = df.format(Calendar.getInstance().getTime());
+            User newUser = new User(mNetid, "", "", formattedDate, mIcsUrl);
+            mUserManager = new UserManager(LoginActivity.this);
+            mUserManager.insertRow(newUser);
+        }
+
+        private void getIcsFile() {
+            if (mIcsUrl != null && mIcsUrl.contains(".ics")) {
+                new DownloadICSFile(LoginActivity.this).execute(mIcsUrl);
+            }
         }
     }
 }

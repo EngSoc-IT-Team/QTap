@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.alex.qtapandroid.activities.LoginActivity;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -83,6 +85,8 @@ public class DownloadICSFile extends AsyncTask<String, Integer, String> {
             if (connection != null)
                 connection.disconnect();
         }
+        final ParseICS parser = new ParseICS(mContext);
+        parser.parseICSData();
         return null;
     }
 
