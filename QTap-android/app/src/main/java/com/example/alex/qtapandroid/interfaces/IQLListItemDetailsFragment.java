@@ -1,7 +1,5 @@
 package com.example.alex.qtapandroid.interfaces;
 
-import android.view.View;
-
 /**
  * Created by Carson on 28/07/2017.
  * Interface for fragments that show the details
@@ -10,9 +8,7 @@ import android.view.View;
 public interface IQLListItemDetailsFragment {
     /**
      * Method that will put phone database table information into the views of a list fragment.
-     * Called from onCreateView().
-     *
-     * @param view The view that holds the TextViews (or whatever else) that hold the data.
+     * Called from onCreateView() after the view has been inflated.
      */
-    void addDataToViews(View view);
+    void addDataToViews();
 }

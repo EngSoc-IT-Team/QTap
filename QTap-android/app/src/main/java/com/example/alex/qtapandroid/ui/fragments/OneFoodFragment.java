@@ -22,6 +22,7 @@ import com.example.alex.qtapandroid.common.database.local.buildings.Building;
 import com.example.alex.qtapandroid.common.database.local.food.Food;
 import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
 import com.example.alex.qtapandroid.interfaces.IQLDrawerItem;
+import com.example.alex.qtapandroid.interfaces.IQLListItemDetailsFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -38,7 +39,7 @@ import java.util.List;
  * Created by Carson on 23/07/2017.
  * Fragment that holds information for one food establishment.
  */
-public class OneFoodFragment extends Fragment implements IQLActionbarFragment, IQLDrawerItem {
+public class OneFoodFragment extends Fragment implements IQLActionbarFragment, IQLDrawerItem, IQLListItemDetailsFragment {
 
     private Bundle mArgs;
     private View mView;
@@ -53,33 +54,8 @@ public class OneFoodFragment extends Fragment implements IQLActionbarFragment, I
         selectDrawer();
 
         setMapView(savedInstanceState);
-        populateViews();
+        addDataToViews();
         return mView;
-    }
-
-    private void populateViews() {
-        ((TextView) mView.findViewById(R.id.mon_hours)).setText(
-                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_MON_START_HOURS), mArgs.getDouble(Food.COLUMN_MON_STOP_HOURS)));
-        ((TextView) mView.findViewById(R.id.tue_hours)).setText(
-                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_TUE_START_HOURS), mArgs.getDouble(Food.COLUMN_TUE_STOP_HOURS)));
-        ((TextView) mView.findViewById(R.id.wed_hours)).setText(
-                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_WED_START_HOURS), mArgs.getDouble(Food.COLUMN_WED_STOP_HOURS)));
-        ((TextView) mView.findViewById(R.id.thur_hours)).setText(
-                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_THUR_START_HOURS), mArgs.getDouble(Food.COLUMN_THUR_STOP_HOURS)));
-        ((TextView) mView.findViewById(R.id.fri_hours)).setText(
-                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_FRI_START_HOURS), mArgs.getDouble(Food.COLUMN_FRI_STOP_HOURS)));
-        ((TextView) mView.findViewById(R.id.sat_hours)).setText(
-                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_SAT_START_HOURS), mArgs.getDouble(Food.COLUMN_SAT_STOP_HOURS)));
-        ((TextView) mView.findViewById(R.id.sun_hours)).setText(
-                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_SUN_START_HOURS), mArgs.getDouble(Food.COLUMN_SUN_STOP_HOURS)));
-
-        ((TextView) mView.findViewById(R.id.takes_card_short)).setText(mArgs.getBoolean(Food.COLUMN_CARD) ? "Yes" : "No");
-        ((TextView) mView.findViewById(R.id.takes_meal_short)).setText(mArgs.getBoolean(Food.COLUMN_MEAL_PLAN) ? "Yes" : "No");
-
-        if (mArgs.getString(Food.COLUMN_INFORMATION) != null && !mArgs.getString(Food.COLUMN_INFORMATION).equals("")) {
-            mView.findViewById(R.id.info).setVisibility(View.VISIBLE);
-            ((TextView) mView.findViewById(R.id.info)).setText(mArgs.getString(Food.COLUMN_INFORMATION));
-        }
     }
 
     private void setMapView(Bundle savedInstanceState) {
@@ -160,5 +136,31 @@ public class OneFoodFragment extends Fragment implements IQLActionbarFragment, I
     @Override
     public void selectDrawer() {
         Util.setDrawerItemSelected(getActivity(), R.id.nav_food, true);
+    }
+
+    @Override
+    public void addDataToViews() {
+        ((TextView) mView.findViewById(R.id.mon_hours)).setText(
+                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_MON_START_HOURS), mArgs.getDouble(Food.COLUMN_MON_STOP_HOURS)));
+        ((TextView) mView.findViewById(R.id.tue_hours)).setText(
+                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_TUE_START_HOURS), mArgs.getDouble(Food.COLUMN_TUE_STOP_HOURS)));
+        ((TextView) mView.findViewById(R.id.wed_hours)).setText(
+                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_WED_START_HOURS), mArgs.getDouble(Food.COLUMN_WED_STOP_HOURS)));
+        ((TextView) mView.findViewById(R.id.thur_hours)).setText(
+                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_THUR_START_HOURS), mArgs.getDouble(Food.COLUMN_THUR_STOP_HOURS)));
+        ((TextView) mView.findViewById(R.id.fri_hours)).setText(
+                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_FRI_START_HOURS), mArgs.getDouble(Food.COLUMN_FRI_STOP_HOURS)));
+        ((TextView) mView.findViewById(R.id.sat_hours)).setText(
+                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_SAT_START_HOURS), mArgs.getDouble(Food.COLUMN_SAT_STOP_HOURS)));
+        ((TextView) mView.findViewById(R.id.sun_hours)).setText(
+                ConvertHourSpan.getHours(mArgs.getDouble(Food.COLUMN_SUN_START_HOURS), mArgs.getDouble(Food.COLUMN_SUN_STOP_HOURS)));
+
+        ((TextView) mView.findViewById(R.id.takes_card_short)).setText(mArgs.getBoolean(Food.COLUMN_CARD) ? "Yes" : "No");
+        ((TextView) mView.findViewById(R.id.takes_meal_short)).setText(mArgs.getBoolean(Food.COLUMN_MEAL_PLAN) ? "Yes" : "No");
+
+        if (mArgs.getString(Food.COLUMN_INFORMATION) != null && !mArgs.getString(Food.COLUMN_INFORMATION).equals("")) {
+            mView.findViewById(R.id.info).setVisibility(View.VISIBLE);
+            ((TextView) mView.findViewById(R.id.info)).setText(mArgs.getString(Food.COLUMN_INFORMATION));
+        }
     }
 }

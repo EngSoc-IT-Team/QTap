@@ -20,6 +20,7 @@ import com.example.alex.qtapandroid.common.Util;
 import com.example.alex.qtapandroid.common.database.local.buildings.Building;
 import com.example.alex.qtapandroid.interfaces.IQLActionbarFragment;
 import com.example.alex.qtapandroid.interfaces.IQLDrawerItem;
+import com.example.alex.qtapandroid.interfaces.IQLListItemDetailsFragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -36,7 +37,7 @@ import java.util.List;
  * Created by Carson on 25/07/2017.
  * Fragment that shows details of one building from the list view
  */
-public class OneBuildingFragment extends Fragment implements IQLActionbarFragment, IQLDrawerItem {
+public class OneBuildingFragment extends Fragment implements IQLActionbarFragment, IQLDrawerItem, IQLListItemDetailsFragment {
 
     private Bundle mArgs;
     private View mView;
@@ -51,30 +52,9 @@ public class OneBuildingFragment extends Fragment implements IQLActionbarFragmen
         selectDrawer();
 
         setMapView(savedInstanceState);
-        populateData();
+        addDataToViews();
         return mView;
     }
-
-    private void populateData() {
-        ArrayList<String> foodNames = mArgs.getStringArrayList(BuildingsFragment.TAG_FOOD_NAMES);
-        String foods = "";
-        if (foodNames != null && !foodNames.isEmpty()) {
-            for (String oneFood : foodNames) {
-                foods += oneFood + "\n";
-            }
-            foods = foods.trim();//remove last \n
-        } else {
-            mView.findViewById(R.id.food_title).setVisibility(View.GONE);
-            mView.findViewById(R.id.food).setVisibility(View.GONE);
-
-        }
-        ((TextView) mView.findViewById(R.id.food)).setText(foods);
-
-        ((TextView) mView.findViewById(R.id.purpose)).setText(mArgs.getString(Building.COLUMN_PURPOSE));
-        ((TextView) mView.findViewById(R.id.atm)).setText(mArgs.getBoolean(Building.COLUMN_ATM) ? "Yes" : "No");
-        ((TextView) mView.findViewById(R.id.book_rooms)).setText(mArgs.getBoolean(Building.COLUMN_BOOK_ROOMS) ? "Yes" : "No");
-    }
-
     private void setMapView(Bundle savedInstanceState) {
         MapView mapView = (MapView) mView.findViewById(R.id.map);
         mapView.onCreate(savedInstanceState);
@@ -151,5 +131,26 @@ public class OneBuildingFragment extends Fragment implements IQLActionbarFragmen
     @Override
     public void selectDrawer() {
         Util.setDrawerItemSelected(getActivity(), R.id.nav_buildings, true);
+    }
+
+    @Override
+    public void addDataToViews() {
+        ArrayList<String> foodNames = mArgs.getStringArrayList(BuildingsFragment.TAG_FOOD_NAMES);
+        String foods = "";
+        if (foodNames != null && !foodNames.isEmpty()) {
+            for (String oneFood : foodNames) {
+                foods += oneFood + "\n";
+            }
+            foods = foods.trim();//remove last \n
+        } else {
+            mView.findViewById(R.id.food_title).setVisibility(View.GONE);
+            mView.findViewById(R.id.food).setVisibility(View.GONE);
+
+        }
+        ((TextView) mView.findViewById(R.id.food)).setText(foods);
+
+        ((TextView) mView.findViewById(R.id.purpose)).setText(mArgs.getString(Building.COLUMN_PURPOSE));
+        ((TextView) mView.findViewById(R.id.atm)).setText(mArgs.getBoolean(Building.COLUMN_ATM) ? "Yes" : "No");
+        ((TextView) mView.findViewById(R.id.book_rooms)).setText(mArgs.getBoolean(Building.COLUMN_BOOK_ROOMS) ? "Yes" : "No");
     }
 }
