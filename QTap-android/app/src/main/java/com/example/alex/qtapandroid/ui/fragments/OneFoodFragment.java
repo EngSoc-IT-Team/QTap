@@ -76,7 +76,6 @@ public class OneFoodFragment extends Fragment implements IQLActionbarFragment {
         ((TextView) mView.findViewById(R.id.takes_meal_short)).setText(mArgs.getBoolean(Food.COLUMN_MEAL_PLAN) ? "Yes" : "No");
 
         if (mArgs.getString(Food.COLUMN_INFORMATION) != null && !mArgs.getString(Food.COLUMN_INFORMATION).equals("")) {
-            mView.findViewById(R.id.info_title).setVisibility(View.VISIBLE);
             mView.findViewById(R.id.info).setVisibility(View.VISIBLE);
             ((TextView) mView.findViewById(R.id.info)).setText(mArgs.getString(Food.COLUMN_INFORMATION));
         }
