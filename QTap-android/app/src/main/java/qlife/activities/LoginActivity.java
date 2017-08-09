@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Parses the html code to look for the ics file. Needed because
      * there are multiple web pages sent through this activity when logging in.
-     * @param html Sring representation of the html code of a webpage.
+     * @param html String representation of the html code of a webpage.
      */
     public void tryProcessHtml(String html) {
         if (html != null && html.contains("Class Schedule")) {
