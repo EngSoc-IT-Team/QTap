@@ -1,12 +1,10 @@
 package com.example.alex.qtapandroid.interfaces;
 
-import android.view.Menu;
-
 /**
  * Created by Carson on 08/08/2017.
  * Interface that defines an Activity accessed from the options menu.
  */
-public interface IQLOptionsMenuActivity {
+public interface IQLOptionsMenuActivity extends IQLActivityHasOptionsMenu{
     /**
      * Method that sets the back button in the action bar.
      *
@@ -23,14 +21,4 @@ public interface IQLOptionsMenuActivity {
      * Should be called from onOptionsItemClick().
      */
     void handleOptionsClick(int itemId);
-
-    /**
-     * Method that handles adding items to the options menu.
-     * @param menu Menu to be inflated.
-     *
-     * Should be called from onCreateOptionsMenu().
-     *
-     * Should call Util.inflateOptionsMenu().
-     */
-    void inflateOptionsMenu(Menu menu);
 }

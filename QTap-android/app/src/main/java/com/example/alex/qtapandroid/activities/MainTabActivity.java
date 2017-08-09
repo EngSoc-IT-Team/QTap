@@ -18,9 +18,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.Util;
 import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.local.users.User;
 import com.example.alex.qtapandroid.common.database.local.users.UserManager;
+import com.example.alex.qtapandroid.interfaces.IQLActivityHasOptionsMenu;
 import com.example.alex.qtapandroid.ui.fragments.BuildingsFragment;
 import com.example.alex.qtapandroid.ui.fragments.CafeteriasFragment;
 import com.example.alex.qtapandroid.ui.fragments.DayFragment;
@@ -32,7 +34,7 @@ import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
  * activity holding most of the app.
  * contains the drawer that navigates user to fragments with map, schedule, info etc.
  */
-public class MainTabActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainTabActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IQLActivityHasOptionsMenu {
 
     private boolean mToActivity;
 
@@ -75,8 +77,7 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main_tab, menu);
+        inflateOptionsMenu(menu);
         return true;
     }
 
@@ -159,5 +160,10 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
 
     public boolean isToActivity() {
         return mToActivity;
+    }
+
+    @Override
+    public void inflateOptionsMenu(Menu menu) {
+        Util.inflateOptionsMenu(R.menu.main_tab, menu, getMenuInflater());
     }
 }
