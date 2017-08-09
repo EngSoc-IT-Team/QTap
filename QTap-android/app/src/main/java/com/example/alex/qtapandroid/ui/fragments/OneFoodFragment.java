@@ -53,12 +53,17 @@ public class OneFoodFragment extends Fragment implements IQLActionbarFragment, I
         mView = inflater.inflate(R.layout.fragment_one_food, container, false);
         mArgs = getArguments();
         setActionbarTitle();
-        selectDrawer();
 
         mSavedInstanceState = savedInstanceState;
         setMapView();
         addDataToViews();
         return mView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        selectDrawer();
     }
 
     @Override

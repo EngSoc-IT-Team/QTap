@@ -42,7 +42,6 @@ public class FoodFragment extends ListFragment implements IQLActionbarFragment, 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         setActionbarTitle();
-        selectDrawer();
 
         mFoodManager = new FoodManager(getActivity().getApplicationContext());
         inflateListView();
@@ -52,6 +51,12 @@ public class FoodFragment extends ListFragment implements IQLActionbarFragment, 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         onListItemChosen(v);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        selectDrawer();
     }
 
     @Override

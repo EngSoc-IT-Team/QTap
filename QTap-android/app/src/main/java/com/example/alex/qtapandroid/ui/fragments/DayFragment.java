@@ -54,7 +54,6 @@ public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDr
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_day, container, false);
         setActionbarTitle();
-        selectDrawer();
 
         mDateText = (TextView) mView.findViewById(R.id.date);
         mCalendar = Calendar.getInstance();
@@ -90,6 +89,7 @@ public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDr
     @Override
     public void onResume() {
         super.onResume();
+        selectDrawer();
         changeDate(mArray.get(mInstances, 0)); //account for day changed before moved fragments
     }
 

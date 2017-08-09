@@ -43,7 +43,6 @@ public class EventInfoFragment extends Fragment implements IQLActionbarFragment,
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         myView = inflater.inflate(R.layout.fragment_event_info, container, false);
         setActionbarTitle();
-        selectDrawer();
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -115,6 +114,7 @@ public class EventInfoFragment extends Fragment implements IQLActionbarFragment,
         mMapView.onResume();
         myView.setFocusableInTouchMode(true);
         myView.requestFocus();
+        selectDrawer();
     }
 
     @Override

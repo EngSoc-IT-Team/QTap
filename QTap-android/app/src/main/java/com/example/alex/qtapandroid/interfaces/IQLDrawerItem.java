@@ -14,7 +14,7 @@ public interface IQLDrawerItem {
 
     /**
      * Method that will select an item in the drawer layout.
-     * Should be called from onCreateView() after the view is inflated.
+     * Should be called from onResume().
      */
     void selectDrawer();
 }

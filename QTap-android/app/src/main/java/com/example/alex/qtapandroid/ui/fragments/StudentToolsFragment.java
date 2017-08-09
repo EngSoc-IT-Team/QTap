@@ -29,7 +29,6 @@ public class StudentToolsFragment extends Fragment implements IQLActionbarFragme
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_student_tools, container, false);
         setActionbarTitle();
-        selectDrawer();
 
         final FragmentManager fm = getActivity().getSupportFragmentManager();
 
@@ -82,6 +81,12 @@ public class StudentToolsFragment extends Fragment implements IQLActionbarFragme
             }
         });
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        selectDrawer();
     }
 
     @Override

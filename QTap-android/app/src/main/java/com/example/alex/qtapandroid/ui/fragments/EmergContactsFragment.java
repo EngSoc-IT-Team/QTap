@@ -33,15 +33,14 @@ public class EmergContactsFragment extends ListFragment implements IQLActionbarF
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container, false);
         setActionbarTitle();
-        selectDrawer();
         inflateListView();
         return v;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        setActionbarTitle();
+    public void onResume() {
+        super.onResume();
+        selectDrawer();
     }
 
     @Override

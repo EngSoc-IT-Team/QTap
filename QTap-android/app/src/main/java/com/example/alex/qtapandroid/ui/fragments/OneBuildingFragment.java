@@ -51,11 +51,16 @@ public class OneBuildingFragment extends Fragment implements IQLActionbarFragmen
         mView = inflater.inflate(R.layout.fragment_one_building, container, false);
         mArgs = getArguments();
         setActionbarTitle();
-        selectDrawer();
         mSavedInstanceState = savedInstanceState;
         setMapView();
         addDataToViews();
         return mView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        selectDrawer();
     }
 
     @Override

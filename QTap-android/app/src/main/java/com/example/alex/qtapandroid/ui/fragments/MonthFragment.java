@@ -37,10 +37,15 @@ public class MonthFragment extends Fragment implements IQLActionbarFragment, IQL
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_month, container, false);
         setActionbarTitle();
-        selectDrawer();
 
         mDatePicker = (DatePicker) v.findViewById(R.id.datePicker);
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        selectDrawer();
     }
 
     @Override
