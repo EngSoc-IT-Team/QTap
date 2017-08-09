@@ -4,6 +4,8 @@ Note that within the app, the name QLife is used. This name was decided after th
 
 This is an Android application for Queen's students (mainly engineers) that shows pertinent Queen's information. Currently, only class schedule is shown, however, for the future, other infomation such as building hours and ATM locations will be incorporated.
 
+The app currently supports API version 21 and newer. This unfortunately means that cool Java 8 features like default or static methods in interfaces are not possible.
+
 ## Cloud Database
 
 A cloud database is hosted with the Queen's Engineering Society's cloud system and made accessible by a public load balancer. A php script, get_database.php, is used to retrive the database in JSON form. On login, the app makes an HTTP get call to qtap.engsoc.queensu.ca/database/get_database.php to retrieve that JSON and then parse it and put into the phone's SQLITE database.
