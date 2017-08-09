@@ -9,6 +9,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.activities.MapsActivity;
@@ -51,11 +53,21 @@ public class Util {
         }
     }
 
-    public static void onLocationPermissionsGiven(Context context, GoogleMap map){
+    public static void onLocationPermissionsGiven(Context context, GoogleMap map) {
 
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             map.setMyLocationEnabled(true);
         }
+    }
+
+    public static void setBackButton(ActionBar actionBar) {
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+    }
+
+    public static void inflateOptionsMenu(int menuId, Menu menu, MenuInflater menuInflater) {
+        menuInflater.inflate(menuId, menu);
     }
 }

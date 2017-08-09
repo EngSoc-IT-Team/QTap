@@ -14,19 +14,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.alex.qtapandroid.common.PrefManager;
+import com.example.alex.qtapandroid.common.Util;
 import com.example.alex.qtapandroid.common.database.local.DatabaseAccessor;
 import com.example.alex.qtapandroid.common.database.local.users.User;
 import com.example.alex.qtapandroid.common.database.local.SqlStringStatements;
 
 import com.example.alex.qtapandroid.R;
 import com.example.alex.qtapandroid.common.database.local.users.UserManager;
+import com.example.alex.qtapandroid.interfaces.IQLOptionsMenuActivity;
 
 import java.util.ArrayList;
 
 /**
  * Activity for the settings. Can see NetID, time since calendar was last synced and can logout here
  */
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements IQLOptionsMenuActivity {
 
     private void clearData(View v) {
         CookieManager.getInstance().removeAllCookies(null);
@@ -63,29 +65,6 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.settings_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.about:
-                startActivity(new Intent(SettingsActivity.this, AboutActivity.class));
-                break;
-            case R.id.review:
-                startActivity(new Intent(SettingsActivity.this, ReviewActivity.class));
-                break;
-            case android.R.id.home:
-                finish();
-                return true;
-        }
-        return false;
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
         DatabaseAccessor.getDatabase().close(); //ensure only one database connection is ever open
@@ -101,9 +80,40 @@ public class SettingsActivity extends AppCompatActivity {
         netID.setText(user.getNetid());
     }
 
-    private void setBackButton() {
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        inflateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        handleOptionsClick(item.getItemId());
+        return true;
+    }
+
+    @Override
+    public void setBackButton() {
+        Util.setBackButton(getSupportActionBar());
+    }
+
+    @Override
+    public void handleOptionsClick(int itemId) {
+        switch (itemId) {
+            case R.id.about:
+                startActivity(new Intent(SettingsActivity.this, AboutActivity.class));
+                break;
+            case R.id.review:
+                startActivity(new Intent(SettingsActivity.this, ReviewActivity.class));
+                break;
+            case android.R.id.home:
+                finish();
         }
+    }
+
+    @Override
+    public void inflateOptionsMenu(Menu menu) {
+        Util.inflateOptionsMenu(R.menu.settings_menu, menu, getMenuInflater());
     }
 }

@@ -8,12 +8,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.Util;
+import com.example.alex.qtapandroid.interfaces.IQLOptionsMenuActivity;
 
 /**
  * Created by Carson on 06/06/2017.
  * In options menu, contains information about app
  */
-public class AboutActivity extends AppCompatActivity {
+public class AboutActivity extends AppCompatActivity implements IQLOptionsMenuActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,14 +26,24 @@ public class AboutActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.about_menu, menu);
+        inflateOptionsMenu(menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        handleOptionsClick(item.getItemId());
+        return true;
+    }
+
+    @Override
+    public void setBackButton() {
+        Util.setBackButton(getSupportActionBar());
+    }
+
+    @Override
+    public void handleOptionsClick(int itemId) {
+        switch (itemId) {
             case R.id.settings:
                 Intent settings = new Intent(AboutActivity.this, SettingsActivity.class);
                 startActivity(settings);
@@ -41,14 +53,11 @@ public class AboutActivity extends AppCompatActivity {
                 break;
             case android.R.id.home:
                 finish();
-                return true;
         }
-        return false;
     }
 
-    private void setBackButton() {
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+    @Override
+    public void inflateOptionsMenu(Menu menu) {
+        Util.inflateOptionsMenu(R.menu.settings_menu, menu, getMenuInflater());
     }
 }

@@ -12,12 +12,14 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.example.alex.qtapandroid.R;
+import com.example.alex.qtapandroid.common.Util;
+import com.example.alex.qtapandroid.interfaces.IQLOptionsMenuActivity;
 
 /**
  * Created by Carson on 06/07/2017.
  * Activity that sends user to review app on Play store and suggest improvements with web form
  */
-public class ReviewActivity extends AppCompatActivity {
+public class ReviewActivity extends AppCompatActivity implements IQLOptionsMenuActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,15 +62,8 @@ public class ReviewActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.review_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+    public void handleOptionsClick(int itemId) {
+        switch (itemId) {
             case R.id.settings:
                 startActivity(new Intent(ReviewActivity.this, SettingsActivity.class));
                 break;
@@ -77,14 +72,28 @@ public class ReviewActivity extends AppCompatActivity {
                 break;
             case android.R.id.home:
                 finish();
-                return true;
         }
-        return false;
     }
 
-    private void setBackButton() {
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        inflateOptionsMenu(menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        handleOptionsClick(item.getItemId());
+        return true;
+    }
+
+    @Override
+    public void setBackButton() {
+        Util.setBackButton(getSupportActionBar());
+    }
+
+    @Override
+    public void inflateOptionsMenu(Menu menu) {
+        Util.inflateOptionsMenu(R.menu.review_menu, menu, getMenuInflater());
     }
 }
