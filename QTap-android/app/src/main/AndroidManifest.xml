@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.example.alex.qtapandroid">
+          package="qlife">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
@@ -13,7 +13,7 @@
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
 
     <permission
-        android:name="com.example.alex.qtapandroid.permission.MAPS_RECEIVE"
+        android:name="qlife.permission.MAPS_RECEIVE"
         android:protectionLevel="signature"/>
     <uses-permission android:name="com.example.alex.qtapandroid.permission.MAPS_RECEIVE"/>
     <!--android:allowBackup="false"-->  // to turn off auto connect on install
@@ -27,7 +27,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activities.StartupActivity"
+            android:name="qlife.activities.StartupActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -36,16 +36,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.MainTabActivity"
+            android:name="qlife.activities.MainTabActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".activities.LoginActivity"
+            android:name="qlife.activities.LoginActivity"
             android:label="@string/activity_login"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize"/>
         <activity
-            android:name=".activities.ReviewActivity"
+            android:name="qlife.activities.ReviewActivity"
             android:label="@string/activity_review"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="adjustResize"/>
@@ -56,10 +56,10 @@
             android:value="d84ee4ad5d54b10dede20dd1d87deb32e5214421"/>
 
         <activity
-            android:name=".activities.SettingsActivity"
+            android:name="qlife.activities.SettingsActivity"
             android:label="@string/activity_settings"/>
         <activity
-            android:name=".activities.AboutActivity"
+            android:name="qlife.activities.AboutActivity"
             android:label="@string/activity_about"/>
 
         <!--
@@ -75,11 +75,11 @@
             android:value="@string/google_maps_key"/>
 
         <activity
-            android:name=".activities.MapsActivity"
+            android:name="qlife.activities.MapsActivity"
             android:label="@string/activity_maps">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.alex.qtapandroid.activities.MainTabActivity"/>
+                android:value="qlife.activities.MainTabActivity"/>
         </activity>
     </application>
 
