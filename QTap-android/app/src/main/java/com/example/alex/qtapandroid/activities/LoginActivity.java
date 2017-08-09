@@ -32,7 +32,7 @@ import java.util.Calendar;
 import java.util.Locale;
 
 /**
- * A login screen that offers login to my.queensu.ca via mNetid/password SSO.
+ * A login screen that offers login to my.queensu.ca via netid/password SSO.
  */
 public class LoginActivity extends AppCompatActivity {
 
@@ -44,6 +44,11 @@ public class LoginActivity extends AppCompatActivity {
     public static String mIcsUrl = "";
     public static String mUserEmail = "";
 
+    /**
+     * Parses the html code to look for the ics file. Needed because
+     * there are multiple web pages sent through this activity when logging in.
+     * @param html Sring representation of the html code of a webpage.
+     */
     public void tryProcessHtml(String html) {
         if (html != null && html.contains("Class Schedule")) {
             html = html.replaceAll("\n", "");
@@ -71,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 
         UserManager mUserManager = new UserManager(getBaseContext());
         if (mUserManager.getTable().isEmpty()) {
+            //not logged in, show software centre login screen
             final WebView browser = (WebView) findViewById(R.id.webView);
             browser.getSettings().setSaveFormData(false); //disable autocomplete - more secure, keyboard popup blocks fields
             browser.getSettings().setJavaScriptEnabled(true); // needed to properly display page / scroll to chosen location
@@ -148,8 +154,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
+     * Class used to log the user in asynchronously. This login process is not actually asynchronous. This
+     * need to be refactored; however, early attempts have caused a strange crash.
      */
     private class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -181,6 +187,9 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, MainTabActivity.class));
         }
 
+        /**
+         * Method that adds the user and their information to the User table in the phone, logging them in.
+         */
         private void addUserSession() {
             SimpleDateFormat df = new SimpleDateFormat("MMMM d, yyyy, hh:mm aa", Locale.CANADA);
             String formattedDate = df.format(Calendar.getInstance().getTime());
@@ -189,6 +198,9 @@ public class LoginActivity extends AppCompatActivity {
             mUserManager.insertRow(newUser);
         }
 
+        /**
+         * Method that starts an asynchronous task that downloads and parses the ICS file.
+         */
         private void getIcsFile() {
             if (mIcsUrl != null && mIcsUrl.contains(".ics")) {
                 new DownloadICSFile(LoginActivity.this).execute(mIcsUrl);

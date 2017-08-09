@@ -88,6 +88,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
+    /**
+     * Method that uses the Buildings table in the phone database to set markers on the Google map.
+     * Each building gets a marker.
+     */
     private void createMarkers() {
         ArrayList<DatabaseRow> buildings = new BuildingManager(this).getTable();
         for (DatabaseRow row : buildings) {

@@ -70,6 +70,9 @@ public class SettingsActivity extends AppCompatActivity implements IQLOptionsMen
         DatabaseAccessor.getDatabase().close(); //ensure only one database connection is ever open
     }
 
+    /**
+     * Method that sets the current user and last login time in the TextViews.
+     */
     private void setTextViews() {
         UserManager mUserManager = new UserManager(this.getApplicationContext());
         ArrayList<User> users = mUserManager.getTable();

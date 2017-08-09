@@ -16,7 +16,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by Alex on 1/29/2017.
- * Class to download the ICS file.
+ * Class to download the ICS file. Once it is downloaded, this class calls the parser class.
  */
 public class DownloadICSFile extends AsyncTask<String, Integer, String> {
 

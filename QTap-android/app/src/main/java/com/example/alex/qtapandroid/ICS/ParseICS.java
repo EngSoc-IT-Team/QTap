@@ -37,7 +37,6 @@ public class ParseICS {
     private String TAG = StudentToolsFragment.class.getSimpleName();
     private OneClassManager mOneClassManager;
     private CourseManager mCourseManager;
-    private DatePicker mDateSelection;
 
     private Context mContext;
 

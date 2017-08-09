@@ -13,12 +13,9 @@ import java.util.ArrayList;
 
 /**
  * Created by Alex on 3/29/2017.
+ * Class that defines the adapter for the DayFragment RecyclerView.
  */
-
-public class RecyclerViewAdapter extends RecyclerView
-        .Adapter<RecyclerViewAdapter
-        .DataObjectHolder> {
-    private static String LOG_TAG = "MyRecyclerViewAdapter";
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.DataObjectHolder> {
     private ArrayList<DataObject> mDataset;
     private static MyClickListener myClickListener;
 
@@ -32,7 +29,6 @@ public class RecyclerViewAdapter extends RecyclerView
             super(itemView);
             label = (TextView) itemView.findViewById(R.id.textView);
             dateTime = (TextView) itemView.findViewById(R.id.textView2);
-            Log.i(LOG_TAG, "Adding Listener");
             itemView.setOnClickListener(this);
         }
 
@@ -43,7 +39,7 @@ public class RecyclerViewAdapter extends RecyclerView
     }
 
     public void setOnItemClickListener(MyClickListener myClickListener) {
-        this.myClickListener = myClickListener;
+        RecyclerViewAdapter.myClickListener = myClickListener;
     }
 
     public RecyclerViewAdapter(ArrayList<DataObject> myDataset) {
@@ -56,8 +52,7 @@ public class RecyclerViewAdapter extends RecyclerView
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.day_events_card, parent, false);
 
-        DataObjectHolder dataObjectHolder = new DataObjectHolder(view);
-        return dataObjectHolder;
+        return new DataObjectHolder(view);
     }
 
     @Override

@@ -31,7 +31,7 @@ import com.example.alex.qtapandroid.ui.fragments.MonthFragment;
 import com.example.alex.qtapandroid.ui.fragments.StudentToolsFragment;
 
 /**
- * activity holding most of the app.
+ * Activity holding most of the app.
  * contains the drawer that navigates user to fragments with map, schedule, info etc.
  */
 public class MainTabActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, IQLActivityHasOptionsMenu {
@@ -108,9 +108,9 @@ public class MainTabActivity extends AppCompatActivity implements NavigationView
     }
 
     /**
-     * logic to decide what fragment to show, based on what drawer item user clicked.
+     * Logic to decide what fragment to show, based on what drawer item user clicked.
      * will attach new fragment.
-     * contains logic to know if on the home fragment or not, for back pressed logic.
+     * Contains logic to know if on the home fragment or not, for back pressed logic.
      * changes title of screen as well.
      *
      * @param viewId the ID of the drawer item user clicked.

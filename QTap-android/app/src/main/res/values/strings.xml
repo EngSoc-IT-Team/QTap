@@ -111,8 +111,8 @@
 When you login to Solus, your class calendar is downloaded and added to the app. The home screen is the day view. Here, you can see your classes for the day.\n\n
 If you swipe from the left side, a menu opens up with information about Queens and the campus. You can also choose the month view, where you can pick a specific day to view your class schedule.\n\n
 Your class calendar and other information isn\'t updated unless you log out and log back in again. To log out, go to the settings page. On this page you can also see the date your calendar was last synced.\n\n
-Don\'t worry about your data! Only your NetID is automatically stored in the phone, and all data is by default in an encrypted location only accessible from this app. Also, when you logout, your information is deleted.\n\n
-Shout out to the 2016-17 Engineering Society IT Team for making this! It\'s not a finished product, so if have any ideas on improvements email doit@engsoc.queensu.ca!</string>
+Don\'t worry about your data! Only your NetID is automatically stored in the phone, and all data is in an encrypted location only accessible from this app. Also, when you logout, your information is deleted.\n\n
+Shout out to the 2016-17 Engineering Society IT Team for starting this project! It\'s not a finished product, so if have any ideas on how to improve it please use the Review page!</string>
 
     <string name="ask_suggestions">If you liked the app, please use the button below to review it on the Play Store!\n\nIf you have any suggestions for improvements, please feel free to email
     doit@engsoc.queensu.ca or submit a suggestion using the button below!</string>

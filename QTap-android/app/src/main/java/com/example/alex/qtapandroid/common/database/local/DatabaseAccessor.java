@@ -24,10 +24,8 @@ public class DatabaseAccessor {
     /**
      * Creates an instance of the database helper and opens
      * a readable/writable instance of the database.
-     *
-     * @throws SQLException
      */
-    public void open() throws SQLException {
+    public void open() {
         if (mDBHelper == null) {
             mDBHelper = DbHelper.getInstance(mContext);
         }

@@ -13,7 +13,7 @@ import com.example.alex.qtapandroid.interfaces.IQLOptionsMenuActivity;
 
 /**
  * Created by Carson on 06/06/2017.
- * In options menu, contains information about app
+ * Displays text providing information about the app.
  */
 public class AboutActivity extends AppCompatActivity implements IQLOptionsMenuActivity {
 

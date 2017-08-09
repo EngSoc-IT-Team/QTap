@@ -119,6 +119,10 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
+    /**
+     * Method that ties together methods that get specific parts of the cloud database JSON.
+     * @param json The JSONObject representing the cloud database.
+     */
     private void cloudToPhoneDB(JSONObject json) {
         emergencyContacts(json);
         engineeringContacts(json);
@@ -127,6 +131,10 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
         cafeterias(json);
     }
 
+    /**
+     * Method that retrieves and inserts the cloud emergency contact data into the phone database.
+     * @param json The JSONObject representing the cloud database.
+     */
     private void emergencyContacts(JSONObject json) {
         try {
             JSONArray contacts = json.getJSONArray(EmergencyContact.TABLE_NAME);
@@ -141,6 +149,10 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
         }
     }
 
+    /**
+     * Method that retrieves and inserts the cloud engineering contact data into the phone database.
+     * @param json The JSONObject representing the cloud database.
+     */
     private void engineeringContacts(JSONObject json) {
         try {
             JSONArray contacts = json.getJSONArray(EngineeringContact.TABLE_NAME);
@@ -155,6 +167,10 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
         }
     }
 
+    /**
+     * Method that retrieves and inserts the cloud buildings data into the phone database.
+     * @param json The JSONObject representing the cloud database.
+     */
     private void buildings(JSONObject json) {
         try {
             JSONArray buildings = json.getJSONArray(Building.TABLE_NAME);
@@ -171,6 +187,10 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
         }
     }
 
+    /**
+     * Method that retrieves and inserts the cloud food data into the phone database.
+     * @param json The JSONObject representing the cloud database.
+     */
     private void food(JSONObject json) {
         try {
             JSONArray food = json.getJSONArray(Food.TABLE_NAME);
@@ -191,6 +211,10 @@ public class GetCloudDb extends AsyncTask<Void, Void, Void> {
         }
     }
 
+    /**
+     * Method that retrieves and inserts the cloud cafeteria data into the phone database.
+     * @param json The JSONObject representing the cloud database.
+     */
     private void cafeterias(JSONObject json) {
         try {
             JSONArray cafs = json.getJSONArray(Cafeteria.TABLE_NAME);

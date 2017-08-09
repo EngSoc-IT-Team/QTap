@@ -28,7 +28,8 @@ import java.util.HashMap;
 
 /**
  * Created by Carson on 05/07/2017.
- * Fragment displaying data in phone database regarding food establishments.
+ * Fragment displaying data in phone database regarding food establishments. When a food place is clicked, it starts
+ * OneFoodFragment that provides details about the food place.
  */
 public class FoodFragment extends ListFragment implements IQLActionbarFragment, IQLDrawerItem, IQLListFragmentWithChild {
 

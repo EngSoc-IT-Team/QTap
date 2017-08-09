@@ -31,7 +31,6 @@ import io.fabric.sdk.android.Fabric;
  */
 public class StartupActivity extends AppCompatActivity {
 
-    //TODO document methods
     //TODO move shared pref info to database
 
     private ViewPager mViewPager;
@@ -187,7 +186,7 @@ public class StartupActivity extends AppCompatActivity {
      * getCount(), isViewFromObject() and destroyItem().
      * These changes allow for custom layouts, and manipulating those custom layouts.
      */
-    public class MyViewPagerAdapter extends PagerAdapter {
+    private class MyViewPagerAdapter extends PagerAdapter {
         private LayoutInflater mLayoutInflater;
 
         @Override

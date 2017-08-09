@@ -29,7 +29,8 @@ import java.util.HashMap;
 
 /**
  * Created by Carson on 26/06/2017.
- * Fragment that displays the buildings in the phone/cloud database.
+ * Fragment that displays the buildings in the phone/cloud database. When a building is clicked, it starts
+ * OneBuildingFragment that provides details about the building.
  */
 public class BuildingsFragment extends ListFragment implements IQLActionbarFragment, IQLDrawerItem, IQLListFragmentWithChild {
 

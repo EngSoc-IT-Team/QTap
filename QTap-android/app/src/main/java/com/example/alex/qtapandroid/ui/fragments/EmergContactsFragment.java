@@ -66,7 +66,6 @@ public class EmergContactsFragment extends ListFragment implements IQLActionbarF
 
     @Override
     public void inflateListView() {
-
         ArrayList<HashMap<String, String>> emergContactsList = new ArrayList<>();
         ArrayList<DatabaseRow> contacts = (new EmergencyContactsManager(getActivity().getApplicationContext())).getTable();
         for (DatabaseRow row : contacts) {

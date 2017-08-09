@@ -32,6 +32,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+/**
+ * Fragment that displays the classes for a given day. When a class is clicked, it starts
+ * EventInfoFragment that provides details about the class.
+ */
 public class DayFragment extends Fragment implements IQLActionbarFragment, IQLDrawerItem, IQLListFragmentWithChild {
 
     public static final String TAG_TITLE = "event_title";
