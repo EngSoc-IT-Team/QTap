@@ -2,21 +2,134 @@
 
 These classes are fragments that have specific page UI, and are controlled by activities.
 
-## Agenda Fragment
+Every fragment here is attached to MainTabActivity, so they all have an options menu that
+allows access to the Settings, About and Review activities.
 
-This fragment shows the user their class schedule. It is an infinite scrollview so that the user can continuously view future classes. There are spaces between classes on the same day, so that a sense of free time can be gotten.
-It is accessed by the Agenda field on the navigation bar, or by selecting a date on the Calendar in the Calendar fragment.
+Since each fragment is attached to an activity that has an action bar, and they all have different
+titles for the action bar, all of these fragments implement IQLActionbarFragment. All of these fragments
+are also accessed using the drawer (some from fragments that come from the drawer) so they all also
+implement IQLDrawerItem.
 
-## Calendar Fragment
+## BuildingsFragment
 
-This fragment shows the user a calendar of the current month, and is what the user sees upon login, being the default page. From here the user can select a date and view their class schedule for that day in the Agenda fragment.
+This fragment shows a list of Queen's buildings; each card has a building's name, description and if it has food available.
 
-This fragment also parses out meaningful data from the strings found by ParseICS in the ICS file. This is done manually, as the ICS file has standard notation that is consistent for all classes.
+Clicking on a card will send the user to OneBuildingFragment.
 
-## Day Fragment
+This fragment is accessed from the drawer layout.
 
-This fragment is currently not in use, but is being created to hold a full day's class schedule on its own.
+Since BuildingsFragment shows a ListView that goes to another fragment when a card is clicked, it implements
+IQLListFragmentWithChild.
 
-## Student Tools, Eng Soc, About, ITS, Information
+It queries the phone database for the full Buildings table in order to populate the ListView.
 
-These fragments are currently just placeholders on the navigation bar. Eventually these fragments will be populated with useful features/information.
+## CafeteriasFragment
+
+This fragment shows a list of Queen's cafeterias; the name and its hours.
+
+This fragment is accessed from the drawer layout.
+
+Since CafeteriasFragment shows a static ListView, it implements IQLListFragment.
+
+It queries the phone database for the full Cafeterias table in order to populate the ListView.
+
+## DayFragment
+
+This fragment shows a list of classes for the set day; showing the name, start/end time and location. It
+also allows the day to be moved forwards or backwards using two buttons.
+
+When a class' card is clicked, the user is sent to EventInfoFragment. Clicking the next/prev buttons does not
+perform a fragment transaction, it merely changes the current DayFragment day.
+
+This fragment is accessed from the drawer layout.
+
+DayFragment uses a RecyclerView instead of a ListView, so it does implement IQLListFragment, but
+it does not actually use one of the methods.
+
+It queries the phone database for the full OneClass table in order to populate the RecyclerView.
+
+## EmergContactsFragment
+
+This fragment shows a list of Queen's emergency contacts; the name a description and a telephone number.
+
+This fragment is accessed from StudentToolsFragment.
+
+Since EmergContactsFragment shows a static ListView, it implements IQLListFragment.
+
+It queries the phone database for the full EmergContacts table in order to populate the ListView.
+
+## EngContactsFragment
+
+This fragment shows a list of Queen's engineering contacts; the name, position, email and description.
+
+This fragment is accessed from StudentToolsFragment.
+
+Since EngContactsFragment shows a static ListView, it implements IQLListFragment.
+
+It queries the phone database for the full EngContacts table in order to populate the ListView.
+
+## EventInfoFragment
+
+This fragment shows the details of a class; the name, location, start/end times and a Google map with
+a marker where the building is.
+
+This fragment is accessed by clicking a class card in DayFragment.
+
+Since EventInfoFragment shows the details of a ListView card, it implements IQLListItemDetailsFragment. It
+also has a MapView, so it implements IQLMapView.
+
+It does not need to access the phone database as all shown information is sent from DayFragment.
+
+## FoodFragment
+
+This fragment shows a list of Queen's food establishments; each card has the name, building and payment methods.
+
+Clicking on a card will send the user to OneFoodFragment.
+
+This fragment is accessed from the drawer layout.
+
+Since FoodFragment shows a ListView that goes to another fragment when a card is clicked, it implements
+IQLListFragmentWithChild.
+
+It queries the phone database for the full Food table in order to populate the ListView.
+
+## MonthFragment
+
+This fragment shows a DatePicker where the user an choose a date to view their schedule for.
+
+Clicking on a day will send the user to DayFragment, with that date.
+
+This fragment is accessed from the drawer layout.
+
+## OneBuildingFragment
+
+This fragment shows the details of a building; the name, food establishments, if it has an ATM/bookable
+rooms, a description and a Google map with a marker at the building location.
+
+Clicking on a card in BuildingsFragment will access this fragment.
+
+Since OneBuildingFragment shows the details of a ListView card, it implements IQLListItemDetailsFragment. It
+also has a MapView, so it implements IQLMapView.
+
+It does not need to access the phone database as all shown information is sent from BuildingsFragment.
+
+## OneBuildingFragment
+
+This fragment shows the details of a food establishment; the name, building, information, payment methods and a Google map
+with a marker at the building location.
+
+Clicking on a card in FoodFragment will access this fragment.
+
+Since OneFoodFragment shows the details of a ListView card, it implements IQLListItemDetailsFragment. It
+also has a MapView, so it implements IQLMapView.
+
+It does not need to access the phone database as all shown information is sent from FoodFragment.
+
+## StudentToolsFragment
+
+This fragment provides information pertinent to students.
+
+StudentToolsFragment is accessed from the drawer.
+
+Clicking on the contacts buttons sends the user to the corresponding contacts fragment. Clicking on the other
+buttons sends the user to a corresponding web page in their phone's default browser.

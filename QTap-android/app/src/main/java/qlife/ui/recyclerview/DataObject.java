@@ -1,4 +1,4 @@
-package qlife.ui.card;
+package qlife.ui.recyclerview;
 
 /**
  * Created by Alex on 3/29/2017.

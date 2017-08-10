@@ -43,7 +43,8 @@ The initial screen when entering MainTabActivity is the Day fragment.
 
 This activity shows a Google maps view with markers at each building on the Queen's campus.
 
-As MapsActivity has a MapView, it implements IQLMapView.
+As MapsActivity has a MapView, it implements IQLMapView. MapsActivity does not implement IQLDrawerItem even though
+it is accessed from the drawer, as it does not use the methods in that interface.
 
 It queries the phone database for building names, latitudes and longitudes, which are used to set the markers
 in the map.

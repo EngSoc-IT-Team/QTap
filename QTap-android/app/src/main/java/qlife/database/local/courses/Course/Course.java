@@ -1,4 +1,4 @@
-package qlife.database.local.courses;
+package qlife.database.local.courses.Course;
 
 import android.provider.BaseColumns;
 import android.util.Log;

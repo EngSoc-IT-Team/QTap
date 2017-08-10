@@ -4,8 +4,8 @@ import qlife.database.local.buildings.Building;
 import qlife.database.local.cafeterias.Cafeteria;
 import qlife.database.local.contacts.emergency.EmergencyContact;
 import qlife.database.local.contacts.engineering.EngineeringContact;
-import qlife.database.local.courses.Course;
-import qlife.database.local.courses.OneClass;
+import qlife.database.local.courses.Course.Course;
+import qlife.database.local.courses.OneClass.OneClass;
 import qlife.database.local.food.Food;
 import qlife.database.local.users.User;
 

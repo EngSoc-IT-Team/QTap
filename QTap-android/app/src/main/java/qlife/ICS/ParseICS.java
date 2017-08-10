@@ -4,10 +4,10 @@ import android.content.Context;
 import android.content.res.AssetManager;
 import android.util.Log;
 
-import qlife.database.local.courses.Course;
-import qlife.database.local.courses.CourseManager;
-import qlife.database.local.courses.OneClass;
-import qlife.database.local.courses.OneClassManager;
+import qlife.database.local.courses.Course.Course;
+import qlife.database.local.courses.Course.CourseManager;
+import qlife.database.local.courses.OneClass.OneClass;
+import qlife.database.local.courses.OneClass.OneClassManager;
 import qlife.database.local.users.User;
 import qlife.database.local.users.UserManager;
 import qlife.ui.fragments.StudentToolsFragment;
